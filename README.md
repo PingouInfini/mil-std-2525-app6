@@ -8,6 +8,7 @@
 L'objectif est de récupérer l'ensemble des icones APP6B issus de [milsymbol-APP6b](https://www.spatialillusions.com/milsymbol/docs/milsymbol-APP6b.html)
 
 Ces icones seront stockées dans des répertoires selon leur format : `svg` ou `png`
+Un fichier de mapping permet de raccrocher chaque hierarchie, code symbole (SIDC) à chaque fichier APP6.
 
 
 # Récupération
@@ -20,8 +21,8 @@ Depuis la page [milsymbol-APP6b](https://www.spatialillusions.com/milsymbol/docs
   > MIL-STD-2525-APP6\rawdata\png\svgexport-[x].png
   > MIL-STD-2525-APP6\rawdata\svg\svgexport-[x].png
 
-- On enregistre la page web en mhtml -> Page web, un seul fichier  également dans `rawdata`
-  > MIL-STD-2525-APP6\rawdata\Milsymbol APP6-B.mhtml
+- On enregistre la page web en html -> Page web COMPLETE également dans `rawdata`
+  > MIL-STD-2525-APP6\rawdata\Milsymbol APP6-B.html
 
 Puis :
 - On remplace le nom des fichiers grâce au script python
