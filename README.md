@@ -17,9 +17,8 @@ Un fichier de mapping permet de raccrocher chaque hierarchie, code symbole (SIDC
 
 Depuis la page [milsymbol-APP6b](https://www.spatialillusions.com/milsymbol/docs/milsymbol-APP6b.html), à l'aide du plugin de chrome [SVG Export](https://chrome.google.com/webstore/detail/svg-export/naeaaedieihlkmdajjefioajbbdbdjgp?hl=fr)
 
-- On enregistre l'ensemble des images dans les formats `svg` et `png` dans le répertoire `rawdata`
-  > MIL-STD-2525-APP6\rawdata\png\svgexport-[x].png
-  > MIL-STD-2525-APP6\rawdata\svg\svgexport-[x].png
+- On enregistre l'ensemble des images au format `svg` dans le répertoire `rawdata`
+  > MIL-STD-2525-APP6\rawdata\svg\svgexport-[x].svg
 
 - On enregistre la page web en html -> Page web COMPLETE également dans `rawdata`
   > MIL-STD-2525-APP6\rawdata\Milsymbol APP6-B.html
@@ -28,6 +27,9 @@ Puis :
 - On remplace le nom des fichiers grâce au script python
 
 ```python
+python -m pip install --upgrade pip
+pip3 install -r requirements.txt
+pip install lib\cairocffi-1.3.0-cp310-cp310-win_amd64.whl
 python generate-APP6-icons.py
 ```
 
