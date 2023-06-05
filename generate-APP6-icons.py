@@ -58,6 +58,20 @@ def extract_svg(string):
         return None
 
 
+def reuse_icon(path, hierarchy_name):
+    # Split the path into file name and directory
+    directory, file_name = os.path.split(path)
+
+    # Get the file extension
+    file_extension = os.path.splitext(file_name)[1]
+
+    # Build the new path with the new file name
+    new_path = os.path.join(directory, hierarchy_name + file_extension)
+
+    # Copy the file
+    shutil.copy2(path, new_path)
+
+
 def rename_file(directory, number, new_filename):
     prefix = 'svgexport-'
     if 'svg' in directory:
@@ -160,7 +174,6 @@ with open(filename, "r") as file:
 
         if not file_begin:
 
-            # pattern = r'(\d.X.[\d\.]+)[ ]?(?:(?:<[\/]?[brem]+>)+([\w:(),*\/\- &amp;]+)?)+(<\/td><td><svg)?'
             pattern = r'(\d.X.[\d\.]+)[ ]?(?:(?:<[\/]?[brem]+>)+([\w:(),*\/\- \'"&amp;]+)?)+(<\/td><td>)(<svg[' \
                       r'\w\d=":/.><,\-# ()	+$&amp;]+<\/svg>)?'
             matches = re.findall(pattern, line)
@@ -172,18 +185,16 @@ with open(filename, "r") as file:
                     has_svg = bool(match[3])
 
                     if has_svg:
-                        # a hierarchy has the same symbol
+                        # a hierarchy has the same symbol, reuse its icon
                         if match[3] in distinct_previous_svg:
                             file_hierarchy = distinct_previous_svg[match[3]]
-                            add_csv_row([hierarchy, sidc, file_hierarchy + '.png', file_hierarchy + '.svg'])
-                            continue
+                            reuse_icon('APP6-icons/svg/friend/' + file_hierarchy + ".svg", hierarchy)
                         else:
                             distinct_previous_svg[match[3]] = hierarchy
+                            rename_file('APP6-icons/svg/friend', idx_file, hierarchy)
+                            idx_file += 1
 
-                        rename_file('APP6-icons/svg/friend', idx_file, hierarchy)
                         add_csv_row([hierarchy, sidc, hierarchy + '.png', hierarchy + '.svg'])
-
-                        idx_file += 1
 
     # Finally, we adapt the background color to the affiliation
     copy_files('APP6-icons/svg/friend', 'APP6-icons/svg/hostile')
