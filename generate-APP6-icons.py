@@ -43,7 +43,7 @@ def copy_files(source_dir, target_dir):
 
 def init_csv_mapping():
     # Add the CSV file header
-    header = ['hierarchy', 'SIDC', 'icon-png', 'icon-svg']
+    header = ['hierarchy', 'SIDC', 'Name', 'icon-png', 'icon-svg']
     add_csv_row(header, False)
 
 
@@ -154,12 +154,20 @@ def create_png_equivalents(src_directory, dest_directory):
             svg2png(open(src_file, 'rb').read(), write_to=open(dest_file, 'wb'))
 
 
+def getClearName(input_string):
+    # Replace all but the last <br> with |.
+    modified_string = re.sub(r'(<br>(?![^<]*$))', '|', input_string)
+    # Remove all html tags
+    clean_string = re.sub('<.*?>', '', modified_string)
+    return clean_string
+
+
 with open(filename, "r") as file:
     idx_file = 0
     file_begin = True
 
     # init files from "rawdata" folder to "APP6-icons" folder
-    copy_files_init_app6_icon_folder()
+    # copy_files_init_app6_icon_folder()
     init_csv_mapping()
 
     for line in file:
@@ -174,35 +182,37 @@ with open(filename, "r") as file:
 
         if not file_begin:
 
-            pattern = r'(\d.X.[\d\.]+)[ ]?(?:(?:<[\/]?[brem]+>)+([\w:(),*\/\- \'"&amp;]+)?)+(<\/td><td>)(<svg[' \
-                      r'\w\d=":/.><,\-# ()	+$&amp;]+<\/svg>)?'
+            pattern = r'(\d.X.[\d\.]+)[ ]?(?:.)+?<br>(.+?)<em>SIDC:<\/em>[ ]?(.+?)<\/td>(?:.)+?<td>(<svg.+?)<\/td>'
+            # pattern = r'(\d.X.[\d\.]+)[ ]?(?:(?:<[\/]?[brem]+>)+([\w:(),*\/\- \'"&amp;]+)?)+(<\/td><td>)(<svg[' \
+            #          r'\w\d=":/.><,\-# ()	+$&amp;]+<\/svg>)?'
             matches = re.findall(pattern, line)
 
             if matches:
                 for match in matches:
                     hierarchy = match[0].replace("'", "")
-                    sidc = match[1].strip().replace("'", "") if match[1] else None
+                    name = getClearName(match[1])
+                    sidc = match[2].strip().replace("'", "") if match[2] else None
                     has_svg = bool(match[3])
 
                     if has_svg:
                         # a hierarchy has the same symbol, reuse its icon
                         if match[3] in distinct_previous_svg:
                             file_hierarchy = distinct_previous_svg[match[3]]
-                            reuse_icon('APP6-icons/svg/friend/' + file_hierarchy + ".svg", hierarchy)
+                            # reuse_icon('APP6-icons/svg/friend/' + file_hierarchy + ".svg", hierarchy)
                         else:
                             distinct_previous_svg[match[3]] = hierarchy
-                            rename_file('APP6-icons/svg/friend', idx_file, hierarchy)
+                            # rename_file('APP6-icons/svg/friend', idx_file, hierarchy)
                             idx_file += 1
 
-                        add_csv_row([hierarchy, sidc, hierarchy + '.png', hierarchy + '.svg'])
+                        add_csv_row([hierarchy, sidc, name, hierarchy + '.png', hierarchy + '.svg'])
 
     # Finally, we adapt the background color to the affiliation
-    copy_files('APP6-icons/svg/friend', 'APP6-icons/svg/hostile')
-    replace_fill_color('APP6-icons/svg/hostile', '#FF8080')
-    copy_files('APP6-icons/svg/friend', 'APP6-icons/svg/neutral')
-    replace_fill_color('APP6-icons/svg/neutral', '#AAFFAA')
-    copy_files('APP6-icons/svg/friend', 'APP6-icons/svg/unknown')
-    replace_fill_color('APP6-icons/svg/unknown', '#FFFF80')
+    # copy_files('APP6-icons/svg/friend', 'APP6-icons/svg/hostile')
+    # replace_fill_color('APP6-icons/svg/hostile', '#FF8080')
+    # copy_files('APP6-icons/svg/friend', 'APP6-icons/svg/neutral')
+    # replace_fill_color('APP6-icons/svg/neutral', '#AAFFAA')
+    # copy_files('APP6-icons/svg/friend', 'APP6-icons/svg/unknown')
+    # replace_fill_color('APP6-icons/svg/unknown', '#FFFF80')
 
     # Creating png images from svg files
-    create_png_equivalents("APP6-icons/svg", "APP6-icons/png")
+    # create_png_equivalents("APP6-icons/svg", "APP6-icons/png")
