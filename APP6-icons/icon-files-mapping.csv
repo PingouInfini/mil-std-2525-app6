@@ -1,4 +1,4 @@
-hierarchy;SIDC;FullPath;Name;icon-png;icon-svg
+hierarchy;SIDC;fullpath;name;icon-png;icon-svg
 1.X.1;S*P*------;SPACE TRACK;SPACE TRACK;1.X.1.png;1.X.1.svg
 1.X.1.1;S*P*S-----;SPACE TRACK|SATELLITE;SATELLITE;1.X.1.1.png;1.X.1.1.svg
 1.X.1.2;S*P*V-----;SPACE TRACK|CREWED SPACE VEHICLE;CREWED SPACE VEHICLE;1.X.1.2.png;1.X.1.2.svg
