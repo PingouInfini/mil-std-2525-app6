@@ -12,6 +12,17 @@ import java.awt.*;
  * @author unknown
  */
 public class SymbolSelector extends JWindow {
+
+    int COMPONENT_HEIGHT = 100;
+
+//    dialogPane.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
+//            0, 0, 0, 0), "Symbole APP6", javax.swing.border.TitledBorder.CENTER, TitledBorder
+//            .TOP, new java.awt.Font("Dia\u006cog", java.awt.Font.BOLD, 12), Color.
+//            blue), dialogPane.getBorder()));
+//            dialogPane.addPropertyChangeListener(e -> {
+//        if ("border".equals(e.getPropertyName())) throw new RuntimeException();
+//    });
+
     public SymbolSelector() {
         initComponents();
     }
@@ -49,28 +60,28 @@ public class SymbolSelector extends JWindow {
 
         //======== dialogPane ========
         {
-            dialogPane.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
-                    0, 0, 0, 0), "Symbole APP6", javax.swing.border.TitledBorder.CENTER, TitledBorder
-                    .TOP, new java.awt.Font("Dia\u006cog", java.awt.Font.BOLD, 12), Color.
-                    blue), dialogPane.getBorder()));
-            dialogPane.addPropertyChangeListener(e -> {
-                if ("border".equals(e.getPropertyName())) throw new RuntimeException();
-            });
+            dialogPane.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
+            . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing
+            .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
+            Font ( "D\u0069alog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
+            ) ,dialogPane. getBorder () ) ); dialogPane. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
+            public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062order" .equals ( e. getPropertyName (
+            ) ) )throw new RuntimeException( ) ;} } );
             dialogPane.setLayout(new BorderLayout());
 
             //======== contentPanel ========
             {
                 contentPanel.setLayout(new MigLayout(
-                        "fill,insets dialog,hidemode 3,align center center",
-                        // columns
-                        "[fill]" +
-                                "[fill]" +
-                                "[fill]" +
-                                "[fill]",
-                        // rows
-                        "[]" +
-                                "[]" +
-                                "[]"));
+                    "fill,insets dialog,hidemode 3,align center center",
+                    // columns
+                    "[fill]" +
+                    "[fill]" +
+                    "[fill]" +
+                    "[fill]",
+                    // rows
+                    "[]" +
+                    "[]" +
+                    "[]"));
 
                 //---- titleField ----
                 titleField.setText("Selection du symbole");
@@ -81,30 +92,40 @@ public class SymbolSelector extends JWindow {
 
                 //======== behaviourPanel ========
                 {
+                    behaviourPanel.setMinimumSize(new Dimension(40, 195));
+                    behaviourPanel.setMaximumSize(new Dimension(40, 2147483647));
                     behaviourPanel.setLayout(new MigLayout(
-                            "fill,hidemode 3,align center center",
-                            // columns
-                            "[fill]",
-                            // rows
-                            "[]" +
-                                    "[]" +
-                                    "[]" +
-                                    "[]"));
+                        "fill,hidemode 3,align center center",
+                        // columns
+                        "[fill]",
+                        // rows
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]"));
 
                     //---- button1 ----
-                    button1.setText("text");
+                    button1.setIcon(new ImageIcon(getClass().getResource("/images/1.u.3.1.png")));
+                    button1.setMaximumSize(new Dimension(40, 40));
+                    button1.setMinimumSize(new Dimension(40, 40));
                     behaviourPanel.add(button1, "cell 0 0");
 
                     //---- button2 ----
-                    button2.setText("text");
+                    button2.setMaximumSize(new Dimension(40, 40));
+                    button2.setMinimumSize(new Dimension(40, 40));
+                    button2.setIcon(new ImageIcon(getClass().getResource("/images/1.f.3.1.png")));
                     behaviourPanel.add(button2, "cell 0 1");
 
                     //---- button3 ----
-                    button3.setText("text");
+                    button3.setMinimumSize(new Dimension(40, 40));
+                    button3.setMaximumSize(new Dimension(40, 40));
+                    button3.setIcon(new ImageIcon(getClass().getResource("/images/1.n.3.1.png")));
                     behaviourPanel.add(button3, "cell 0 2");
 
                     //---- button4 ----
-                    button4.setText("text");
+                    button4.setIcon(new ImageIcon(getClass().getResource("/images/1.h.3.1.png")));
+                    button4.setMaximumSize(new Dimension(40, 40));
+                    button4.setMinimumSize(new Dimension(40, 40));
                     behaviourPanel.add(button4, "cell 0 3");
                 }
                 contentPanel.add(behaviourPanel, "cell 0 2");
@@ -112,14 +133,16 @@ public class SymbolSelector extends JWindow {
                 //======== backPanel ========
                 {
                     backPanel.setLayout(new MigLayout(
-                            "fill,hidemode 3,align center center",
-                            // columns
-                            "[fill]",
-                            // rows
-                            "[]"));
+                        "fill,hidemode 3,align center center",
+                        // columns
+                        "[fill]",
+                        // rows
+                        "[]"));
 
                     //---- button5 ----
                     button5.setText("<");
+                    button5.setMaximumSize(new Dimension(78, 100));
+                    button5.setMinimumSize(new Dimension(78, 100));
                     backPanel.add(button5, "cell 0 0");
                 }
                 contentPanel.add(backPanel, "cell 1 2");
@@ -127,15 +150,15 @@ public class SymbolSelector extends JWindow {
                 //======== symbolPanel ========
                 {
                     symbolPanel.setLayout(new MigLayout(
-                            "filly,hidemode 3,align center center",
-                            // columns
-                            "[fill]",
-                            // rows
-                            "[]" +
-                                    "[]" +
-                                    "[]" +
-                                    "[]" +
-                                    "[]"));
+                        "filly,hidemode 3,align center center",
+                        // columns
+                        "[fill]",
+                        // rows
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]"));
 
                     //---- button6 ----
                     button6.setText("text");
@@ -162,15 +185,15 @@ public class SymbolSelector extends JWindow {
                 //======== nextPanel ========
                 {
                     nextPanel.setLayout(new MigLayout(
-                            "filly,hidemode 3,align center center",
-                            // columns
-                            "[fill]",
-                            // rows
-                            "[]" +
-                                    "[]" +
-                                    "[]" +
-                                    "[]" +
-                                    "[]"));
+                        "filly,hidemode 3,align center center",
+                        // columns
+                        "[fill]",
+                        // rows
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]" +
+                        "[]"));
 
                     //---- button11 ----
                     button11.setText("text");
@@ -187,12 +210,12 @@ public class SymbolSelector extends JWindow {
             //======== buttonBar ========
             {
                 buttonBar.setLayout(new MigLayout(
-                        "insets dialog,alignx right",
-                        // columns
-                        "[button,fill]" +
-                                "[button,fill]",
-                        // rows
-                        null));
+                    "insets dialog,alignx right",
+                    // columns
+                    "[button,fill]" +
+                    "[button,fill]",
+                    // rows
+                    null));
 
                 //---- okButton ----
                 okButton.setText("OK");
@@ -206,7 +229,7 @@ public class SymbolSelector extends JWindow {
         }
         contentPane.add(dialogPane, BorderLayout.CENTER);
         pack();
-        setLocationRelativeTo(getOwner());
+        setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
