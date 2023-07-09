@@ -2,295 +2,248 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-/*
- * Created by JFormDesigner on Sun Jul 09 12:31:09 CEST 2023
- */
-
+import java.util.Random;
 
 /**
  * @author PingouInfini
  */
 public class SymbolSelector extends JDialog {
 
-    int FULL_COMPONENT_HEIGHT = 100;
+    // TODO: DEBUT : constantes de DEBUG/test, à supprimer
+    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private int NODE_NUMBER = 7;
+    // TODO: FIN
 
     /**
-     * Behavior
+     * Dimensions
      **/
-    int BEHAVIOR_JBUTTON_HEIGHT = 40;
-    int BEHAVIOR_JBUTTON_WIDTH = 40;
+    private int DEFAULT_SPACE = 5;
 
-    int JBUTTON_HEIGHT = 40;
+    // BEHAVIORS
+    private int BEHAVIOR_JBUTTON_HEIGHT = 40;
+    private int BEHAVIOR_JBUTTON_WIDTH = 40;
+    private int BEHAVIOR_PANEL_HEIGHT = 6 * (BEHAVIOR_JBUTTON_HEIGHT + DEFAULT_SPACE);
+    private int BEHAVIOR_PANEL_WIDTH = BEHAVIOR_JBUTTON_WIDTH + 10;
 
-//    dialogPane.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
-//            0, 0, 0, 0), "Symbole APP6", javax.swing.border.TitledBorder.CENTER, TitledBorder
-//            .TOP, new java.awt.Font("Dia\u006cog", java.awt.Font.BOLD, 12), Color.
-//            blue), dialogPane.getBorder()));
-//            dialogPane.addPropertyChangeListener(e -> {
-//        if ("border".equals(e.getPropertyName())) throw new RuntimeException();
-//    });
+    // SYMBOLS
+    private int SYMBOL_JBUTTON_HEIGHT = 40;
+    private int SYMBO_JBUTTON_WIDTH = 400; // TODO à adapter ?
+    private int SYMBO_PANEL_HEIGHT = NODE_NUMBER * SYMBOL_JBUTTON_HEIGHT + (NODE_NUMBER + 2) * DEFAULT_SPACE;
+    private int SYMBO_PANEL_WIDTH = SYMBO_JBUTTON_WIDTH + 7;
+
+    // BACK & NEXT
+    private int BACK_JBUTTON_HEIGHT = SYMBO_PANEL_HEIGHT - 3 * DEFAULT_SPACE;
+    private int BACK_JBUTTON_WIDTH = 40;
+    private int BACK_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
+    private int BACK_PANEL_WIDTH = BACK_JBUTTON_WIDTH + 10;
+    private int NEXT_JBUTTON_HEIGHT = SYMBOL_JBUTTON_HEIGHT;
+    private int NEXT_JBUTTON_WIDTH = BACK_JBUTTON_WIDTH;
+    private int NEXT_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
+    private int NEXT_PANEL_WIDTH = BACK_JBUTTON_WIDTH;
+
+
+    private int DIALOG_PANEL_HEIGHT = Math.max(SYMBO_PANEL_HEIGHT, BEHAVIOR_PANEL_HEIGHT) + 50;
+    private int DIALOG_PANEL_WIDTH = BEHAVIOR_PANEL_WIDTH + BACK_PANEL_WIDTH + SYMBO_PANEL_WIDTH + NEXT_PANEL_WIDTH
+            + 6 * DEFAULT_SPACE;
+
 
     public SymbolSelector() {
         initComponents();
     }
 
     private void initComponents() {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - unknown
-        dialogPane = new JPanel();
-        contentPanel = new JPanel();
-        behaviourPanel = new JPanel();
-        button1 = new JButton();
-        button2 = new JButton();
-        button3 = new JButton();
-        button4 = new JButton();
-        backPanel = new JPanel();
-        button5 = new JButton();
-        symbolPanel = new JPanel();
-        button6 = new JButton();
-        button7 = new JButton();
-        button8 = new JButton();
-        button9 = new JButton();
-        button10 = new JButton();
-        nextPanel = new JPanel();
-        button11 = new JButton();
-        button12 = new JButton();
-        buttonBar = new JPanel();
-        okButton = new JButton();
-        cancelButton = new JButton();
+        JPanel dialogPane = new JPanel();
+        JPanel contentPanel = new JPanel();
+        JPanel behaviourPanel = new JPanel();
+        JPanel backPanel = new JPanel();
+        JPanel symbolPanel = new JPanel();
+        JPanel nextPanel = new JPanel();
 
         //======== this ========
         setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
         setResizable(false);
-        setTitle("S\u00e9lection du symbol APP6");
+        setTitle("S\u00e9lection du symbole APP6");
         setType(Window.Type.POPUP);
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
         {
-            dialogPane.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border
-            . EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER, javax
-            . swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font .BOLD ,
-            12 ), java. awt. Color. red) ,dialogPane. getBorder( )) ); dialogPane. addPropertyChangeListener (new java. beans
-            . PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("borde\u0072" .equals (e .
-            getPropertyName () )) throw new RuntimeException( ); }} );
+            dialogPane.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.
+                    swing.border.EmptyBorder(0, 0, 0, 0), "", javax.swing.border
+                    .TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog"
+                    , java.awt.Font.BOLD, 12), java.awt.Color.red), dialogPane.getBorder
+                    ()));
+            dialogPane.addPropertyChangeListener(e -> {
+                if ("border".equals(e.getPropertyName())) throw new RuntimeException
+                        ();
+            });
             dialogPane.setLayout(new BorderLayout());
 
             //======== contentPanel ========
             {
                 contentPanel.setLayout(new MigLayout(
-                    "fill,insets dialog,hidemode 3,align center center",
-                    // columns
-                    "[40!,center]" +
-                    "[40!,fill]" +
-                    "[fill]" +
-                    "[40!,fill]",
-                    // rows
-                    "[]" +
-                    "[]"));
+                        "fill,insets dialog,hidemode 3,align center center",
+                        // columns
+                        "[40!,center]" +
+                                "[40!,fill]" +
+                                "[fill]" +
+                                "[40!,fill]",
+                        // rows
+                        "[]"));
 
                 //======== behaviourPanel ========
                 {
-                    behaviourPanel.setMinimumSize(new Dimension(40, 195));
-                    behaviourPanel.setMaximumSize(new Dimension(40, 2147483647));
+                    behaviourPanel.setPreferredSize(new Dimension(BEHAVIOR_PANEL_WIDTH, BEHAVIOR_PANEL_HEIGHT));
+                    behaviourPanel.setMinimumSize(new Dimension(BEHAVIOR_PANEL_WIDTH, BEHAVIOR_PANEL_HEIGHT));
+                    behaviourPanel.setMaximumSize(new Dimension(BEHAVIOR_PANEL_WIDTH, BEHAVIOR_PANEL_HEIGHT));
                     behaviourPanel.setLayout(new MigLayout(
-                        "fill,hidemode 3,align center center",
-                        // columns
-                        "[fill]",
-                        // rows
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]"));
+                            "hidemode 3,align center center,gapy " + DEFAULT_SPACE,
+                            // columns
+                            "[fill]",
+                            // rows
+                            "[]" +
+                                    "[]" +
+                                    "[]" +
+                                    "[]"));
 
-                    //---- button1 ----
-                    button1.setIcon(new ImageIcon(getClass().getResource("/images/behavior/1.u.3.1.png")));
-                    button1.setMaximumSize(new Dimension(40, 40));
-                    button1.setMinimumSize(new Dimension(40, 40));
-                    button1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    behaviourPanel.add(button1, "cell 0 0");
+                    char[] behaviors = {'u', 'f', 'n', 'h'};
+                    for (int i = 0; i < behaviors.length; i++) {
+                        JButton button = createBehaviorButton(behaviors[i]);
+                        behaviourPanel.add(button, "cell 0 " + i);
 
-                    //---- button2 ----
-                    button2.setMaximumSize(new Dimension(40, 40));
-                    button2.setMinimumSize(new Dimension(40, 40));
-                    button2.setIcon(new ImageIcon(getClass().getResource("/images/behavior/1.f.3.1.png")));
-                    button2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    behaviourPanel.add(button2, "cell 0 1");
-
-                    //---- button3 ----
-                    button3.setMinimumSize(new Dimension(40, 40));
-                    button3.setMaximumSize(new Dimension(40, 40));
-                    button3.setIcon(new ImageIcon(getClass().getResource("/images/behavior/1.n.3.1.png")));
-                    button3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    behaviourPanel.add(button3, "cell 0 2");
-
-                    //---- button4 ----
-                    button4.setIcon(new ImageIcon(getClass().getResource("/images/behavior/1.h.3.1.png")));
-                    button4.setMaximumSize(new Dimension(40, 40));
-                    button4.setMinimumSize(new Dimension(40, 40));
-                    button4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    behaviourPanel.add(button4, "cell 0 3");
+                    }
                 }
-                contentPanel.add(behaviourPanel, "cell 0 1");
+                contentPanel.add(behaviourPanel, "cell 0 0");
 
                 //======== backPanel ========
                 {
+                    backPanel.setPreferredSize(new Dimension(BACK_PANEL_WIDTH, BACK_PANEL_HEIGHT));
+                    backPanel.setMinimumSize(new Dimension(BACK_PANEL_WIDTH, BACK_PANEL_HEIGHT));
+                    backPanel.setMaximumSize(new Dimension(BACK_PANEL_WIDTH, BACK_PANEL_HEIGHT));
                     backPanel.setLayout(new MigLayout(
-                        "fill,hidemode 3,align center center",
-                        // columns
-                        "[fill]",
-                        // rows
-                        "[]"));
+                            "fill,hidemode 3,align center center,gapy " + DEFAULT_SPACE,
+                            // columns
+                            "[fill]",
+                            // rows
+                            "[]"));
 
-                    //---- button5 ----
-                    button5.setMaximumSize(new Dimension(40, 100));
-                    button5.setMinimumSize(new Dimension(40, 100));
-                    button5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    button5.setIcon(new ImageIcon(getClass().getResource("/images/navigation/left.png")));
-                    backPanel.add(button5, "cell 0 0");
+                    //---- button back ----
+                    JButton buttonBack = createButton("/images/navigation/left.png", null,
+                            BACK_JBUTTON_WIDTH, BACK_JBUTTON_HEIGHT);
+                    backPanel.add(buttonBack, "cell 0 0");
                 }
-                contentPanel.add(backPanel, "cell 1 1");
+                contentPanel.add(backPanel, "cell 1 0");
 
                 //======== symbolPanel ========
                 {
+                    symbolPanel.setPreferredSize(new Dimension(SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT));
+                    symbolPanel.setMinimumSize(new Dimension(SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT));
+                    symbolPanel.setMaximumSize(new Dimension(SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT));
                     symbolPanel.setLayout(new MigLayout(
-                        "filly,hidemode 3,align center center",
-                        // columns
-                        "[fill]",
-                        // rows
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]"));
+                            "fill,hidemode 3,align left center,gapy " + DEFAULT_SPACE,
+                            // columns
+                            "[fill]",
+                            // rows
+                            "[]"));
 
-                    //---- button6 ----
-                    button6.setText("e");
-                    button6.setPreferredSize(new Dimension(78, 40));
-                    button6.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    symbolPanel.add(button6, "cell 0 0");
-
-                    //---- button7 ----
-                    button7.setText("text");
-                    button7.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    symbolPanel.add(button7, "cell 0 1");
-
-                    //---- button8 ----
-                    button8.setText("text");
-                    button8.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    symbolPanel.add(button8, "cell 0 2");
-
-                    //---- button9 ----
-                    button9.setText("text");
-                    button9.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    symbolPanel.add(button9, "cell 0 3");
-
-                    //---- button10 ----
-                    button10.setText("text");
-                    button10.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    symbolPanel.add(button10, "cell 0 4");
+                    for (int i = 0; i < NODE_NUMBER; i++) {
+                        JButton button = createSymbolButton("getHierarchy()", generateRandomWord(i));
+                        symbolPanel.add(button, "cell 0 " + i);
+                    }
                 }
-                contentPanel.add(symbolPanel, "cell 2 1");
+                contentPanel.add(symbolPanel, "cell 2 0");
 
                 //======== nextPanel ========
                 {
+                    nextPanel.setPreferredSize(new Dimension(NEXT_PANEL_WIDTH, NEXT_PANEL_HEIGHT));
+                    nextPanel.setMinimumSize(new Dimension(NEXT_PANEL_WIDTH, NEXT_PANEL_HEIGHT));
+                    nextPanel.setMaximumSize(new Dimension(NEXT_PANEL_WIDTH, NEXT_PANEL_HEIGHT));
                     nextPanel.setLayout(new MigLayout(
-                        "filly,hidemode 3,align center center",
-                        // columns
-                        "[fill]",
-                        // rows
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]" +
-                        "[]"));
+                            "fill,hidemode 3,align center center,gapy " + DEFAULT_SPACE,
+                            // columns
+                            "[fill]",
+                            // rows
+                            "[]"));
 
-                    //---- button11 ----
-                    button11.setMaximumSize(new Dimension(40, 30));
-                    button11.setMinimumSize(new Dimension(40, 30));
-                    button11.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    button11.setIcon(new ImageIcon(getClass().getResource("/images/navigation/right.png")));
-                    nextPanel.add(button11, "cell 0 0");
+                    for (int i = 0; i < NODE_NUMBER; i++) {
+                        // TODO: 50% de chance d'avoir un bouton, à remplacer par test "if hasChild"
+                        JButton buttonBack;
+                        if (Math.random() < 0.5) {
+                            buttonBack = createButton("/images/navigation/right.png", null,
+                                    NEXT_JBUTTON_WIDTH, NEXT_JBUTTON_HEIGHT);
+                            nextPanel.add(buttonBack, "cell 0 " + i);
+                        } else {
+                            buttonBack = new JButton();
+                            buttonBack.setPreferredSize(new Dimension(NEXT_JBUTTON_WIDTH, NEXT_JBUTTON_HEIGHT));
+                            buttonBack.setOpaque(false);  // transparent
+                            buttonBack.setContentAreaFilled(false);
+                            buttonBack.setBorderPainted(false);
 
-                    //---- button12 ----
-                    button12.setMaximumSize(new Dimension(40, 30));
-                    button12.setMinimumSize(new Dimension(40, 30));
-                    button12.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-                    button12.setIcon(new ImageIcon(getClass().getResource("/images/navigation/right.png")));
-                    nextPanel.add(button12, "cell 0 3");
+                        }
+                        nextPanel.add(buttonBack, "cell 0 " + i);
+                    }
                 }
-                contentPanel.add(nextPanel, "cell 3 1");
+                contentPanel.add(nextPanel, "cell 3 0");
             }
             dialogPane.add(contentPanel, BorderLayout.CENTER);
-
-            //======== buttonBar ========
-            {
-                buttonBar.setLayout(new MigLayout(
-                    "insets dialog,alignx right",
-                    // columns
-                    "[button,fill]" +
-                    "[button,fill]",
-                    // rows
-                    null));
-
-                //---- okButton ----
-                okButton.setText("OK");
-                buttonBar.add(okButton, "cell 0 0");
-
-                //---- cancelButton ----
-                cancelButton.setText("Cancel");
-                buttonBar.add(cancelButton, "cell 1 0");
-            }
-            dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }
         contentPane.add(dialogPane, BorderLayout.CENTER);
-        setSize(400, 300);
+        setSize(DIALOG_PANEL_WIDTH, DIALOG_PANEL_HEIGHT);
         setLocationRelativeTo(null);
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
 
-    private JButton createNewBehaviorIcon(char behavior) {
-        JButton jButton = new JButton();
-        jButton.setIcon(new ImageIcon(getClass().getResource("/images/1." + behavior + ".3.1.png")));
-        button1.setMaximumSize(new Dimension(BEHAVIOR_JBUTTON_WIDTH, BEHAVIOR_JBUTTON_HEIGHT));
-        button1.setMinimumSize(new Dimension(BEHAVIOR_JBUTTON_WIDTH, BEHAVIOR_JBUTTON_HEIGHT));
+    private JButton createBehaviorButton(char behavior) {
+        String iconPath = "/images/behavior/1." + behavior + ".3.1.png";
+        return createButton(iconPath, null, BEHAVIOR_JBUTTON_WIDTH, BEHAVIOR_JBUTTON_HEIGHT);
+    }
+
+    private JButton createSymbolButton(String hierachy, String description) {
+        String iconPath = "/images/behavior/1." + "f" + ".3.1.png";
+        // TODO: JButton jButton = createButton(hierachy, description, SYMBO_JBUTTON_WIDTH, SYMBOL_JBUTTON_HEIGHT);
+        // TODO et virer le iconPath
+        JButton jButton = createButton(iconPath, description, SYMBO_JBUTTON_WIDTH, SYMBOL_JBUTTON_HEIGHT);
+        jButton.setHorizontalAlignment(SwingConstants.LEFT);
         return jButton;
     }
 
-    // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
-    // Generated using JFormDesigner Evaluation license - unknown
-    private JPanel dialogPane;
-    private JPanel contentPanel;
-    private JPanel behaviourPanel;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JButton button4;
-    private JPanel backPanel;
-    private JButton button5;
-    private JPanel symbolPanel;
-    private JButton button6;
-    private JButton button7;
-    private JButton button8;
-    private JButton button9;
-    private JButton button10;
-    private JPanel nextPanel;
-    private JButton button11;
-    private JButton button12;
-    private JPanel buttonBar;
-    private JButton okButton;
-    private JButton cancelButton;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
+    private JButton createButton(String iconPath, String text, int width, int height) {
+        JButton jButton = new JButton();
+        if (iconPath != null)
+            jButton.setIcon(new ImageIcon(getClass().getResource(iconPath)));
+        if (text != null && !text.isEmpty())
+            jButton.setText(text);
+        jButton.setPreferredSize(new Dimension(width, height));
+        jButton.setMaximumSize(new Dimension(width, height));
+        jButton.setMinimumSize(new Dimension(width, height));
+        jButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        jButton.setHorizontalAlignment(SwingConstants.CENTER);
+        return jButton;
+    }
 
+    // TODO: DEBUT methode de DEBUG/test, à supprimer
+    private static String generateRandomWord(int i) {
+        Random random = new Random();
+        StringBuilder word = new StringBuilder();
+        word.append(i + 1).append("-");
+        int maxLength = random.nextInt(84) + 8;
+
+        while (word.length() < maxLength) {
+            int index = random.nextInt(CHARACTERS.length());
+            char randomChar = CHARACTERS.charAt(index);
+            word.append(randomChar);
+        }
+
+        return word.toString();
+    }
+    // TODO: FIN
+
+    // TODO: DEBUT MAIN de DEBUG/test, à supprimer
     public static void main(String args[]) {
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SymbolSelector().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new SymbolSelector().setVisible(true));
     }
+    // TODO: FIN
 }
