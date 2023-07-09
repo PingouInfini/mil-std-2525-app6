@@ -1,7 +1,6 @@
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 /*
  * Created by JFormDesigner on Sun Jul 09 12:31:09 CEST 2023
@@ -9,11 +8,19 @@ import java.awt.*;
 
 
 /**
- * @author unknown
+ * @author PingouInfini
  */
-public class SymbolSelector extends JWindow {
+public class SymbolSelector extends JDialog {
 
-    int COMPONENT_HEIGHT = 100;
+    int FULL_COMPONENT_HEIGHT = 100;
+
+    /**
+     * Behavior
+     **/
+    int BEHAVIOR_JBUTTON_HEIGHT = 40;
+    int BEHAVIOR_JBUTTON_WIDTH = 40;
+
+    int JBUTTON_HEIGHT = 40;
 
 //    dialogPane.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
 //            0, 0, 0, 0), "Symbole APP6", javax.swing.border.TitledBorder.CENTER, TitledBorder
@@ -32,7 +39,6 @@ public class SymbolSelector extends JWindow {
         // Generated using JFormDesigner Evaluation license - unknown
         dialogPane = new JPanel();
         contentPanel = new JPanel();
-        titleField = new JTextField();
         behaviourPanel = new JPanel();
         button1 = new JButton();
         button2 = new JButton();
@@ -55,18 +61,22 @@ public class SymbolSelector extends JWindow {
 
         //======== this ========
         setAlwaysOnTop(true);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        setModal(true);
+        setResizable(false);
+        setTitle("S\u00e9lection du symbol APP6");
+        setType(Window.Type.POPUP);
         var contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         //======== dialogPane ========
         {
-            dialogPane.setBorder ( new javax . swing. border .CompoundBorder ( new javax . swing. border .TitledBorder ( new javax
-            . swing. border .EmptyBorder ( 0, 0 ,0 , 0) ,  "JF\u006frmDes\u0069gner \u0045valua\u0074ion" , javax. swing
-            .border . TitledBorder. CENTER ,javax . swing. border .TitledBorder . BOTTOM, new java. awt .
-            Font ( "D\u0069alog", java .awt . Font. BOLD ,12 ) ,java . awt. Color .red
-            ) ,dialogPane. getBorder () ) ); dialogPane. addPropertyChangeListener( new java. beans .PropertyChangeListener ( ){ @Override
-            public void propertyChange (java . beans. PropertyChangeEvent e) { if( "\u0062order" .equals ( e. getPropertyName (
-            ) ) )throw new RuntimeException( ) ;} } );
+            dialogPane.setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border
+            . EmptyBorder( 0, 0, 0, 0) , "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax. swing. border. TitledBorder. CENTER, javax
+            . swing. border. TitledBorder. BOTTOM, new java .awt .Font ("Dialo\u0067" ,java .awt .Font .BOLD ,
+            12 ), java. awt. Color. red) ,dialogPane. getBorder( )) ); dialogPane. addPropertyChangeListener (new java. beans
+            . PropertyChangeListener( ){ @Override public void propertyChange (java .beans .PropertyChangeEvent e) {if ("borde\u0072" .equals (e .
+            getPropertyName () )) throw new RuntimeException( ); }} );
             dialogPane.setLayout(new BorderLayout());
 
             //======== contentPanel ========
@@ -74,21 +84,13 @@ public class SymbolSelector extends JWindow {
                 contentPanel.setLayout(new MigLayout(
                     "fill,insets dialog,hidemode 3,align center center",
                     // columns
+                    "[40!,center]" +
+                    "[40!,fill]" +
                     "[fill]" +
-                    "[fill]" +
-                    "[fill]" +
-                    "[fill]",
+                    "[40!,fill]",
                     // rows
                     "[]" +
-                    "[]" +
                     "[]"));
-
-                //---- titleField ----
-                titleField.setText("Selection du symbole");
-                titleField.setHorizontalAlignment(SwingConstants.LEFT);
-                titleField.setEditable(false);
-                titleField.setBorder(null);
-                contentPanel.add(titleField, "cell 0 0");
 
                 //======== behaviourPanel ========
                 {
@@ -105,30 +107,34 @@ public class SymbolSelector extends JWindow {
                         "[]"));
 
                     //---- button1 ----
-                    button1.setIcon(new ImageIcon(getClass().getResource("/images/1.u.3.1.png")));
+                    button1.setIcon(new ImageIcon(getClass().getResource("/images/behavior/1.u.3.1.png")));
                     button1.setMaximumSize(new Dimension(40, 40));
                     button1.setMinimumSize(new Dimension(40, 40));
+                    button1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     behaviourPanel.add(button1, "cell 0 0");
 
                     //---- button2 ----
                     button2.setMaximumSize(new Dimension(40, 40));
                     button2.setMinimumSize(new Dimension(40, 40));
-                    button2.setIcon(new ImageIcon(getClass().getResource("/images/1.f.3.1.png")));
+                    button2.setIcon(new ImageIcon(getClass().getResource("/images/behavior/1.f.3.1.png")));
+                    button2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     behaviourPanel.add(button2, "cell 0 1");
 
                     //---- button3 ----
                     button3.setMinimumSize(new Dimension(40, 40));
                     button3.setMaximumSize(new Dimension(40, 40));
-                    button3.setIcon(new ImageIcon(getClass().getResource("/images/1.n.3.1.png")));
+                    button3.setIcon(new ImageIcon(getClass().getResource("/images/behavior/1.n.3.1.png")));
+                    button3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     behaviourPanel.add(button3, "cell 0 2");
 
                     //---- button4 ----
-                    button4.setIcon(new ImageIcon(getClass().getResource("/images/1.h.3.1.png")));
+                    button4.setIcon(new ImageIcon(getClass().getResource("/images/behavior/1.h.3.1.png")));
                     button4.setMaximumSize(new Dimension(40, 40));
                     button4.setMinimumSize(new Dimension(40, 40));
+                    button4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     behaviourPanel.add(button4, "cell 0 3");
                 }
-                contentPanel.add(behaviourPanel, "cell 0 2");
+                contentPanel.add(behaviourPanel, "cell 0 1");
 
                 //======== backPanel ========
                 {
@@ -140,12 +146,13 @@ public class SymbolSelector extends JWindow {
                         "[]"));
 
                     //---- button5 ----
-                    button5.setText("<");
-                    button5.setMaximumSize(new Dimension(78, 100));
-                    button5.setMinimumSize(new Dimension(78, 100));
+                    button5.setMaximumSize(new Dimension(40, 100));
+                    button5.setMinimumSize(new Dimension(40, 100));
+                    button5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    button5.setIcon(new ImageIcon(getClass().getResource("/images/navigation/left.png")));
                     backPanel.add(button5, "cell 0 0");
                 }
-                contentPanel.add(backPanel, "cell 1 2");
+                contentPanel.add(backPanel, "cell 1 1");
 
                 //======== symbolPanel ========
                 {
@@ -161,26 +168,32 @@ public class SymbolSelector extends JWindow {
                         "[]"));
 
                     //---- button6 ----
-                    button6.setText("text");
+                    button6.setText("e");
+                    button6.setPreferredSize(new Dimension(78, 40));
+                    button6.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     symbolPanel.add(button6, "cell 0 0");
 
                     //---- button7 ----
                     button7.setText("text");
+                    button7.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     symbolPanel.add(button7, "cell 0 1");
 
                     //---- button8 ----
                     button8.setText("text");
+                    button8.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     symbolPanel.add(button8, "cell 0 2");
 
                     //---- button9 ----
                     button9.setText("text");
+                    button9.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     symbolPanel.add(button9, "cell 0 3");
 
                     //---- button10 ----
                     button10.setText("text");
+                    button10.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                     symbolPanel.add(button10, "cell 0 4");
                 }
-                contentPanel.add(symbolPanel, "cell 2 2");
+                contentPanel.add(symbolPanel, "cell 2 1");
 
                 //======== nextPanel ========
                 {
@@ -196,14 +209,20 @@ public class SymbolSelector extends JWindow {
                         "[]"));
 
                     //---- button11 ----
-                    button11.setText("text");
+                    button11.setMaximumSize(new Dimension(40, 30));
+                    button11.setMinimumSize(new Dimension(40, 30));
+                    button11.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    button11.setIcon(new ImageIcon(getClass().getResource("/images/navigation/right.png")));
                     nextPanel.add(button11, "cell 0 0");
 
                     //---- button12 ----
-                    button12.setText("text");
+                    button12.setMaximumSize(new Dimension(40, 30));
+                    button12.setMinimumSize(new Dimension(40, 30));
+                    button12.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    button12.setIcon(new ImageIcon(getClass().getResource("/images/navigation/right.png")));
                     nextPanel.add(button12, "cell 0 3");
                 }
-                contentPanel.add(nextPanel, "cell 3 2");
+                contentPanel.add(nextPanel, "cell 3 1");
             }
             dialogPane.add(contentPanel, BorderLayout.CENTER);
 
@@ -228,16 +247,23 @@ public class SymbolSelector extends JWindow {
             dialogPane.add(buttonBar, BorderLayout.SOUTH);
         }
         contentPane.add(dialogPane, BorderLayout.CENTER);
-        pack();
+        setSize(400, 300);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+    }
+
+    private JButton createNewBehaviorIcon(char behavior) {
+        JButton jButton = new JButton();
+        jButton.setIcon(new ImageIcon(getClass().getResource("/images/1." + behavior + ".3.1.png")));
+        button1.setMaximumSize(new Dimension(BEHAVIOR_JBUTTON_WIDTH, BEHAVIOR_JBUTTON_HEIGHT));
+        button1.setMinimumSize(new Dimension(BEHAVIOR_JBUTTON_WIDTH, BEHAVIOR_JBUTTON_HEIGHT));
+        return jButton;
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown
     private JPanel dialogPane;
     private JPanel contentPanel;
-    private JTextField titleField;
     private JPanel behaviourPanel;
     private JButton button1;
     private JButton button2;
