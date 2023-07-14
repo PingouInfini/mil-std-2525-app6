@@ -1,5 +1,6 @@
 import csv
 import os
+import shutil
 
 from app6.data_generation.data_generation import generate_data_from_milsymbol_app6b
 from app6.utils.file_manager import copy_and_rename_file, clear_files_in_directory
@@ -14,6 +15,10 @@ def main():
     manage_svg_files()
     # Creating png images from svg files
     create_png_equivalents("APP6-icons/svg", "APP6-icons/png")
+
+    clear_files_in_directory(os.path.join("symbol-selector", "src", "images", "icons"), [".png", ".svg"])
+    put_all_png_in_directory(os.path.join("APP6-icons", "png"),
+                             os.path.join("symbol-selector", "src", "images", "icons"))
 
 
 def manage_svg_files():
@@ -74,6 +79,18 @@ def replace_last_character_found(string, character):
         return modified_string
     else:
         return string
+
+
+def put_all_png_in_directory(path_in, path_out):
+    for root, dirs, files in os.walk(path_in):
+        for file in files:
+            if file.endswith(".png") and file[0].isdigit():
+                original_path = os.path.join(root, file)
+                new_directory_name = os.path.basename(root)
+                new_file_name = file.replace("x", new_directory_name[0].lower())
+                new_path = os.path.join(path_out, new_file_name)
+
+                shutil.copyfile(original_path, new_path)
 
 
 # Call the main method
