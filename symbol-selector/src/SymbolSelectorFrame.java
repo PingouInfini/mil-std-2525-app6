@@ -17,20 +17,20 @@ public class SymbolSelectorFrame extends JDialog  {
     private int DEFAULT_SPACE = 5;
 
     // BEHAVIOURS
-    private int BEHAVIOUR_JBUTTON_HEIGHT = 40;
-    private int BEHAVIOUR_JBUTTON_WIDTH = 40;
+    private int BEHAVIOUR_JBUTTON_HEIGHT = 50;
+    private int BEHAVIOUR_JBUTTON_WIDTH = BEHAVIOUR_JBUTTON_HEIGHT;
     private int BEHAVIOUR_PANEL_HEIGHT = 6 * (BEHAVIOUR_JBUTTON_HEIGHT + DEFAULT_SPACE);
     private int BEHAVIOUR_PANEL_WIDTH = BEHAVIOUR_JBUTTON_WIDTH + 10;
 
     // SYMBOLS
-    private int SYMBOL_JBUTTON_HEIGHT = 40;
+    private int SYMBOL_JBUTTON_HEIGHT = BEHAVIOUR_JBUTTON_HEIGHT;
     private int SYMBO_JBUTTON_WIDTH = 400;
     private int SYMBO_PANEL_HEIGHT = NODE_NUMBER * SYMBOL_JBUTTON_HEIGHT + (NODE_NUMBER + 2) * DEFAULT_SPACE;
     private int SYMBO_PANEL_WIDTH = SYMBO_JBUTTON_WIDTH + 7;
 
     // BACK & NEXT
     private int BACK_JBUTTON_HEIGHT = SYMBO_PANEL_HEIGHT - 3 * DEFAULT_SPACE;
-    private int BACK_JBUTTON_WIDTH = 40;
+    private int BACK_JBUTTON_WIDTH = BEHAVIOUR_JBUTTON_WIDTH;
     private int BACK_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
     private int BACK_PANEL_WIDTH = BACK_JBUTTON_WIDTH + 10;
     private int NEXT_JBUTTON_HEIGHT = SYMBOL_JBUTTON_HEIGHT;
@@ -106,10 +106,10 @@ public class SymbolSelectorFrame extends JDialog  {
             contentPanel.setLayout(new MigLayout(
                     "fill,insets dialog,hidemode 3,align center center",
                     // columns
-                    "[40!,center]" +
-                            "[40!,fill]" +
+                    "["+(BEHAVIOUR_PANEL_WIDTH)+"!,center]" +
+                            "["+(BACK_PANEL_WIDTH-DEFAULT_SPACE)+"!,fill]" +
                             "[fill]" +
-                            "[40!,fill]",
+                            "["+(NEXT_PANEL_WIDTH+DEFAULT_SPACE)+"!,fill]",
                     // rows
                     "[]"));
 
@@ -183,7 +183,7 @@ public class SymbolSelectorFrame extends JDialog  {
 
                 for (int i = 0; i < NODE_NUMBER; i++) {
                     String hierarchy = node.getChildren().get(i).getHierarchy();
-                    String name = node.getChildren().get(i).getHierarchy()+" - "+node.getChildren().get(i).getName();
+                    String name = node.getChildren().get(i).getName();
                     JButton button = createSymbolButton(hierarchy, name);
                     button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD, button.getFont().getSize() - 3f));
 
@@ -254,7 +254,10 @@ public class SymbolSelectorFrame extends JDialog  {
         JButton jButton = new JButton();
         if (iconPath != null)
             try {
-                jButton.setIcon(new ImageIcon(getClass().getResource(iconPath)));
+                Image image =  new ImageIcon(getClass().getResource(iconPath)).getImage();
+                ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(BEHAVIOUR_JBUTTON_WIDTH -10,
+                        BEHAVIOUR_JBUTTON_HEIGHT-10, Image.SCALE_SMOOTH));
+                jButton.setIcon(imageIcon);
             } catch (Exception e) {
                 jButton.setIcon(new ImageIcon(getClass().getResource("/images/navigation/notfound.png")));
             }
