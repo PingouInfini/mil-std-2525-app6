@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 /**
  * @author PingouInfini
  */
-public class SymbolSelectorFrame extends JDialog  {
+public class SymbolSelectorFrame extends JDialog {
 
     private JPanel dialogPane = new JPanel();
 
@@ -36,14 +36,15 @@ public class SymbolSelectorFrame extends JDialog  {
     private int NEXT_JBUTTON_HEIGHT = SYMBOL_JBUTTON_HEIGHT;
     private int NEXT_JBUTTON_WIDTH = BACK_JBUTTON_WIDTH;
     private int NEXT_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
-    private int NEXT_PANEL_WIDTH = BACK_JBUTTON_WIDTH;
+    private int NEXT_PANEL_WIDTH = BACK_JBUTTON_WIDTH + 10;
 
 
-    private int DIALOG_PANEL_HEIGHT = Math.max(SYMBO_PANEL_HEIGHT, BEHAVIOUR_PANEL_HEIGHT) + 50;
+    private int DIALOG_PANEL_HEIGHT = Math.max(SYMBO_PANEL_HEIGHT, BEHAVIOUR_PANEL_HEIGHT) + 75;
     private int DIALOG_PANEL_WIDTH = BEHAVIOUR_PANEL_WIDTH + BACK_PANEL_WIDTH + SYMBO_PANEL_WIDTH + NEXT_PANEL_WIDTH
-            + 6 * DEFAULT_SPACE;
+            + 6 * DEFAULT_SPACE + 20;
 
     private String BEHAVIOUR = "h";
+    private String LANGUAGE = "EN";
 
 
     public SymbolSelectorFrame(Node node) {
@@ -65,7 +66,7 @@ public class SymbolSelectorFrame extends JDialog  {
         NEXT_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
 
 
-        DIALOG_PANEL_HEIGHT = Math.max(SYMBO_PANEL_HEIGHT, BEHAVIOUR_PANEL_HEIGHT) + 50;
+        DIALOG_PANEL_HEIGHT = Math.max(SYMBO_PANEL_HEIGHT, BEHAVIOUR_PANEL_HEIGHT) + 75;
     }
 
 
@@ -92,6 +93,7 @@ public class SymbolSelectorFrame extends JDialog  {
 
     private void initComponents(Node node) {
         JPanel contentPanel = new JPanel();
+        JPanel languagePanel = new JPanel();
         JPanel behaviourPanel = new JPanel();
         JPanel backPanel = new JPanel();
         JPanel symbolPanel = new JPanel();
@@ -106,12 +108,47 @@ public class SymbolSelectorFrame extends JDialog  {
             contentPanel.setLayout(new MigLayout(
                     "fill,insets dialog,hidemode 3,align center center",
                     // columns
-                    "["+(BEHAVIOUR_PANEL_WIDTH)+"!,center]" +
-                            "["+(BACK_PANEL_WIDTH-DEFAULT_SPACE)+"!,fill]" +
+                    "[10!]" +
+                            "[" + (BEHAVIOUR_PANEL_WIDTH) + "!,center]" +
+                            "[" + (BACK_PANEL_WIDTH - DEFAULT_SPACE) + "!,fill]" +
                             "[fill]" +
-                            "["+(NEXT_PANEL_WIDTH+DEFAULT_SPACE)+"!,fill]",
+                            "[" + (NEXT_PANEL_WIDTH + DEFAULT_SPACE) + "!,fill]" +
+                            "[10!]",
                     // rows
-                    "[]"));
+                    "[]" +
+                            "[]"));
+
+
+            //======== languagePanel ========
+            {
+                languagePanel.setPreferredSize(new Dimension(NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4));
+                languagePanel.setMinimumSize(new Dimension(NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4));
+                languagePanel.setMaximumSize(new Dimension(NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4));
+                languagePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+                //---- textAreaEN ----
+                languagePanel.add(createDisabledJTextArea("EN"));
+
+                //---- ToggleSwitch ----
+                ToggleSwitch ts = new ToggleSwitch();
+                ts.setPreferredSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
+                ts.setMinimumSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
+                ts.setMaximumSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
+                ts.setActivated(!LANGUAGE.equals("EN"));
+                ts.addPropertyChangeListener(evt -> {
+                    if (evt.getPropertyName().equals("activated")) {
+                        boolean activated = (boolean) evt.getNewValue();
+                        LANGUAGE = activated ? "FR" : "EN";
+                        redraw(node);
+                    }
+                });
+
+                languagePanel.add(ts);
+
+                //---- textAreaFR ----
+                languagePanel.add(createDisabledJTextArea("FR"));
+            }
+            contentPanel.add(languagePanel, "cell 3 0 2 1,alignx trailing center,grow 0 0");
 
             //======== behaviourPanel ========
             {
@@ -133,18 +170,13 @@ public class SymbolSelectorFrame extends JDialog  {
                     JButton button = createBehaviourButton(behaviours[i]);
                     button.putClientProperty("behaviour", behaviours[i]);
                     button.addActionListener(e -> {
-                        this.BEHAVIOUR = String.valueOf( ((JButton) e.getSource()).getClientProperty("behaviour"));
-                        JPanel dialogPane = getDialogPane();
-                        dialogPane.removeAll();
-                        adaptSize(node.getChildren().size());
-                        initComponents(node);
-                        validate();
+                        this.BEHAVIOUR = String.valueOf(((JButton) e.getSource()).getClientProperty("behaviour"));
+                        redraw(node);
                     });
                     behaviourPanel.add(button, "cell 0 " + i);
-
                 }
             }
-            contentPanel.add(behaviourPanel, "cell 0 0");
+            contentPanel.add(behaviourPanel, "cell 1 1");
 
             //======== backPanel ========
             {
@@ -167,7 +199,7 @@ public class SymbolSelectorFrame extends JDialog  {
                     backPanel.add(buttonBack, "cell 0 0");
                 }
             }
-            contentPanel.add(backPanel, "cell 1 0");
+            contentPanel.add(backPanel, "cell 2 1");
 
             //======== symbolPanel ========
             {
@@ -183,7 +215,16 @@ public class SymbolSelectorFrame extends JDialog  {
 
                 for (int i = 0; i < NODE_NUMBER; i++) {
                     String hierarchy = node.getChildren().get(i).getHierarchy();
-                    String name = node.getChildren().get(i).getName();
+                    String name = "";
+                    switch (LANGUAGE) {
+                        case "EN":
+                            name = node.getChildren().get(i).getName();
+                            break;
+                        case "FR":
+                            name = node.getChildren().get(i).getNameFR();
+                            break;
+                    }
+
                     JButton button = createSymbolButton(hierarchy, name);
                     button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD, button.getFont().getSize() - 3f));
 
@@ -198,7 +239,7 @@ public class SymbolSelectorFrame extends JDialog  {
                     symbolPanel.add(button, "cell 0 " + i);
                 }
             }
-            contentPanel.add(symbolPanel, "cell 2 0");
+            contentPanel.add(symbolPanel, "cell 3 1");
 
             //======== nextPanel ========
             {
@@ -229,13 +270,22 @@ public class SymbolSelectorFrame extends JDialog  {
                     nextPanel.add(buttonNext, "cell 0 " + i);
                 }
             }
-            contentPanel.add(nextPanel, "cell 3 0");
+            contentPanel.add(nextPanel, "cell 4 1");
         }
         dialogPane.add(contentPanel, BorderLayout.CENTER);
 
         contentPane.add(dialogPane, BorderLayout.CENTER);
         setSize(DIALOG_PANEL_WIDTH, DIALOG_PANEL_HEIGHT);
         setLocationRelativeTo(null);
+    }
+
+    private JTextArea createDisabledJTextArea(String text) {
+        JTextArea textArea = new JTextArea();
+        textArea.setText(text);
+        textArea.setEnabled(false);
+        textArea.setBackground(null);
+        textArea.setFont(new Font("Arial Black", Font.BOLD, 8));
+        return textArea;
     }
 
     private JButton createBehaviourButton(char behaviour) {
@@ -254,9 +304,9 @@ public class SymbolSelectorFrame extends JDialog  {
         JButton jButton = new JButton();
         if (iconPath != null)
             try {
-                Image image =  new ImageIcon(getClass().getResource(iconPath)).getImage();
-                ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(BEHAVIOUR_JBUTTON_WIDTH -10,
-                        BEHAVIOUR_JBUTTON_HEIGHT-10, Image.SCALE_SMOOTH));
+                Image image = new ImageIcon(getClass().getResource(iconPath)).getImage();
+                ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(BEHAVIOUR_JBUTTON_WIDTH - 10,
+                        BEHAVIOUR_JBUTTON_HEIGHT - 10, Image.SCALE_SMOOTH));
                 jButton.setIcon(imageIcon);
             } catch (Exception e) {
                 jButton.setIcon(new ImageIcon(getClass().getResource("/images/navigation/notfound.png")));
@@ -271,16 +321,18 @@ public class SymbolSelectorFrame extends JDialog  {
         return jButton;
     }
 
-    private void addListenerNavigation(final JButton jbouton, final Node node)
-    {
+    private void addListenerNavigation(final JButton jbouton, final Node node) {
         jbouton.addActionListener(e -> {
-            JPanel dialogPane = getDialogPane();
-            dialogPane.removeAll();
-
-            adaptSize(node.getChildren().size());
-            initComponents(node);
-            validate();
+            redraw(node);
         });
+    }
+
+    private void redraw(Node node) {
+        JPanel dialogPane = getDialogPane();
+        dialogPane.removeAll();
+        adaptSize(node.getChildren().size());
+        initComponents(node);
+        validate();
     }
 
     private JPanel getDialogPane() {

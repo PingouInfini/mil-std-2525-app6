@@ -19,7 +19,8 @@ public class App6Parser {
                         currentHierarchy.contains(".") ? currentHierarchy.substring(0, currentHierarchy.lastIndexOf(".")) : currentHierarchy;
                     String currentSymbolCode = columns[1].trim();
                     String currentName = columns[3].trim();
-                    Node currentNode = new Node(currentHierarchy, currentSymbolCode, currentName, currentName);
+                    String currentNameFR = columns[4].trim();
+                    Node currentNode = new Node(currentHierarchy, currentSymbolCode, currentName, currentNameFR);
 
                     // Le parent n'est pas trouvé, on rajoute le node au primaryNode
                     if (primaryNode.findNodeByHierarchy(parentHierarchy) == null) {
