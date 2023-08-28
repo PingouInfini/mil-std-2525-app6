@@ -2,8 +2,13 @@ import csv
 import os
 import re
 
-rawdata_html_filename = "rawdata/Milsymbol APP6-B.html"
+from app6.utils.translater import translate_to_french
+
+rawdata_html_filename = "rawdata/Milsymbol 2525C.html"
 csv_data_output_name = ''
+
+map_attributes_by_lvl = {}
+hierarchy_prefix = ""
 
 
 # Read Milsymbol APP6-B.html and generate csv with hierarchy', 'SIDC', 'Name', 'icon-png', 'icon-svg'
@@ -13,6 +18,39 @@ def generate_data_from_milsymbol_app6b(mapping_file):
 
     generate_icon_files_mapping()
     generate_tree_structure(csv_data_output_name)
+
+
+def compute_hierarchy_from_fullpath(fullpath):
+    global map_attributes_by_lvl
+    global hierarchy_prefix
+
+    # dirty...but hey...
+    if fullpath == "SPACE TRACK":
+        hierarchy_prefix = "1.X."
+    if fullpath == "TACTICAL GRAPHICS":
+        hierarchy_prefix = "2.X."
+
+    hierarchy = hierarchy_prefix
+    pieces = fullpath.split('|')
+    cpt = 0
+
+    for piece in pieces:
+        cpt += 1
+        if cpt not in map_attributes_by_lvl:
+            map_attributes_by_lvl[cpt] = set()
+
+        if piece in map_attributes_by_lvl[cpt]:
+            hierarchy += str(len(map_attributes_by_lvl[cpt])) + "."
+        else:
+            keys_to_remove = [key for key in map_attributes_by_lvl.keys() if key > cpt]
+            for key in keys_to_remove:
+                del map_attributes_by_lvl[key]
+
+            hierarchy += str(len(map_attributes_by_lvl[cpt]) + 1) + "."
+            map_attributes_by_lvl[cpt].add(piece)
+
+    hierarchy = hierarchy[:-1] if hierarchy.endswith(".") else hierarchy
+    return hierarchy
 
 
 def generate_icon_files_mapping():
@@ -29,20 +67,26 @@ def generate_icon_files_mapping():
                 file_begin = False
 
             if not file_begin:
-                pattern = r'(\d.X.[\d\.]+)[ ]?(?:.)+?<br>(.+?)<em>SIDC:<\/em>[ ]?(.+?)<\/td>(?:.)+?(<svg(?:.)+?<\/svg>)'
+                pattern = r'(?:.)+?<br>(.+?)<em>SIDC:<\/em>[ ]?(.+?)<\/td>(?:.)+?(<svg(?:.)+?<\/svg>)'
                 matches = re.findall(pattern, line)
 
                 if matches:
                     for match in matches:
-                        hierarchy = match[0].replace("'", "")
-                        fullpath = get_clear_name(match[1])
-                        name = re.search(r"(?<=\|)([^|]+)$", fullpath).group(1) \
+                        fullpath = get_clear_name(match[0])
+                        hierarchy = compute_hierarchy_from_fullpath(fullpath)
+                        name = re.search(r"(?<=\|)([^|]+)$", fullpath).group(0) \
                             if re.search(r"(?<=\|)([^|]+)$", fullpath) else fullpath
-                        sidc = match[2].strip().replace("'", "") if match[2] else None
-                        has_svg = bool(match[3])
+                        name = get_clear_name(name)
+                        nameFR = translate_to_french(name)
+                        sidc = match[1].strip().replace("'", "") if match[1] else None
+                        has_svg = bool(match[2])
+
+                        if fullpath == "TASKS":
+                            return
 
                         if has_svg:
-                            add_csv_row([hierarchy, sidc, fullpath, name, hierarchy + '.png', hierarchy + '.svg'])
+                            add_csv_row(
+                                [hierarchy, sidc, fullpath, name, nameFR, hierarchy + '.png', hierarchy + '.svg'])
 
 
 def generate_tree_structure(csv_file):
@@ -77,7 +121,7 @@ def build_tree_string(tree, previous_key='', indent='', is_name=False):
             tree_string += f"\t-\t{key}\t-\t[{previous_key[1:]}]\n"
             is_name = True
         if value:
-            tree_string += build_tree_string(value, previous_key+'.'+key, indent + "│   ", is_name)
+            tree_string += build_tree_string(value, previous_key + '.' + key, indent + "│   ", is_name)
 
     last_index = tree_string.rfind("├")
     if last_index != -1:
@@ -101,7 +145,7 @@ def save_tree_to_file(tree_string, file_path):
 
 def init_csv_mapping():
     # Add the CSV file header
-    header = ['hierarchy', 'SIDC', 'fullpath', 'name', 'icon-png', 'icon-svg']
+    header = ['hierarchy', 'SIDC', 'fullpath', 'name', 'nameFR', 'icon-png', 'icon-svg']
     add_csv_row(header, False)
 
 
@@ -130,4 +174,12 @@ def get_clear_name(input_string):
     modified_string = re.sub(r"(<br>(?![^<]*$))", '|', input_string)
     # Remove all html tags
     clean_string = re.sub('<.*?>', '', modified_string)
+    clean_string = clean_string.replace("&amp;", "&")
+
+    if clean_string.startswith("GROUND TRACK EQUIPMENT|") or clean_string == "GROUND TRACK EQUIPMENT":
+        clean_string = clean_string.replace("GROUND TRACK EQUIPMENT", "GROUND TRACK|EQUIPMENT", 1)
+
+    if clean_string.startswith("INSTALLATION|") or clean_string == "INSTALLATION":
+        clean_string = clean_string.replace("INSTALLATION", "GROUND TRACK|INSTALLATION", 1)
+
     return clean_string
