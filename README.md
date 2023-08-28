@@ -5,7 +5,7 @@
 **[EN] APP6 symbols are available in the directory `APP6-icons`.**  
 **[FR] Les symboles APP6 sont disponibles dans le répertoire `APP6-icons`.**
 
-L'objectif est de récupérer l'ensemble des codes APP6B issus de [milsymbol-APP6b](https://www.spatialillusions.com/milsymbol/docs/milsymbol-APP6b.html) et des svg présents dans `rawdata/symbols``et de construire un répertoire d'images APP6b
+L'objectif est de récupérer l'ensemble des codes APP6B issus de [milsymbol-APP6c](https://www.spatialillusions.com/milsymbol/docs/milsymbol-2525c.html) et des svg présents dans `rawdata/symbols``et de construire un répertoire d'images APP6c
 
 Ces icones seront stockées dans des répertoires selon leur format : `svg` ou `png`  
 Un fichier de mapping permet de raccrocher chaque hiérarchie, code symbole (SIDC) à chaque fichier APP6.  
@@ -16,10 +16,10 @@ Un fichier d'arborescence des codes est également présent dans `APP6-icons`
 
 ## Récupération des images
 
-Depuis la page [milsymbol-APP6b](https://www.spatialillusions.com/milsymbol/docs/milsymbol-APP6b.html)
+Depuis la page [milsymbol-APP6c](https://www.spatialillusions.com/milsymbol/docs/milsymbol-2525c.html)
 
 - On enregistre la page web en html -> Page web COMPLETE également dans `rawdata`
-  > MIL-STD-2525-APP6\rawdata\Milsymbol APP6-B.html
+  > MIL-STD-2525-APP6\rawdata\Milsymbol 2525C.html
 
 Puis :
 - On remplace le nom des fichiers grâce au script python et on crée les fichiers png associés
