@@ -76,8 +76,8 @@ def generate_icon_files_mapping():
                         hierarchy = compute_hierarchy_from_fullpath(fullpath)
                         name = re.search(r"(?<=\|)([^|]+)$", fullpath).group(0) \
                             if re.search(r"(?<=\|)([^|]+)$", fullpath) else fullpath
-                        name = get_clear_name(name)
-                        nameFR = translate_to_french(name)
+
+                        nameFR = translate_to_french(name).strip()
                         sidc = match[1].strip().replace("'", "") if match[1] else None
                         has_svg = bool(match[2])
 
@@ -153,7 +153,7 @@ def add_csv_row(row, append=True):
     global csv_data_output_name
     mode = 'a' if append else 'w'
 
-    with open(csv_data_output_name, mode, newline='') as csv_file:
+    with open(csv_data_output_name, mode, encoding="utf-8", newline='') as csv_file:
         writer = csv.writer(csv_file, delimiter=';')
         writer.writerow(row)
 

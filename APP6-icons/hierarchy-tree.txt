@@ -646,7 +646,7 @@
 │   │   │   │   │   └───5	-	LAND MINES	-	[1.X.3.2.4.5]
 │   │   │   │   │   │   └───1	-	CLAYMORE	-	[1.X.3.2.4.5.1]
 │   │   │   │   │   │   └───2	-	LESS THAN LETHAL	-	[1.X.3.2.4.5.2]
-│   │   │   ├───3	-	GROUND TRACK|INSTALLATION	-	[1.X.3.3]
+│   │   │   ├───3	-	INSTALLATION	-	[1.X.3.3]
 │   │   │   │   ├───1	-	RAW MATERIAL PRODUCTION/STORAGE	-	[1.X.3.3.1]
 │   │   │   │   │   ├───1	-	MINE	-	[1.X.3.3.1.1]
 │   │   │   │   │   ├───2	-	PETROLEUM/GAS/OIL	-	[1.X.3.3.1.2]
