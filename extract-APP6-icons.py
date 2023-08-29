@@ -47,7 +47,7 @@ def manage_svg_files():
 
         if os.path.isfile(file_path) and file_name.lower().endswith(".svg"):
             symbol_code = os.path.splitext(file_name)[0]
-            symbol_code = symbol_code[0] + "*" + symbol_code[2:]
+            symbol_code = symbol_code[0] + "*" + symbol_code[2] + "*" + symbol_code[4:]
             symbol_code = symbol_code.replace("-", "")
 
         while True:
