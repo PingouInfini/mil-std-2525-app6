@@ -26,4 +26,4 @@ def create_png_equivalents(src_directory, dest_directory):
 
             # Convert SVG to PNG
             from cairosvg import svg2png
-            svg2png(open(src_file, 'rb').read(), write_to=open(dest_file, 'wb'), output_width=30, output_height=30)
+            svg2png(open(src_file, 'rb').read(), write_to=open(dest_file, 'wb'), output_width=128, output_height=128)

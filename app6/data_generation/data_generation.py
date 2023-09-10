@@ -4,20 +4,26 @@ import re
 
 from app6.utils.translater import translate_to_french
 
-rawdata_html_filename = "rawdata/Milsymbol 2525C.html"
+rawdata_html_filename_app6c = "rawdata/Milsymbol 2525C.html"
+rawdata_html_filename_app6b = "rawdata/Milsymbol APP6-B.html"
 csv_data_output_name = ''
 
 map_attributes_by_lvl = {}
 hierarchy_prefix = ""
 
+distinct_previous_svg = {}
+
 
 # Read Milsymbol APP6-B.html and generate csv with hierarchy', 'SIDC', 'Name', 'icon-png', 'icon-svg'
-def generate_data_from_milsymbol_app6b(mapping_file):
+def generate_data_from_milsymbol_app6(mapping_file):
     global csv_data_output_name
     csv_data_output_name = mapping_file
 
-    generate_icon_files_mapping()
+    generate_icon_files_mapping_app6c()
+    generate_icon_files_mapping_tactical()
     generate_tree_structure(csv_data_output_name)
+
+    return distinct_previous_svg
 
 
 def compute_hierarchy_from_fullpath(fullpath):
@@ -53,12 +59,11 @@ def compute_hierarchy_from_fullpath(fullpath):
     return hierarchy
 
 
-def generate_icon_files_mapping():
-    with open(rawdata_html_filename, "r") as file:
+def generate_icon_files_mapping_app6c():
+    with open(rawdata_html_filename_app6c, "r") as file:
         file_begin = True
 
         # init files from "rawdata" folder to "APP6-icons" folder
-        # copy_files_init_app6_icon_folder()
         init_csv_mapping()
 
         for line in file:
@@ -85,6 +90,47 @@ def generate_icon_files_mapping():
                             return
 
                         if has_svg:
+                            add_csv_row(
+                                [hierarchy, sidc, fullpath, name, nameFR, hierarchy + '.png', hierarchy + '.svg'])
+
+
+def generate_icon_files_mapping_tactical():
+    with open(rawdata_html_filename_app6b, "r") as file:
+        file_begin = True
+
+        for line in file:
+            # Ignore lines up to ">SPACE</h2>"
+            if ">SPACE</h2>" in line:
+                file_begin = False
+
+            if not file_begin:
+                pattern = (r'(\d.X.[\d\.]+)[ ]?(?:.)+?<br>(.+?)<em>SIDC:<\/em>[ ]?(.+?)<\/td>(?:<td>)+?(<svg('
+                           r'?:.)+?<\/svg>)?')
+                matches = re.findall(pattern, line)
+
+                if matches:
+                    for match in matches:
+                        hierarchy = match[0].replace("'", "")
+
+                        values_to_check = ["2.x.1", "2.x.2"]
+                        if not any(hierarchy.lower().startswith(value) for value in values_to_check):
+                            continue
+
+                        fullpath = get_clear_name(match[1])
+                        name = re.search(r"(?<=\|)([^|]+)$", fullpath).group(1) \
+                            if re.search(r"(?<=\|)([^|]+)$", fullpath) else fullpath
+                        name = get_clear_name(name)
+                        nameFR = translate_to_french(name)
+                        sidc = match[2].strip().replace("'", "") if match[2] else None
+                        has_svg = bool(match[3])
+
+                        if has_svg:
+                            # a hierarchy has the same symbol, reuse its icon
+                            if match[3] in distinct_previous_svg:
+                                distinct_previous_svg[match[3]].append(hierarchy)
+                            else:
+                                distinct_previous_svg[match[3]] = [hierarchy]
+
                             add_csv_row(
                                 [hierarchy, sidc, fullpath, name, nameFR, hierarchy + '.png', hierarchy + '.svg'])
 

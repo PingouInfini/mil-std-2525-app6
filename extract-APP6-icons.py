@@ -1,8 +1,9 @@
 import csv
 import os
+import re
 import shutil
 
-from app6.data_generation.data_generation import generate_data_from_milsymbol_app6b
+from app6.data_generation.data_generation import generate_data_from_milsymbol_app6
 from app6.utils.file_manager import copy_and_rename_file, clear_files_in_directory
 from app6.utils.image_manager import create_png_equivalents
 
@@ -11,20 +12,24 @@ symbol_code = {}
 
 
 def main():
-    generate_data_from_milsymbol_app6b(mapping_file)
-    manage_svg_files()
+    distinct_previous_svg = generate_data_from_milsymbol_app6(mapping_file)
+    manage_svg_files(distinct_previous_svg)
     # Creating png images from svg files
     create_png_equivalents("APP6-icons/svg", "APP6-icons/png")
 
+    # update data for symbol selector (csv and png)
+    shutil.copy(os.path.join("APP6-icons", "icon-files-mapping.csv"),
+                os.path.join("symbol-selector", "src", "resources", "icon-files-mapping.csv"))
     clear_files_in_directory(os.path.join("symbol-selector", "src", "images", "icons"), [".png", ".svg"])
     put_all_png_in_directory(os.path.join("APP6-icons", "png"),
                              os.path.join("symbol-selector", "src", "images", "icons"))
 
 
-def manage_svg_files():
+def manage_svg_files(distinct_svg):
     global symbol_code
     global mapping_file
     svg_directory = os.path.join("rawdata", "symbols")
+    svg_app6b_directory = os.path.join("rawdata", "app6-svg")
     codes = {}
 
     # Read the mapping file
@@ -70,6 +75,26 @@ def manage_svg_files():
                 copy_and_rename_file(file_path, "rejected", file_name)
                 print(f"File Name: {file_name}, No corresponding code found")
                 break
+
+    # Iterate over the app6-SVG files
+    idx_file = 0
+    svg_values = list(distinct_svg.values())
+    for file_name in os.listdir(svg_app6b_directory):
+        file_path = os.path.join(svg_app6b_directory, file_name)
+        if not (os.path.isfile(file_path) and file_name.lower().endswith(".svg")):
+            continue
+
+        # focus only on tactical data
+        file_number = re.search(r'(\d+)', file_name).group(0)
+        # 147 svg de tactical, de 806 à 952 inclus
+        if int(file_number) < 806 or int(file_number) >= 953:
+            continue
+
+        for code in svg_values[idx_file]:
+            print(f"File Name: {file_name}, Corresponding Code: {code}")
+            copy_and_rename_file(file_path, "tactical", code)
+
+        idx_file += 1
 
 
 def replace_last_character_found(string, character):
