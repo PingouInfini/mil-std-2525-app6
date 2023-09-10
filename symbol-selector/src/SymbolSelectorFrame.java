@@ -227,6 +227,7 @@ public class SymbolSelectorFrame extends JDialog {
 
                     JButton button = createSymbolButton(hierarchy, name);
                     button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD, button.getFont().getSize() - 3f));
+                    button.setEnabled(node.getChildren().get(i).getSymbolCode() != null);
 
                     button.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
@@ -294,7 +295,8 @@ public class SymbolSelectorFrame extends JDialog {
     }
 
     private JButton createSymbolButton(String hierachy, String description) {
-        String iconPath = "/images/icons/" + hierachy.replace("X", BEHAVIOUR) + ".png";
+        String behaviour = hierachy.startsWith("1.X") ? BEHAVIOUR : "X";
+        String iconPath = "/images/icons/" + hierachy.replace("X", behaviour) + ".png";
         JButton jButton = createButton(iconPath, description, SYMBO_JBUTTON_WIDTH, SYMBOL_JBUTTON_HEIGHT);
         jButton.setHorizontalAlignment(SwingConstants.LEFT);
         return jButton;
