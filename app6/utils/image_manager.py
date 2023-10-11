@@ -1,5 +1,7 @@
 import os
 
+from tqdm import tqdm
+
 
 def create_png_equivalents(src_directory, dest_directory):
     # Check if the source directory exists
@@ -12,7 +14,7 @@ def create_png_equivalents(src_directory, dest_directory):
         os.makedirs(dest_directory)
 
     # Recursively traverse the source directory
-    for root, dirs, files in os.walk(src_directory):
+    for root, dirs, files in tqdm(os.walk(src_directory)):
         # Create the corresponding subdirectories in the destination directory
         rel_path = os.path.relpath(root, src_directory)
         dest_subdirectory = os.path.join(dest_directory, rel_path)

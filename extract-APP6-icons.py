@@ -60,8 +60,8 @@ def manage_svg_files(distinct_svg):
                 switch_case = {
                     'f': ['friend', 'assumed-friend'],
                     'h': ['hostile', 'suspect'],
-                    'n': ['neutral', 'pending'],
-                    'u': ['unknown']
+                    'n': ['neutral'],
+                    'u': ['unknown', 'pending']
                 }
                 case = switch_case.get(file_name[1], ['unknown'])
 
