@@ -2,6 +2,8 @@ import csv
 import os
 import re
 
+from tqdm import tqdm
+
 from app6.utils.translater import translate_to_french
 
 rawdata_html_filename_app6c = "rawdata/Milsymbol 2525C.html"
@@ -19,9 +21,10 @@ def generate_data_from_milsymbol_app6(mapping_file):
     global csv_data_output_name
     csv_data_output_name = mapping_file
 
+    print("### generate_icon_files_mapping_app6c")
     generate_icon_files_mapping_app6c()
+    print("### generate_icon_files_mapping_tactical")
     generate_icon_files_mapping_tactical()
-    generate_tree_structure(csv_data_output_name)
 
     return distinct_previous_svg
 
@@ -76,7 +79,7 @@ def generate_icon_files_mapping_app6c():
                 matches = re.findall(pattern, line)
 
                 if matches:
-                    for match in matches:
+                    for match in tqdm(matches):
                         fullpath = get_clear_name(match[0])
                         hierarchy = compute_hierarchy_from_fullpath(fullpath)
                         name = re.search(r"(?<=\|)([^|]+)$", fullpath).group(0) \
@@ -109,7 +112,7 @@ def generate_icon_files_mapping_tactical():
                 matches = re.findall(pattern, line)
 
                 if matches:
-                    for match in matches:
+                    for match in tqdm(matches):
                         hierarchy = match[0].replace("'", "")
 
                         values_to_check = ["2.x.1", "2.x.2"]

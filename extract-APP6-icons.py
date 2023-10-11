@@ -58,15 +58,22 @@ def manage_svg_files(distinct_svg):
         while True:
             if symbol_code in codes:
                 switch_case = {
-                    'f': 'friend',
-                    'h': 'hostile',
-                    'n': 'neutral',
-                    'u': 'unknown'
+                    'f': ['friend', 'assumed-friend'],
+                    'h': ['hostile', 'suspect'],
+                    'n': ['neutral', 'pending'],
+                    'u': ['unknown']
                 }
-                subfolder = switch_case.get(file_name[1], 'unknown')
+                case = switch_case.get(file_name[1], ['unknown'])
+
+                subfolder = case[0]
                 code = codes[symbol_code]
                 print(f"File Name: {file_name}, Corresponding Code: {code}")
                 copy_and_rename_file(file_path, subfolder, code)
+
+                # create behaviour with dash (cf. other_behaviours)
+                if len(case) > 1:
+                    create_other_svg_behaviour(file_path_in=file_path, folder_out=case[1], filename_out=code)
+
                 break
 
             if "p" in symbol_code:
@@ -95,6 +102,34 @@ def manage_svg_files(distinct_svg):
             copy_and_rename_file(file_path, "tactical", code)
 
         idx_file += 1
+
+
+def create_other_svg_behaviour(file_path_in, folder_out, filename_out):
+    with open(file_path_in, 'r') as f:
+        svg_content = f.read()
+
+    # Utilise une expression régulière pour rechercher la première balise <path>
+    match = re.search(r'<path\s[^>]*?stroke="black"', svg_content)
+
+    if match:
+        start, end = match.span()
+
+        # Insère stroke-dasharray="5,5" après stroke="black"
+        modified_svg = svg_content[:end] + ' stroke-dasharray="5,5"' + svg_content[end:]
+
+        # # Vérifie si le dossier de sortie existe, sinon le crée
+        if not os.path.exists(os.path.join("APP6-icons", "svg", folder_out)):
+            os.makedirs(os.path.join("APP6-icons", "svg", folder_out))
+
+        # Obtient le nom de fichier sans le chemin
+        file_name = os.path.basename(file_path_in)
+
+        # Crée le chemin complet pour le fichier de sortie
+        file_path_out = os.path.join("APP6-icons", "svg", folder_out, filename_out + ".svg")
+
+        # Écrit le contenu modifié dans un nouveau fichier ou dans le même fichier
+        with open(file_path_out, 'w') as f:
+            f.write(modified_svg)
 
 
 def replace_last_character_found(string, character):
