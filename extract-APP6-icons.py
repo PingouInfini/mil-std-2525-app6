@@ -109,7 +109,7 @@ def create_other_svg_behaviour(file_path_in, folder_out, filename_out):
         svg_content = f.read()
 
     # Utilise une expression régulière pour rechercher la première balise <path>
-    match = re.search(r'<path\s[^>]*?stroke="black"', svg_content)
+    match = re.search(r'<svg[^>]*><[^>]*', svg_content)
 
     if match:
         start, end = match.span()
