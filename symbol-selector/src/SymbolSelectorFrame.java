@@ -45,6 +45,7 @@ public class SymbolSelectorFrame extends JDialog {
 
     private String BEHAVIOUR = "h";
     private String LANGUAGE = "EN";
+    private String PRESUMED = "NO";
 
 
     public SymbolSelectorFrame(Node node) {
@@ -98,6 +99,7 @@ public class SymbolSelectorFrame extends JDialog {
         JPanel backPanel = new JPanel();
         JPanel symbolPanel = new JPanel();
         JPanel nextPanel = new JPanel();
+        JPanel blankPanel = createBlankPanel();
 
         //======== this ========
         var contentPane = getContentPane();
@@ -121,20 +123,14 @@ public class SymbolSelectorFrame extends JDialog {
 
             //======== languagePanel ========
             {
-                languagePanel.setPreferredSize(new Dimension(NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4));
-                languagePanel.setMinimumSize(new Dimension(NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4));
-                languagePanel.setMaximumSize(new Dimension(NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4));
+                setPanelSize(languagePanel, NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4);
                 languagePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
                 //---- textAreaEN ----
                 languagePanel.add(createDisabledJTextArea("EN"));
 
                 //---- ToggleSwitch ----
-                ToggleSwitch ts = new ToggleSwitch();
-                ts.setPreferredSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
-                ts.setMinimumSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
-                ts.setMaximumSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
-                ts.setActivated(!LANGUAGE.equals("EN"));
+                ToggleSwitch ts = createToggleSwitch(!LANGUAGE.equals("EN"));
                 ts.addPropertyChangeListener(evt -> {
                     if (evt.getPropertyName().equals("activated")) {
                         boolean activated = (boolean) evt.getNewValue();
@@ -152,9 +148,7 @@ public class SymbolSelectorFrame extends JDialog {
 
             //======== behaviourPanel ========
             {
-                behaviourPanel.setPreferredSize(new Dimension(BEHAVIOUR_PANEL_WIDTH, BEHAVIOUR_PANEL_HEIGHT));
-                behaviourPanel.setMinimumSize(new Dimension(BEHAVIOUR_PANEL_WIDTH, BEHAVIOUR_PANEL_HEIGHT));
-                behaviourPanel.setMaximumSize(new Dimension(BEHAVIOUR_PANEL_WIDTH, BEHAVIOUR_PANEL_HEIGHT));
+                setPanelSize(behaviourPanel, BEHAVIOUR_PANEL_WIDTH, BEHAVIOUR_PANEL_HEIGHT);
                 behaviourPanel.setLayout(new MigLayout(
                         "hidemode 3,align center center,gapy " + DEFAULT_SPACE,
                         // columns
@@ -163,9 +157,41 @@ public class SymbolSelectorFrame extends JDialog {
                         "[]" +
                                 "[]" +
                                 "[]" +
+                                "[]" +
+                                "[]" +
+                                "[]" +
+                                "[]" +
                                 "[]"));
 
-                char[] behaviours = {'u', 'f', 'n', 'h'};
+                char[] behaviorProved = {'u', 'f', 'n', 'h'};
+                char[] behaviorPresumed = {'p', 'a', 'n', 's'};
+
+                //---- ToggleSwitch ----
+                ToggleSwitch ts2 = createToggleSwitch(!PRESUMED.equals("NO"));
+                ts2.addPropertyChangeListener(evt -> {
+                    if (evt.getPropertyName().equals("activated")) {
+                        boolean activated = (boolean) evt.getNewValue();
+                        if (activated) {
+                            this.PRESUMED = "YES";
+                            this.BEHAVIOUR = String.valueOf(behaviorPresumed[new String(behaviorProved).indexOf(BEHAVIOUR)]);
+                        } else {
+                            this.PRESUMED = "NO";
+                            this.BEHAVIOUR = String.valueOf(behaviorProved[new String(behaviorPresumed).indexOf(BEHAVIOUR)]);
+                        }
+                        redraw(node);
+                    }
+                });
+                behaviourPanel.add(createDisabledJTextArea("PRESUMED"), "cell 0 0");
+                behaviourPanel.add(ts2, "cell 0 1");
+                behaviourPanel.add(blankPanel, "cell 0 2");
+
+                char[] behaviours;
+                if (PRESUMED.equals("NO")) {
+                    behaviours = new char[]{'u', 'f', 'n', 'h'};
+                } else {
+                    behaviours = new char[]{'p', 'a', 'n', 's'};
+                }
+
                 for (int i = 0; i < behaviours.length; i++) {
                     JButton button = createBehaviourButton(behaviours[i]);
                     button.putClientProperty("behaviour", behaviours[i]);
@@ -173,16 +199,17 @@ public class SymbolSelectorFrame extends JDialog {
                         this.BEHAVIOUR = String.valueOf(((JButton) e.getSource()).getClientProperty("behaviour"));
                         redraw(node);
                     });
-                    behaviourPanel.add(button, "cell 0 " + i);
+                    behaviourPanel.add(button, "cell 0 " + (i + 3));
                 }
+
+                for (int j = 4; j < 7; j++)
+                    behaviourPanel.add(blankPanel, "cell 0 " + (behaviours.length + j));
             }
             contentPanel.add(behaviourPanel, "cell 1 1");
 
             //======== backPanel ========
             {
-                backPanel.setPreferredSize(new Dimension(BACK_PANEL_WIDTH, BACK_PANEL_HEIGHT));
-                backPanel.setMinimumSize(new Dimension(BACK_PANEL_WIDTH, BACK_PANEL_HEIGHT));
-                backPanel.setMaximumSize(new Dimension(BACK_PANEL_WIDTH, BACK_PANEL_HEIGHT));
+                setPanelSize(backPanel, BACK_PANEL_WIDTH, BACK_PANEL_HEIGHT);
                 backPanel.setLayout(new MigLayout(
                         "fill,hidemode 3,align center center,gapy " + DEFAULT_SPACE,
                         // columns
@@ -203,9 +230,7 @@ public class SymbolSelectorFrame extends JDialog {
 
             //======== symbolPanel ========
             {
-                symbolPanel.setPreferredSize(new Dimension(SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT));
-                symbolPanel.setMinimumSize(new Dimension(SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT));
-                symbolPanel.setMaximumSize(new Dimension(SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT));
+                setPanelSize(symbolPanel, SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT);
                 symbolPanel.setLayout(new MigLayout(
                         "fill,hidemode 3,align left center,gapy " + DEFAULT_SPACE,
                         // columns
@@ -226,7 +251,8 @@ public class SymbolSelectorFrame extends JDialog {
                     }
 
                     JButton button = createSymbolButton(hierarchy, name);
-                    button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD, button.getFont().getSize() - 3f));
+                    button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD,
+                            button.getFont().getSize() - 3f));
                     button.setEnabled(node.getChildren().get(i).getSymbolCode() != null);
 
                     button.addActionListener(new ActionListener() {
@@ -244,9 +270,7 @@ public class SymbolSelectorFrame extends JDialog {
 
             //======== nextPanel ========
             {
-                nextPanel.setPreferredSize(new Dimension(NEXT_PANEL_WIDTH, NEXT_PANEL_HEIGHT));
-                nextPanel.setMinimumSize(new Dimension(NEXT_PANEL_WIDTH, NEXT_PANEL_HEIGHT));
-                nextPanel.setMaximumSize(new Dimension(NEXT_PANEL_WIDTH, NEXT_PANEL_HEIGHT));
+                setPanelSize(nextPanel, NEXT_PANEL_WIDTH, NEXT_PANEL_HEIGHT);
                 nextPanel.setLayout(new MigLayout(
                         "fill,hidemode 3,align center center,gapy " + DEFAULT_SPACE,
                         // columns
@@ -278,6 +302,12 @@ public class SymbolSelectorFrame extends JDialog {
         contentPane.add(dialogPane, BorderLayout.CENTER);
         setSize(DIALOG_PANEL_WIDTH, DIALOG_PANEL_HEIGHT);
         setLocationRelativeTo(null);
+    }
+
+    private void setPanelSize(JPanel jpanel, int WIDTH, int HEIGHT) {
+        jpanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        jpanel.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        jpanel.setMaximumSize(new Dimension(WIDTH, HEIGHT));
     }
 
     private JTextArea createDisabledJTextArea(String text) {
@@ -321,6 +351,22 @@ public class SymbolSelectorFrame extends JDialog {
         jButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jButton.setHorizontalAlignment(SwingConstants.CENTER);
         return jButton;
+    }
+
+    private ToggleSwitch createToggleSwitch(boolean activated) {
+        ToggleSwitch toggleSwitch = new ToggleSwitch();
+        toggleSwitch.setPreferredSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
+        toggleSwitch.setMinimumSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
+        toggleSwitch.setMaximumSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
+        toggleSwitch.setActivated(activated);
+
+        return toggleSwitch;
+    }
+
+    private JPanel createBlankPanel() {
+        JPanel jPanel = new JPanel();
+        setPanelSize(jPanel, BEHAVIOUR_PANEL_WIDTH, DEFAULT_SPACE * 3);
+        return jPanel;
     }
 
     private void addListenerNavigation(final JButton jbouton, final Node node) {
