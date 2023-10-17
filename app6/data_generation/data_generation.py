@@ -4,7 +4,7 @@ import re
 
 from tqdm import tqdm
 
-from app6.utils.translater import translate_to_french
+from app6.utils.translater import translate_to_french_from_csv
 
 rawdata_html_filename_app6c = "rawdata/Milsymbol 2525C.html"
 rawdata_html_filename_app6b = "rawdata/Milsymbol APP6-B.html"
@@ -85,7 +85,7 @@ def generate_icon_files_mapping_app6c():
                         name = re.search(r"(?<=\|)([^|]+)$", fullpath).group(0) \
                             if re.search(r"(?<=\|)([^|]+)$", fullpath) else fullpath
 
-                        nameFR = translate_to_french(name).strip()
+                        nameFR = translate_to_french_from_csv(name).strip()
                         sidc = match[1].strip().replace("'", "") if match[1] else None
                         has_svg = bool(match[2])
 
@@ -123,7 +123,7 @@ def generate_icon_files_mapping_tactical():
                         name = re.search(r"(?<=\|)([^|]+)$", fullpath).group(1) \
                             if re.search(r"(?<=\|)([^|]+)$", fullpath) else fullpath
                         name = get_clear_name(name)
-                        nameFR = translate_to_french(name)
+                        nameFR = translate_to_french_from_csv(name)
                         sidc = match[2].strip().replace("'", "") if match[2] else None
                         has_svg = bool(match[3])
 
