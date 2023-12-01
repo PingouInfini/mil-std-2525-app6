@@ -1,10 +1,16 @@
+import model.ExtractedData;
+import model.Node;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class App6Parser {
-    public static Node readFirstColumn(String filePath) {
+    public static ExtractedData readColumns(String filePath) {
         Node primaryNode = new Node();
+        Map<String, String> mapDescriptionHierarchy = new HashMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -12,6 +18,8 @@ public class App6Parser {
                 String[] columns = line.split(";");
                 if (columns.length > 0) {
                     String currentHierarchy = columns[0].trim();
+                    String name = columns[3].trim();
+                    String nameFr = columns[4].trim();
                     if (!currentHierarchy.startsWith("1.X") && !currentHierarchy.startsWith("2.X")) continue;
 
                     String parentHierarchy = currentHierarchy.contains(".") ? currentHierarchy.substring(0, currentHierarchy.lastIndexOf(".")) : currentHierarchy;
@@ -20,6 +28,8 @@ public class App6Parser {
                     String currentName = columns[3].trim();
                     String currentNameFR = columns[4].trim();
                     Node currentNode = new Node(currentHierarchy, currentSymbolCode, currentName, currentNameFR);
+
+                    mapDescriptionHierarchy.put(name + " / "+nameFr, currentHierarchy);
 
                     // Le parent n'est pas trouvé, on rajoute le node au primaryNode s'il est de niveau 1 (1.X.1, 1.X.2...)
                     if (currentHierarchy.length() == 5 && primaryNode.findNodeByHierarchy(parentHierarchy) == null) {
@@ -39,7 +49,7 @@ public class App6Parser {
             e.printStackTrace();
         }
 
-        return primaryNode;
+        return new ExtractedData(primaryNode, mapDescriptionHierarchy);
     }
 
     private static Node createMissingNodes(Node primaryNode, String hierarchy, String symbolCode, String path) {

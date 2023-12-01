@@ -1,3 +1,6 @@
+import model.ExtractedData;
+import model.Node;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,9 +22,9 @@ public class Main extends JFrame {
     }
 
     private void showPopup() {
-        Node nodes = App6Parser.readFirstColumn(App6Parser.class.getResource("/resources/icon-files-mapping.csv").getFile());
+        ExtractedData extractedData = App6Parser.readColumns(App6Parser.class.getResource("/resources/icon-files-mapping.csv").getFile());
 
-        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(nodes);
+        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(extractedData);
         symbolSelector.setVisible(true);
     }
 

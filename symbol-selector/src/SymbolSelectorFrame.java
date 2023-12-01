@@ -1,9 +1,16 @@
+import combo_suggestion.ComboBoxSuggestion;
+import model.ExtractedData;
+import model.Node;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author PingouInfini
@@ -47,11 +54,13 @@ public class SymbolSelectorFrame extends JDialog {
     private String LANGUAGE = "EN";
     private String PRESUMED = "NO";
 
+    private static Map<String, String> mapDescriptionHierarchy;
 
-    public SymbolSelectorFrame(Node node) {
-        adaptSize(node.getChildren().size());
+    public SymbolSelectorFrame(ExtractedData extractedData) {
+        mapDescriptionHierarchy = extractedData.getMapDescriptionHierarchy();
+        adaptSize(extractedData.getNode().getChildren().size());
         initMainPanel();
-        initComponents(node);
+        initComponents(extractedData.getNode());
     }
 
     /**
@@ -231,12 +240,37 @@ public class SymbolSelectorFrame extends JDialog {
             //======== symbolPanel ========
             {
                 setPanelSize(symbolPanel, SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT);
+
                 symbolPanel.setLayout(new MigLayout(
                         "fill,hidemode 3,align left center,gapy " + DEFAULT_SPACE,
                         // columns
                         "[fill]",
                         // rows
                         "[]"));
+
+
+                ComboBoxSuggestion comboBoxSuggestion = getComboBoxSuggestion();
+
+
+                JComboBox<String> comboBox = new JComboBox<>(mapDescriptionHierarchy.keySet().toArray(new String[0]));
+                // Ajoutez un écouteur de clavier pour filtrer les éléments du modèle du JComboBox
+                comboBox.getEditor().getEditorComponent().addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        // Implementez le filtre ici
+                        filterItems(comboBox, comboBox.getEditor().getItem().toString());
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+
+                symbolPanel.add(comboBoxSuggestion, "cell 0 0");
 
                 for (int i = 0; i < NODE_NUMBER; i++) {
                     String hierarchy = node.getChildren().get(i).getHierarchy();
@@ -263,7 +297,7 @@ public class SymbolSelectorFrame extends JDialog {
 
                         }
                     });
-                    symbolPanel.add(button, "cell 0 " + i);
+                    symbolPanel.add(button, "cell 0 " + (i + 1));
                 }
             }
             contentPanel.add(symbolPanel, "cell 3 1");
@@ -302,6 +336,27 @@ public class SymbolSelectorFrame extends JDialog {
         contentPane.add(dialogPane, BorderLayout.CENTER);
         setSize(DIALOG_PANEL_WIDTH, DIALOG_PANEL_HEIGHT);
         setLocationRelativeTo(null);
+    }
+
+    private static ComboBoxSuggestion getComboBoxSuggestion() {
+        ComboBoxSuggestion comboBoxSuggestion = new ComboBoxSuggestion();
+        comboBoxSuggestion.setModel(new DefaultComboBoxModel(mapDescriptionHierarchy.keySet().toArray(new String[0])));
+        return comboBoxSuggestion;
+    }
+
+    // Filtrer les éléments du modèle du JComboBox
+    private static void filterItems(JComboBox<String> comboBox, String filter) {
+        DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) comboBox.getModel();
+        model.removeAllElements();
+
+        for (int i = 0; i < model.getSize(); i++) {
+            String item = model.getElementAt(i);
+            if (item.toLowerCase().contains(filter.toLowerCase())) {
+                model.addElement(item);
+            }
+        }
+
+        comboBox.showPopup();
     }
 
     private void setPanelSize(JPanel jpanel, int WIDTH, int HEIGHT) {
