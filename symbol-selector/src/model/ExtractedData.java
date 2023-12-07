@@ -3,19 +3,19 @@ package model;
 import java.util.Map;
 
 public class ExtractedData {
-    private Node node;
+    private NodeAPP6 node;
     private Map<String, String> mapDescriptionHierarchy;
 
-    public ExtractedData(Node node, Map<String, String> mapDescriptionHierarchy) {
+    public ExtractedData(NodeAPP6 node, Map<String, String> mapDescriptionHierarchy) {
         this.node = node;
         this.mapDescriptionHierarchy = mapDescriptionHierarchy;
     }
 
-    public Node getNode() {
+    public NodeAPP6 getNode() {
         return node;
     }
 
-    public void setNode(Node node) {
+    public void setNode(NodeAPP6 node) {
         this.node = node;
     }
 

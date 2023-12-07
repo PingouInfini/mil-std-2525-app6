@@ -1,362 +1,171 @@
-import combo_suggestion.ComboBoxSuggestion;
 import model.ExtractedData;
-import model.Node;
+import model.NodeAPP6;
 import net.miginfocom.swing.MigLayout;
+import search.SearchComponentPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.util.Map;
-import java.util.Set;
+import java.io.Serial;
+import java.util.Objects;
 
 /**
  * @author PingouInfini
  */
 public class SymbolSelectorFrame extends JDialog {
+    @Serial
+    private static final long serialVersionUID = -1108393012654115976L;
 
-    private JPanel dialogPane = new JPanel();
+    private static final String FRENCH_LANGUAGE = "FR";
+    private static final String ENGLISH_LANGUAGE = "EN";
+
+    private final JPanel dialogPane = new JPanel();
 
     /* Init Dimensions */
-    private int NODE_NUMBER = 7;
-    private int DEFAULT_SPACE = 5;
+    private int nodeNumber;
+    private static final int DEFAULT_SPACE = 5;
 
     // BEHAVIOURS
-    private int BEHAVIOUR_JBUTTON_HEIGHT = 50;
-    private int BEHAVIOUR_JBUTTON_WIDTH = BEHAVIOUR_JBUTTON_HEIGHT;
-    private int BEHAVIOUR_PANEL_HEIGHT = 6 * (BEHAVIOUR_JBUTTON_HEIGHT + DEFAULT_SPACE);
-    private int BEHAVIOUR_PANEL_WIDTH = BEHAVIOUR_JBUTTON_WIDTH + 10;
+    private static final int BEHAVIOUR_JBUTTON_HEIGHT = 50;
+    private static final int BEHAVIOUR_JBUTTON_WIDTH = SymbolSelectorFrame.BEHAVIOUR_JBUTTON_HEIGHT;
+    private static final int BEHAVIOUR_PANEL_HEIGHT = 6
+            * (SymbolSelectorFrame.BEHAVIOUR_JBUTTON_HEIGHT + SymbolSelectorFrame.DEFAULT_SPACE);
+    private static final int BEHAVIOUR_PANEL_WIDTH = SymbolSelectorFrame.BEHAVIOUR_JBUTTON_WIDTH + 10;
 
     // SYMBOLS
-    private int SYMBOL_JBUTTON_HEIGHT = BEHAVIOUR_JBUTTON_HEIGHT;
-    private int SYMBO_JBUTTON_WIDTH = 400;
-    private int SYMBO_PANEL_HEIGHT = NODE_NUMBER * SYMBOL_JBUTTON_HEIGHT + (NODE_NUMBER + 2) * DEFAULT_SPACE;
-    private int SYMBO_PANEL_WIDTH = SYMBO_JBUTTON_WIDTH + 7;
+    private static final int SYMBOL_JBUTTON_HEIGHT = SymbolSelectorFrame.BEHAVIOUR_JBUTTON_HEIGHT;
+    private static final int SYMBO_JBUTTON_WIDTH = 400;
+    private int symboPanelHeight;
+    private static final int SYMBO_PANEL_WIDTH = SymbolSelectorFrame.SYMBO_JBUTTON_WIDTH + 7;
 
     // BACK & NEXT
-    private int BACK_JBUTTON_HEIGHT = SYMBO_PANEL_HEIGHT - 3 * DEFAULT_SPACE;
-    private int BACK_JBUTTON_WIDTH = BEHAVIOUR_JBUTTON_WIDTH;
-    private int BACK_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
-    private int BACK_PANEL_WIDTH = BACK_JBUTTON_WIDTH + 10;
-    private int NEXT_JBUTTON_HEIGHT = SYMBOL_JBUTTON_HEIGHT;
-    private int NEXT_JBUTTON_WIDTH = BACK_JBUTTON_WIDTH;
-    private int NEXT_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
-    private int NEXT_PANEL_WIDTH = BACK_JBUTTON_WIDTH + 10;
+    private int backJButtonHeight;
+    private static final int BACK_JBUTTON_WIDTH = SymbolSelectorFrame.BEHAVIOUR_JBUTTON_WIDTH;
+    private int backPanelHeight;
+    private static final int BACK_PANEL_WIDTH = SymbolSelectorFrame.BACK_JBUTTON_WIDTH + 10;
+    private static final int NEXT_JBUTTON_HEIGHT = SymbolSelectorFrame.SYMBOL_JBUTTON_HEIGHT;
+    private static final int NEXT_JBUTTON_WIDTH = SymbolSelectorFrame.BACK_JBUTTON_WIDTH;
+    private int nextPanelHeight;
+    private static final int NEXT_PANEL_WIDTH = SymbolSelectorFrame.BACK_JBUTTON_WIDTH + 10;
 
+    private int dialogPanelHeight;
+    private static final int DIALOG_PANEL_WIDTH = SymbolSelectorFrame.BEHAVIOUR_PANEL_WIDTH + SymbolSelectorFrame.BACK_PANEL_WIDTH
+            + SymbolSelectorFrame.SYMBO_PANEL_WIDTH + SymbolSelectorFrame.NEXT_PANEL_WIDTH + 6 * SymbolSelectorFrame.DEFAULT_SPACE + 20;
 
-    private int DIALOG_PANEL_HEIGHT = Math.max(SYMBO_PANEL_HEIGHT, BEHAVIOUR_PANEL_HEIGHT) + 75;
-    private int DIALOG_PANEL_WIDTH = BEHAVIOUR_PANEL_WIDTH + BACK_PANEL_WIDTH + SYMBO_PANEL_WIDTH + NEXT_PANEL_WIDTH
-            + 6 * DEFAULT_SPACE + 20;
+    private String behaviour = "h";
+    private String language = ENGLISH_LANGUAGE;
+    private boolean presumed = false;
 
-    private String BEHAVIOUR = "h";
-    private String LANGUAGE = "EN";
-    private String PRESUMED = "NO";
+    private final String iconeDirectoryPath;
 
-    private static Map<String, String> mapDescriptionHierarchy;
+    public SymbolSelectorFrame(ExtractedData extractedData, String startSymbole, String iconeDirectoryPath) {
+        this.iconeDirectoryPath = iconeDirectoryPath;
+        NodeAPP6 startnode = extractedData.getNode();
 
-    public SymbolSelectorFrame(ExtractedData extractedData) {
-        mapDescriptionHierarchy = extractedData.getMapDescriptionHierarchy();
-        adaptSize(extractedData.getNode().getChildren().size());
+        if (startSymbole != null && startSymbole.length() > 4) {
+            final char c = startSymbole.charAt(2);
+            startSymbole = startSymbole.replace(c, 'X');
+            startnode = extractedData.getNode().getParentNodeByHierarchy(startSymbole);
+
+            if (startnode == null) {
+                startnode = extractedData.getNode();
+            }
+
+            if ("fhun".contains(String.valueOf(c).toLowerCase())) {
+                this.behaviour = String.valueOf(c).toLowerCase();
+            }
+            if ("spa".contains(String.valueOf(c).toLowerCase())) {
+                this.behaviour = String.valueOf(c).toLowerCase();
+                this.presumed = true;
+            }
+        }
+
+        adaptSize(startnode.getChildren().size());
         initMainPanel();
-        initComponents(extractedData.getNode());
+        initComponents(startnode);
     }
 
     /**
      * Adapts component size. Only the values affected by the number of nodes are modified
      */
     private void adaptSize(int size) {
-        NODE_NUMBER = size;
+        this.nodeNumber = size;
 
-        SYMBO_PANEL_HEIGHT = NODE_NUMBER * SYMBOL_JBUTTON_HEIGHT + (NODE_NUMBER + 2) * DEFAULT_SPACE;
+        this.symboPanelHeight = this.nodeNumber * SymbolSelectorFrame.SYMBOL_JBUTTON_HEIGHT
+                + (this.nodeNumber + 2) * SymbolSelectorFrame.DEFAULT_SPACE;
 
-        BACK_JBUTTON_HEIGHT = SYMBO_PANEL_HEIGHT - 3 * DEFAULT_SPACE;
-        BACK_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
-        NEXT_PANEL_HEIGHT = SYMBO_PANEL_HEIGHT;
+        this.backJButtonHeight = this.symboPanelHeight - 3 * SymbolSelectorFrame.DEFAULT_SPACE;
+        this.backPanelHeight = this.symboPanelHeight;
+        this.nextPanelHeight = this.symboPanelHeight;
 
-
-        DIALOG_PANEL_HEIGHT = Math.max(SYMBO_PANEL_HEIGHT, BEHAVIOUR_PANEL_HEIGHT) + 75;
+        this.dialogPanelHeight = Math.max(this.symboPanelHeight, SymbolSelectorFrame.BEHAVIOUR_PANEL_HEIGHT) + 100;
     }
-
 
     private void initMainPanel() {
         setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setModal(true);
         setResizable(false);
         setTitle("Sélection du symbole APP6");
         setType(Window.Type.POPUP);
+        setModal(true);
 
-        dialogPane.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.
-                swing.border.EmptyBorder(0, 0, 0, 0), "", javax.swing.border
-                .TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dialog"
-                , java.awt.Font.BOLD, 12), java.awt.Color.red), dialogPane.getBorder
-                ()));
-        dialogPane.addPropertyChangeListener(e -> {
-            if ("border".equals(e.getPropertyName())) throw new RuntimeException
-                    ();
+        this.dialogPane.setBorder(
+                new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
+                        "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM,
+                        new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.red), this.dialogPane.getBorder()));
+        this.dialogPane.addPropertyChangeListener(e -> {
+            if ("border".equals(e.getPropertyName()))
+                throw new RuntimeException();
         });
-        dialogPane.setLayout(new BorderLayout());
+        this.dialogPane.setLayout(new BorderLayout());
     }
 
+    private void initComponents(NodeAPP6 node) {
+        final JPanel contentPanel = new JPanel();
+        final JPanel languagePanel = new JPanel();
+        final JPanel searchPanel = new JPanel();
+        final JPanel behaviourPanel = new JPanel();
+        final JPanel backPanel = new JPanel();
+        final JPanel symbolPanel = new JPanel();
+        final JPanel nextPanel = new JPanel();
+        final JPanel blankPanel = createBlankPanel();
 
-    private void initComponents(Node node) {
-        JPanel contentPanel = new JPanel();
-        JPanel languagePanel = new JPanel();
-        JPanel behaviourPanel = new JPanel();
-        JPanel backPanel = new JPanel();
-        JPanel symbolPanel = new JPanel();
-        JPanel nextPanel = new JPanel();
-        JPanel blankPanel = createBlankPanel();
+        final Container container = getContentPane();
+        container.setLayout(new BorderLayout());
 
-        //======== this ========
-        var contentPane = getContentPane();
-        contentPane.setLayout(new BorderLayout());
+        contentPanel.setLayout(new MigLayout("fill,insets dialog,hidemode 3,align center center",
+                // columns
+                "[10!]" //
+                        + "[" + (SymbolSelectorFrame.BEHAVIOUR_PANEL_WIDTH) + "!,center]" //
+                        + "[" + (SymbolSelectorFrame.BACK_PANEL_WIDTH - SymbolSelectorFrame.DEFAULT_SPACE) + "!,fill]" //
+                        + "[fill]" //
+                        + "[" + (SymbolSelectorFrame.NEXT_PANEL_WIDTH + SymbolSelectorFrame.DEFAULT_SPACE) + "!,fill]" //
+                        + "[10!]",
+                // rows
+                "[]" //
+                        + "[]"));
 
-        //======== contentPanel ========
-        {
-            contentPanel.setLayout(new MigLayout(
-                    "fill,insets dialog,hidemode 3,align center center",
-                    // columns
-                    "[10!]" +
-                            "[" + (BEHAVIOUR_PANEL_WIDTH) + "!,center]" +
-                            "[" + (BACK_PANEL_WIDTH - DEFAULT_SPACE) + "!,fill]" +
-                            "[fill]" +
-                            "[" + (NEXT_PANEL_WIDTH + DEFAULT_SPACE) + "!,fill]" +
-                            "[10!]",
-                    // rows
-                    "[]" +
-                            "[]"));
+        initLanguagePanel(node, languagePanel);
+        contentPanel.add(languagePanel, "cell 3 0 2 1,alignx trailing center,grow 0 0");
 
+        initSearchPanel(searchPanel);
+        contentPanel.add(searchPanel, "cell 1 0 4 1, gapy 10");
 
-            //======== languagePanel ========
-            {
-                setPanelSize(languagePanel, NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4);
-                languagePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        initBehaviourPanel(node, behaviourPanel, blankPanel);
+        contentPanel.add(behaviourPanel, "cell 1 1");
 
-                //---- textAreaEN ----
-                languagePanel.add(createDisabledJTextArea("EN"));
+        initBackPanel(node, backPanel);
+        contentPanel.add(backPanel, "cell 2 1");
 
-                //---- ToggleSwitch ----
-                ToggleSwitch ts = createToggleSwitch(!LANGUAGE.equals("EN"));
-                ts.addPropertyChangeListener(evt -> {
-                    if (evt.getPropertyName().equals("activated")) {
-                        boolean activated = (boolean) evt.getNewValue();
-                        LANGUAGE = activated ? "FR" : "EN";
-                        redraw(node);
-                    }
-                });
+        initSymbolPanel(node, symbolPanel);
+        contentPanel.add(symbolPanel, "cell 3 1");
 
-                languagePanel.add(ts);
+        initNextPanel(node, nextPanel);
+        contentPanel.add(nextPanel, "cell 4 1");
 
-                //---- textAreaFR ----
-                languagePanel.add(createDisabledJTextArea("FR"));
-            }
-            contentPanel.add(languagePanel, "cell 3 0 2 1,alignx trailing center,grow 0 0");
+        this.dialogPane.add(contentPanel, BorderLayout.CENTER);
 
-            //======== behaviourPanel ========
-            {
-                setPanelSize(behaviourPanel, BEHAVIOUR_PANEL_WIDTH, BEHAVIOUR_PANEL_HEIGHT);
-                behaviourPanel.setLayout(new MigLayout(
-                        "hidemode 3,align center center,gapy " + DEFAULT_SPACE,
-                        // columns
-                        "[fill]",
-                        // rows
-                        "[]" +
-                                "[]" +
-                                "[]" +
-                                "[]" +
-                                "[]" +
-                                "[]" +
-                                "[]" +
-                                "[]"));
-
-                char[] behaviorProved = {'u', 'f', 'n', 'h'};
-                char[] behaviorPresumed = {'p', 'a', 'n', 's'};
-
-                //---- ToggleSwitch ----
-                ToggleSwitch ts2 = createToggleSwitch(!PRESUMED.equals("NO"));
-                ts2.addPropertyChangeListener(evt -> {
-                    if (evt.getPropertyName().equals("activated")) {
-                        boolean activated = (boolean) evt.getNewValue();
-                        if (activated) {
-                            this.PRESUMED = "YES";
-                            this.BEHAVIOUR = String.valueOf(behaviorPresumed[new String(behaviorProved).indexOf(BEHAVIOUR)]);
-                        } else {
-                            this.PRESUMED = "NO";
-                            this.BEHAVIOUR = String.valueOf(behaviorProved[new String(behaviorPresumed).indexOf(BEHAVIOUR)]);
-                        }
-                        redraw(node);
-                    }
-                });
-                behaviourPanel.add(createDisabledJTextArea("PRESUMED"), "cell 0 0");
-                behaviourPanel.add(ts2, "cell 0 1");
-                behaviourPanel.add(blankPanel, "cell 0 2");
-
-                char[] behaviours;
-                if (PRESUMED.equals("NO")) {
-                    behaviours = new char[]{'u', 'f', 'n', 'h'};
-                } else {
-                    behaviours = new char[]{'p', 'a', 'n', 's'};
-                }
-
-                for (int i = 0; i < behaviours.length; i++) {
-                    JButton button = createBehaviourButton(behaviours[i]);
-                    button.putClientProperty("behaviour", behaviours[i]);
-                    button.addActionListener(e -> {
-                        this.BEHAVIOUR = String.valueOf(((JButton) e.getSource()).getClientProperty("behaviour"));
-                        redraw(node);
-                    });
-                    behaviourPanel.add(button, "cell 0 " + (i + 3));
-                }
-
-                for (int j = 4; j < 7; j++)
-                    behaviourPanel.add(blankPanel, "cell 0 " + (behaviours.length + j));
-            }
-            contentPanel.add(behaviourPanel, "cell 1 1");
-
-            //======== backPanel ========
-            {
-                setPanelSize(backPanel, BACK_PANEL_WIDTH, BACK_PANEL_HEIGHT);
-                backPanel.setLayout(new MigLayout(
-                        "fill,hidemode 3,align center center,gapy " + DEFAULT_SPACE,
-                        // columns
-                        "[fill]",
-                        // rows
-                        "[]"));
-
-                //---- button back ----
-                if (!node.getHierarchy().isBlank()) {
-                    JButton buttonBack = createButton("/images/navigation/left.png", null,
-                            BACK_JBUTTON_WIDTH, BACK_JBUTTON_HEIGHT);
-
-                    addListenerNavigation(buttonBack, node.getParent());
-                    backPanel.add(buttonBack, "cell 0 0");
-                }
-            }
-            contentPanel.add(backPanel, "cell 2 1");
-
-            //======== symbolPanel ========
-            {
-                setPanelSize(symbolPanel, SYMBO_PANEL_WIDTH, SYMBO_PANEL_HEIGHT);
-
-                symbolPanel.setLayout(new MigLayout(
-                        "fill,hidemode 3,align left center,gapy " + DEFAULT_SPACE,
-                        // columns
-                        "[fill]",
-                        // rows
-                        "[]"));
-
-
-                ComboBoxSuggestion comboBoxSuggestion = getComboBoxSuggestion();
-
-
-                JComboBox<String> comboBox = new JComboBox<>(mapDescriptionHierarchy.keySet().toArray(new String[0]));
-                // Ajoutez un écouteur de clavier pour filtrer les éléments du modèle du JComboBox
-                comboBox.getEditor().getEditorComponent().addKeyListener(new KeyListener() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        // Implementez le filtre ici
-                        filterItems(comboBox, comboBox.getEditor().getItem().toString());
-                    }
-
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                    }
-
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                    }
-                });
-
-                symbolPanel.add(comboBoxSuggestion, "cell 0 0");
-
-                for (int i = 0; i < NODE_NUMBER; i++) {
-                    String hierarchy = node.getChildren().get(i).getHierarchy();
-                    String name = "";
-                    switch (LANGUAGE) {
-                        case "EN":
-                            name = node.getChildren().get(i).getName();
-                            break;
-                        case "FR":
-                            name = node.getChildren().get(i).getNameFR();
-                            break;
-                    }
-
-                    JButton button = createSymbolButton(hierarchy, name);
-                    button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD,
-                            button.getFont().getSize() - 3f));
-                    button.setEnabled(node.getChildren().get(i).getSymbolCode() != null);
-
-                    button.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            // TODO
-                            // Code à exécuter lors du clic sur le bouton
-                            //JOptionPane.showMessageDialog(null, "Le bouton a été cliqué !");
-
-                        }
-                    });
-                    symbolPanel.add(button, "cell 0 " + (i + 1));
-                }
-            }
-            contentPanel.add(symbolPanel, "cell 3 1");
-
-            //======== nextPanel ========
-            {
-                setPanelSize(nextPanel, NEXT_PANEL_WIDTH, NEXT_PANEL_HEIGHT);
-                nextPanel.setLayout(new MigLayout(
-                        "fill,hidemode 3,align center center,gapy " + DEFAULT_SPACE,
-                        // columns
-                        "[fill]",
-                        // rows
-                        "[]"));
-
-                for (int i = 0; i < NODE_NUMBER; i++) {
-                    JButton buttonNext;
-                    // If the node displayed has children
-                    if (node.getChildren().get(i).getChildren().size() > 0) {
-                        buttonNext = createButton("/images/navigation/right.png", null,
-                                NEXT_JBUTTON_WIDTH, NEXT_JBUTTON_HEIGHT);
-                        addListenerNavigation(buttonNext, node.getChildren().get(i));
-                    } else {
-                        buttonNext = new JButton();
-                        buttonNext.setPreferredSize(new Dimension(NEXT_JBUTTON_WIDTH, NEXT_JBUTTON_HEIGHT));
-                        buttonNext.setOpaque(false);  // transparent
-                        buttonNext.setContentAreaFilled(false);
-                        buttonNext.setBorderPainted(false);
-                    }
-                    nextPanel.add(buttonNext, "cell 0 " + i);
-                }
-            }
-            contentPanel.add(nextPanel, "cell 4 1");
-        }
-        dialogPane.add(contentPanel, BorderLayout.CENTER);
-
-        contentPane.add(dialogPane, BorderLayout.CENTER);
-        setSize(DIALOG_PANEL_WIDTH, DIALOG_PANEL_HEIGHT);
-        setLocationRelativeTo(null);
-    }
-
-    private static ComboBoxSuggestion getComboBoxSuggestion() {
-        ComboBoxSuggestion comboBoxSuggestion = new ComboBoxSuggestion();
-        comboBoxSuggestion.setModel(new DefaultComboBoxModel(mapDescriptionHierarchy.keySet().toArray(new String[0])));
-        return comboBoxSuggestion;
-    }
-
-    // Filtrer les éléments du modèle du JComboBox
-    private static void filterItems(JComboBox<String> comboBox, String filter) {
-        DefaultComboBoxModel<String> model = (DefaultComboBoxModel<String>) comboBox.getModel();
-        model.removeAllElements();
-
-        for (int i = 0; i < model.getSize(); i++) {
-            String item = model.getElementAt(i);
-            if (item.toLowerCase().contains(filter.toLowerCase())) {
-                model.addElement(item);
-            }
-        }
-
-        comboBox.showPopup();
+        container.add(this.dialogPane, BorderLayout.CENTER);
+        setSize(SymbolSelectorFrame.DIALOG_PANEL_WIDTH, this.dialogPanelHeight);
     }
 
     private void setPanelSize(JPanel jpanel, int WIDTH, int HEIGHT) {
@@ -365,51 +174,173 @@ public class SymbolSelectorFrame extends JDialog {
         jpanel.setMaximumSize(new Dimension(WIDTH, HEIGHT));
     }
 
-    private JTextArea createDisabledJTextArea(String text) {
-        JTextArea textArea = new JTextArea();
-        textArea.setText(text);
-        textArea.setEnabled(false);
-        textArea.setBackground(null);
-        textArea.setFont(new Font("Arial Black", Font.BOLD, 8));
-        return textArea;
-    }
+    private void initLanguagePanel(NodeAPP6 node, final JPanel languagePanel) {
+        setPanelSize(languagePanel, NEXT_PANEL_WIDTH * 2, DEFAULT_SPACE * 4);
+        languagePanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-    private JButton createBehaviourButton(char behaviour) {
-        String iconPath = "/images/behaviour/1." + behaviour + ".3.1.png";
-        return createButton(iconPath, null, BEHAVIOUR_JBUTTON_WIDTH, BEHAVIOUR_JBUTTON_HEIGHT);
-    }
+        // ---- textAreaEN ----
+        final JLabel usEnglishFlag = new JLabel();
+        usEnglishFlag.setIcon(getImageIconFromPath("/images/navigation/usenglish_flag.png", 20, 15));
+        languagePanel.add(usEnglishFlag);
 
-    private JButton createSymbolButton(String hierachy, String description) {
-        String behaviour = hierachy.startsWith("1.X") ? BEHAVIOUR : "X";
-        String iconPath = "/images/icons/" + hierachy.replace("X", behaviour) + ".png";
-        JButton jButton = createButton(iconPath, description, SYMBO_JBUTTON_WIDTH, SYMBOL_JBUTTON_HEIGHT);
-        jButton.setHorizontalAlignment(SwingConstants.LEFT);
-        return jButton;
-    }
-
-    private JButton createButton(String iconPath, String text, int width, int height) {
-        JButton jButton = new JButton();
-        if (iconPath != null)
-            try {
-                Image image = new ImageIcon(getClass().getResource(iconPath)).getImage();
-                ImageIcon imageIcon = new ImageIcon(image.getScaledInstance(BEHAVIOUR_JBUTTON_WIDTH - 10,
-                        BEHAVIOUR_JBUTTON_HEIGHT - 10, Image.SCALE_SMOOTH));
-                jButton.setIcon(imageIcon);
-            } catch (Exception e) {
-                jButton.setIcon(new ImageIcon(getClass().getResource("/images/navigation/notfound.png")));
+        // ---- ToggleSwitch ----
+        final ToggleSwitch ts = createToggleSwitch(!this.language.equals("EN"));
+        ts.addPropertyChangeListener(evt -> {
+            if (evt.getPropertyName().equals("activated")) {
+                final boolean activated = (boolean) evt.getNewValue();
+                this.language = activated ? FRENCH_LANGUAGE : ENGLISH_LANGUAGE;
+                redraw(node);
             }
-        if (text != null && !text.isEmpty())
-            jButton.setText(text);
-        jButton.setPreferredSize(new Dimension(width, height));
-        jButton.setMaximumSize(new Dimension(width, height));
-        jButton.setMinimumSize(new Dimension(width, height));
-        jButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        jButton.setHorizontalAlignment(SwingConstants.CENTER);
-        return jButton;
+        });
+
+        languagePanel.add(ts);
+
+        // ---- textAreaFR ----
+        final JLabel frenchFlag = new JLabel();
+        frenchFlag.setIcon(getImageIconFromPath("/images/navigation/french_flag.png", 20, 15));
+        languagePanel.add(frenchFlag);
+    }
+
+    private void initSearchPanel(JPanel searchPanel) {
+        setPanelSize(searchPanel, 350, DEFAULT_SPACE * 8);
+        searchPanel.setLayout(new MigLayout("fill,hidemode 3,aligny center",
+                // columns
+                "[fill]",
+                // rows
+                "[]"));
+
+        setPanelSize(searchPanel, 375, 40);
+        searchPanel.add(new SearchComponentPanel().createSearchPanel("/images/navigation/"));
+    }
+
+    private void initBehaviourPanel(NodeAPP6 node, final JPanel behaviourPanel, JPanel blankPanel) {
+        setPanelSize(behaviourPanel, BEHAVIOUR_PANEL_WIDTH, BEHAVIOUR_PANEL_HEIGHT);
+        behaviourPanel.setLayout(new MigLayout("hidemode 3,align center center,gapy 0" + SymbolSelectorFrame.DEFAULT_SPACE,
+                // columns
+                "[fill]",
+                // rows
+                "[]" + "[]" + "[]" + "[]" + "[]" + "[]" + "[]" + "[]"));
+
+        final char[] behaviorProved = {'u', 'f', 'n', 'h'};
+        final char[] behaviorPresumed = {'p', 'a', 'n', 's'};
+
+        // ---- ToggleSwitch ----
+        final ToggleSwitch ts2 = createToggleSwitch(this.presumed);
+        ts2.addPropertyChangeListener(evt -> {
+            if (evt.getPropertyName().equals("activated")) {
+                final boolean activated = (boolean) evt.getNewValue();
+                if (activated) {
+                    this.presumed = true;
+                    this.behaviour = String.valueOf(behaviorPresumed[new String(behaviorProved).indexOf(this.behaviour)]);
+                } else {
+                    this.presumed = false;
+                    this.behaviour = String.valueOf(behaviorProved[new String(behaviorPresumed).indexOf(this.behaviour)]);
+                }
+                redraw(node);
+            }
+        });
+        behaviourPanel.add(createDisabledJTextArea(language.equals("EN") ? "PRESUMED" : "PRÉSUMÉ"), "cell 0 0");
+        behaviourPanel.add(ts2, "cell 0 1");
+        behaviourPanel.add(blankPanel, "cell 0 2");
+
+        char[] behaviours;
+        if (!this.presumed) {
+            behaviours = new char[]{'u', 'f', 'n', 'h'};
+        } else {
+            behaviours = new char[]{'p', 'a', 'n', 's'};
+        }
+
+        for (int i = 0; i < behaviours.length; i++) {
+            final JButton button = createBehaviourButton(behaviours[i]);
+            button.putClientProperty("behaviour", behaviours[i]);
+            button.addActionListener(e -> {
+                this.behaviour = String.valueOf(((JButton) e.getSource()).getClientProperty("behaviour"));
+                redraw(node);
+            });
+            behaviourPanel.add(button, "cell 0 " + (i + 3));
+        }
+
+        for (int j = 4; j < 7; j++)
+            behaviourPanel.add(blankPanel, "cell 0 " + (behaviours.length + j));
+
+    }
+
+    private void initBackPanel(NodeAPP6 node, final JPanel backPanel) {
+        setPanelSize(backPanel, BACK_PANEL_WIDTH, this.backPanelHeight);
+        backPanel.setLayout(new MigLayout("fill,hidemode 3,align center center,gapy " + SymbolSelectorFrame.DEFAULT_SPACE,
+                // columns
+                "[fill]",
+                // rows
+                "[]"));
+
+        // ---- button back ----
+        if (!node.getHierarchy().isEmpty()) {
+            final JButton buttonBack = createButton(
+                    "/images/navigation/left.png", null,
+                    SymbolSelectorFrame.BACK_JBUTTON_WIDTH, this.backJButtonHeight);
+
+            addListenerNavigation(buttonBack, node.getParent());
+            backPanel.add(buttonBack, "cell 0 0");
+        }
+    }
+
+    private void initSymbolPanel(NodeAPP6 node, final JPanel symbolPanel) {
+        setPanelSize(symbolPanel, SYMBO_PANEL_WIDTH, this.symboPanelHeight);
+        symbolPanel.setLayout(new MigLayout("fill,hidemode 3,align left center,gapy " + SymbolSelectorFrame.DEFAULT_SPACE,
+                // columns
+                "[fill]",
+                // rows
+                "[]"));
+
+        for (int i = 0; i < this.nodeNumber; i++) {
+            final String hierarchy = node.getChildren().get(i).getHierarchy();
+            String name = switch (this.language) {
+                case ENGLISH_LANGUAGE -> node.getChildren().get(i).getName();
+                case FRENCH_LANGUAGE -> node.getChildren().get(i).getNameFR();
+                default -> "";
+            };
+
+            final JButton button = createSymbolButton(hierarchy, name);
+            button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD, button.getFont().getSize() - 3f));
+            button.setEnabled(node.getChildren().get(i).getSymbolCode() != null);
+
+            button.addActionListener(e -> {
+                // Code executé lors du clic sur le bouton
+                firePropertyChange("selectedSymbol", "", hierarchy.replace("X", SymbolSelectorFrame.this.behaviour));
+            });
+            symbolPanel.add(button, "cell 0 " + i);
+        }
+    }
+
+    private void initNextPanel(NodeAPP6 node, final JPanel nextPanel) {
+        setPanelSize(nextPanel, NEXT_PANEL_WIDTH, this.nextPanelHeight);
+        nextPanel.setLayout(new MigLayout("fill,hidemode 3,align center center,gapy " + SymbolSelectorFrame.DEFAULT_SPACE,
+                // columns
+                "[fill]",
+                // rows
+                "[]"));
+
+        for (int i = 0; i < this.nodeNumber; i++) {
+            JButton buttonNext;
+            // If the node displayed has children
+            if (!node.getChildren().get(i).getChildren().isEmpty()) {
+                buttonNext = createButton(
+                        "/images/navigation/right.png", null,
+                        SymbolSelectorFrame.NEXT_JBUTTON_WIDTH, SymbolSelectorFrame.NEXT_JBUTTON_HEIGHT);
+                addListenerNavigation(buttonNext, node.getChildren().get(i));
+            } else {
+                buttonNext = new JButton();
+                buttonNext.setPreferredSize(new Dimension(SymbolSelectorFrame.NEXT_JBUTTON_WIDTH, SymbolSelectorFrame.NEXT_JBUTTON_HEIGHT));
+                buttonNext.setOpaque(false); // transparent
+                buttonNext.setContentAreaFilled(false);
+                buttonNext.setBorderPainted(false);
+            }
+            nextPanel.add(buttonNext, "cell 0 " + i);
+        }
     }
 
     private ToggleSwitch createToggleSwitch(boolean activated) {
-        ToggleSwitch toggleSwitch = new ToggleSwitch();
+        final ToggleSwitch toggleSwitch = new ToggleSwitch();
         toggleSwitch.setPreferredSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
         toggleSwitch.setMinimumSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
         toggleSwitch.setMaximumSize(new Dimension(NEXT_PANEL_WIDTH / 2, DEFAULT_SPACE * 2));
@@ -419,26 +350,80 @@ public class SymbolSelectorFrame extends JDialog {
     }
 
     private JPanel createBlankPanel() {
-        JPanel jPanel = new JPanel();
+        final JPanel jPanel = new JPanel();
         setPanelSize(jPanel, BEHAVIOUR_PANEL_WIDTH, DEFAULT_SPACE * 3);
         return jPanel;
     }
 
-    private void addListenerNavigation(final JButton jbouton, final Node node) {
-        jbouton.addActionListener(e -> {
-            redraw(node);
-        });
+    private JTextArea createDisabledJTextArea(String text) {
+        final JTextArea textArea = new JTextArea();
+        textArea.setText(text);
+        textArea.setEnabled(false);
+        textArea.setBackground(null);
+        textArea.setFont(new Font("Arial Black", Font.BOLD, 8));
+        return textArea;
     }
 
-    private void redraw(Node node) {
-        JPanel dialogPane = getDialogPane();
-        dialogPane.removeAll();
+    private JButton createBehaviourButton(char behaviour) {
+        String iconPath = "/images/behaviour/1." + behaviour + ".3.1.png";
+        return createButton(iconPath, null, SymbolSelectorFrame.BEHAVIOUR_JBUTTON_WIDTH, SymbolSelectorFrame.BEHAVIOUR_JBUTTON_HEIGHT);
+    }
+
+    private JButton createSymbolButton(String hierarchy, String description) {
+        final String iconPath = "/images/icons/" +//
+                "/" +//
+                hierarchy.replace("X", this.behaviour) +//
+                ".png";
+
+        final JButton jButton = createButton(iconPath, description, SymbolSelectorFrame.SYMBO_JBUTTON_WIDTH,
+                SymbolSelectorFrame.SYMBOL_JBUTTON_HEIGHT);
+        jButton.setHorizontalAlignment(SwingConstants.LEFT);
+
+        return jButton;
+    }
+
+    private JButton createButton(String iconPath, String text, int width, int height) {
+        final JButton jButton = new JButton();
+        jButton.setIcon(getImageIconFromPath(iconPath));
+
+        if (text != null && !text.isEmpty())
+            jButton.setText(text);
+
+        jButton.setPreferredSize(new Dimension(width, height));
+        jButton.setMaximumSize(new Dimension(width, height));
+        jButton.setMinimumSize(new Dimension(width, height));
+        jButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        jButton.setHorizontalAlignment(SwingConstants.CENTER);
+
+        return jButton;
+    }
+
+    private ImageIcon getImageIconFromPath(String iconPath) {
+        return getImageIconFromPath(iconPath, BEHAVIOUR_JBUTTON_WIDTH - 10, BEHAVIOUR_JBUTTON_HEIGHT - 10);
+    }
+
+    private ImageIcon getImageIconFromPath(String iconPath, int width, int height) {
+        if (iconPath != null) try {
+            Image image = new ImageIcon(Objects.requireNonNull(getClass().getResource(iconPath))).getImage();
+            return new ImageIcon(image.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+        } catch (Exception ignored) {
+        }
+        return new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/navigation/notfound.png")));
+    }
+
+    private void addListenerNavigation(final JButton jbouton, final NodeAPP6 node) {
+        jbouton.addActionListener(e -> redraw(node));
+    }
+
+    private void redraw(NodeAPP6 node) {
+        final JPanel panel = getDialogPane();
+        panel.removeAll();
         adaptSize(node.getChildren().size());
         initComponents(node);
         validate();
     }
 
     private JPanel getDialogPane() {
-        return dialogPane;
+        return this.dialogPane;
     }
 }

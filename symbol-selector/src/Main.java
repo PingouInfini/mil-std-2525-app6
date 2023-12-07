@@ -1,11 +1,10 @@
 import model.ExtractedData;
-import model.Node;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
 
 public class Main extends JFrame {
-    private JTextField textField;
 
     public Main() {
         setTitle("IHM Example");
@@ -13,7 +12,7 @@ public class Main extends JFrame {
         setSize(300, 200);
         setLayout(new FlowLayout());
 
-        textField = new JTextField(10);
+        JTextField textField = new JTextField(10);
         JButton goButton = new JButton("Select an APP6 Icon");
         goButton.addActionListener(e -> showPopup());
 
@@ -22,9 +21,10 @@ public class Main extends JFrame {
     }
 
     private void showPopup() {
-        ExtractedData extractedData = App6Parser.readColumns(App6Parser.class.getResource("/resources/icon-files-mapping.csv").getFile());
+        ExtractedData extractedData = App6Parser.readColumns(Objects.
+                requireNonNull(App6Parser.class.getResource("/resources/icon-files-mapping.csv")).getFile());
 
-        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(extractedData);
+        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(extractedData, null, null);
         symbolSelector.setVisible(true);
     }
 
