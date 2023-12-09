@@ -10,22 +10,22 @@ public class DataSearch {
         this.text = text;
     }
 
-    public boolean isStory() {
-        return story;
+    public boolean isInHistory() {
+        return inHistory;
     }
 
-    public void setStory(boolean story) {
-        this.story = story;
+    public void setInHistory(boolean inHistory) {
+        this.inHistory = inHistory;
     }
 
-    public DataSearch(String text, boolean story) {
+    public DataSearch(String text, boolean inHistory) {
         this.text = text;
-        this.story = story;
+        this.inHistory = inHistory;
     }
 
     public DataSearch() {
     }
 
     private String text;
-    private boolean story;
+    private boolean inHistory;
 }

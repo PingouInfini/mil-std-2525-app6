@@ -3,6 +3,8 @@ import model.ExtractedData;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Main extends JFrame {
 
@@ -24,7 +26,11 @@ public class Main extends JFrame {
         ExtractedData extractedData = App6Parser.readColumns(Objects.
                 requireNonNull(App6Parser.class.getResource("/resources/icon-files-mapping.csv")).getFile());
 
-        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(extractedData, null, null);
+        Set<String> historiqueRecherche = new TreeSet<>();
+        historiqueRecherche.add("INFANTRY / INFANTERIE");
+        historiqueRecherche.add("ARMOR TRACK / PISTE DE BLINDE");
+
+        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(extractedData, historiqueRecherche, null, null);
         symbolSelector.setVisible(true);
     }
 

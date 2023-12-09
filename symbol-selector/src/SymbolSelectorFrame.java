@@ -6,7 +6,10 @@ import search.SearchComponentPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.io.Serial;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author PingouInfini
@@ -55,10 +58,16 @@ public class SymbolSelectorFrame extends JDialog {
     private String language = ENGLISH_LANGUAGE;
     private boolean presumed = false;
 
+    private Map<String, String> mapDescriptionHierarchy;
+    private final Set<String> historiqueRecherche;
+
     private final String iconeDirectoryPath;
 
-    public SymbolSelectorFrame(ExtractedData extractedData, String startSymbole, String iconeDirectoryPath) {
+    public SymbolSelectorFrame(ExtractedData extractedData, Set<String> historiqueRecherche, String startSymbole, String iconeDirectoryPath) {
         this.iconeDirectoryPath = iconeDirectoryPath;
+        this.mapDescriptionHierarchy = extractedData.getMapDescriptionHierarchy();
+        this.historiqueRecherche = historiqueRecherche;
+
         NodeAPP6 startnode = extractedData.getNode();
 
         if (startSymbole != null && startSymbole.length() > 4) {
@@ -189,6 +198,8 @@ public class SymbolSelectorFrame extends JDialog {
             if (evt.getPropertyName().equals("activated")) {
                 final boolean activated = (boolean) evt.getNewValue();
                 this.language = activated ? FRENCH_LANGUAGE : ENGLISH_LANGUAGE;
+                this.mapDescriptionHierarchy = switchSearchDataset(this.mapDescriptionHierarchy);
+
                 redraw(node);
             }
         });
@@ -210,7 +221,8 @@ public class SymbolSelectorFrame extends JDialog {
                 "[]"));
 
         setPanelSize(searchPanel, 375, 40);
-        searchPanel.add(new SearchComponentPanel().createSearchPanel("/images/navigation/"));
+        searchPanel.add(new SearchComponentPanel(this.mapDescriptionHierarchy, this.historiqueRecherche, "/images/navigation/")
+                .createSearchPanel());
     }
 
     private void initBehaviourPanel(NodeAPP6 node, final JPanel behaviourPanel, JPanel blankPanel) {
@@ -421,6 +433,30 @@ public class SymbolSelectorFrame extends JDialog {
         adaptSize(node.getChildren().size());
         initComponents(node);
         validate();
+    }
+
+    private Map<String, String> switchSearchDataset(Map<String, String> mapDescriptionHierarchy) {
+        Map<String, String> switchedMap = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : mapDescriptionHierarchy.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            // Search for the "/" in the key
+            int index = key.indexOf(" / ");
+
+            // If "/" is found, swap the left and right parts
+            if (index != -1) {
+                String leftPart = key.substring(0, index).trim();
+                String rightPart = key.substring(index + 3).trim();
+                String switchedKey = rightPart + " / " + leftPart;
+                switchedMap.put(switchedKey, value);
+            } else {
+                // If "/" is not found, keep the original key
+                switchedMap.put(key, value);
+            }
+        }
+        return switchedMap;
     }
 
     private JPanel getDialogPane() {

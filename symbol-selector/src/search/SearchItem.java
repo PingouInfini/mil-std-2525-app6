@@ -5,6 +5,7 @@
  */
 package search;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -25,7 +26,8 @@ public class SearchItem extends javax.swing.JPanel {
         addEventMouse(lbText);
         addEventMouse(lbRemove);
         lbText.setText(data.getText());
-        if (data.isStory()) {
+        lbText.setFont(new Font("Arial Black", Font.BOLD, 8));
+        if (data.isInHistory()) {
             lbText.setForeground(new Color(29, 106, 205));
             lbIcon.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(this.iconPath + "/time.png"))));
             lbRemove.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -75,7 +77,7 @@ public class SearchItem extends javax.swing.JPanel {
         lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbIcon.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(this.iconPath + "/search_small.png")))); // NOI18N
 
-        lbText.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        lbText.setFont(new Font("Arial Black", Font.BOLD, 8)); // NOI18N
         lbText.setForeground(new Color(38, 38, 38));
         lbText.setText("Text ...");
         lbText.addMouseListener(new MouseAdapter() {
@@ -85,8 +87,8 @@ public class SearchItem extends javax.swing.JPanel {
         });
 
         lbRemove.setForeground(new Color(147, 147, 147));
-        lbRemove.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbRemove.setText("Remove");
+        lbRemove.setHorizontalAlignment(SwingConstants.CENTER);
+        lbRemove.setText("X");
         lbRemove.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 lbRemoveMouseClicked(evt);
@@ -102,7 +104,7 @@ public class SearchItem extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lbText, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
         layout.setVerticalGroup(
