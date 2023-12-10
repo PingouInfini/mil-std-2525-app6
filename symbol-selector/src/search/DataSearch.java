@@ -2,6 +2,19 @@ package search;
 
 public class DataSearch {
 
+    private String text;
+    private String hierarchy;
+    private boolean inHistory;
+
+    public DataSearch() {
+    }
+
+    public DataSearch(String text, String hierarchy, boolean inHistory) {
+        this.text = text;
+        this.hierarchy = hierarchy;
+        this.inHistory = inHistory;
+    }
+
     public String getText() {
         return text;
     }
@@ -18,14 +31,11 @@ public class DataSearch {
         this.inHistory = inHistory;
     }
 
-    public DataSearch(String text, boolean inHistory) {
-        this.text = text;
-        this.inHistory = inHistory;
+    public String getHierarchy() {
+        return hierarchy;
     }
 
-    public DataSearch() {
+    public void setHierarchy(String hierarchy) {
+        this.hierarchy = hierarchy;
     }
-
-    private String text;
-    private boolean inHistory;
 }

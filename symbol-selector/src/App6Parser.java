@@ -1,11 +1,11 @@
-import model.NodeAPP6;
 import model.ExtractedData;
+import model.NodeAPP6;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,7 +16,7 @@ public class App6Parser
     public static ExtractedData readColumns(String filePath)
     {
         final NodeAPP6 primaryNode = new NodeAPP6();
-        final Map<String, String> mapDescriptionHierarchy = new HashMap<>();
+        final Map<String, String> mapDescriptionHierarchy = new TreeMap<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath)))
         {

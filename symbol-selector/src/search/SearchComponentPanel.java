@@ -10,12 +10,12 @@ public class SearchComponentPanel extends javax.swing.JPanel {
     private SearchPanel search;
     private SearchTextField txtSearch;
 
-    private final Set<String> searchDataset;
+    private final Map<String, String> searchDataset;
     private Set<String> previousSearch = new TreeSet<>();
     private final String iconPath;
 
     public SearchComponentPanel(Map<String, String> mapDescriptionHierarchy, Set<String> historiqueRecherche, String iconPath) {
-        this.searchDataset = new TreeSet<>(mapDescriptionHierarchy.keySet());
+        this.searchDataset = mapDescriptionHierarchy;
         this.iconPath = iconPath;
 
         if (historiqueRecherche != null)
@@ -38,7 +38,7 @@ public class SearchComponentPanel extends javax.swing.JPanel {
                 txtSearch.setText(data.getText());
                 previousSearch.add(data.getText());
 
-                System.out.println("Click Item : " + data.getText());
+                System.out.println("Click Item : " + data.getText()+ " -> "+data.getHierarchy());
             }
 
             @Override
@@ -116,13 +116,14 @@ public class SearchComponentPanel extends javax.swing.JPanel {
         int limitData = 7;
         List<DataSearch> list = new ArrayList<>();
 
-        for (String d : searchDataset) {
+        for (Map.Entry<String, String> entry : searchDataset.entrySet()) {
+            String d = entry.getKey();
             if (d.toLowerCase().contains(search)) {
                 boolean inHistory = isInHistory(d);
                 if (inHistory) {
-                    list.add(0, new DataSearch(d, inHistory));
+                    list.add(0, new DataSearch(d, entry.getValue(), inHistory));
                 } else {
-                    list.add(new DataSearch(d, inHistory));
+                    list.add(new DataSearch(d, entry.getValue(), inHistory));
                 }
             }
         }
