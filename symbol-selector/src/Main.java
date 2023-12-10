@@ -30,7 +30,7 @@ public class Main extends JFrame {
         historiqueRecherche.add("INFANTRY / INFANTERIE");
         historiqueRecherche.add("ARMOR TRACK / PISTE DE BLINDE");
 
-        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(extractedData, historiqueRecherche, null, null);
+        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(extractedData, historiqueRecherche, "1.X.4.1.3", null);
         symbolSelector.setVisible(true);
     }
 

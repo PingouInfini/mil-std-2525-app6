@@ -4,6 +4,10 @@ import net.miginfocom.swing.MigLayout;
 import search.SearchComponentPanel;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.Serial;
 import java.util.HashMap;
@@ -58,6 +62,8 @@ public class SymbolSelectorFrame extends JDialog {
     private String language = ENGLISH_LANGUAGE;
     private boolean presumed = false;
 
+    private String startSymbole;
+
     private Map<String, String> mapDescriptionHierarchy;
     private final Set<String> historiqueRecherche;
 
@@ -67,6 +73,7 @@ public class SymbolSelectorFrame extends JDialog {
         this.iconeDirectoryPath = iconeDirectoryPath;
         this.mapDescriptionHierarchy = extractedData.getMapDescriptionHierarchy();
         this.historiqueRecherche = historiqueRecherche;
+        this.startSymbole = startSymbole;
 
         NodeAPP6 startnode = extractedData.getNode();
 
@@ -320,6 +327,13 @@ public class SymbolSelectorFrame extends JDialog {
                 // Code executé lors du clic sur le bouton
                 firePropertyChange("selectedSymbol", "", hierarchy.replace("X", SymbolSelectorFrame.this.behaviour));
             });
+
+            if (this.startSymbole.equals(hierarchy)) {
+                Border compoundBorder = new CompoundBorder(new LineBorder(Color.GREEN, 5),
+                        new EmptyBorder(0, 12, 0, 0));
+                button.setBorder(compoundBorder);
+            }
+
             symbolPanel.add(button, "cell 0 " + i);
         }
     }
@@ -406,7 +420,7 @@ public class SymbolSelectorFrame extends JDialog {
         jButton.setMinimumSize(new Dimension(width, height));
         jButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jButton.setHorizontalAlignment(SwingConstants.CENTER);
-
+        jButton.setRequestFocusEnabled(false);
         return jButton;
     }
 
