@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class SearchItem extends javax.swing.JPanel {
     private String iconPath;
+    private final int FONT_SIZE = 8;
 
     public SearchItem(DataSearch data, String iconPath) {
         this.iconPath = iconPath;
@@ -26,7 +27,7 @@ public class SearchItem extends javax.swing.JPanel {
         addEventMouse(lbText);
         addEventMouse(lbRemove);
         lbText.setText(data.getText());
-        lbText.setFont(new Font("Arial Black", Font.BOLD, 8));
+        lbText.setFont(new Font("Arial Black", Font.BOLD, FONT_SIZE));
         if (data.isInHistory()) {
             lbText.setForeground(new Color(29, 106, 205));
             lbIcon.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(this.iconPath + "/time.png"))));
@@ -77,7 +78,7 @@ public class SearchItem extends javax.swing.JPanel {
         lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbIcon.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(this.iconPath + "/search_small.png")))); // NOI18N
 
-        lbText.setFont(new Font("Arial Black", Font.BOLD, 8)); // NOI18N
+        lbText.setFont(new Font("Arial Black", Font.BOLD, FONT_SIZE));
         lbText.setForeground(new Color(38, 38, 38));
         lbText.setText("Text ...");
         lbText.addMouseListener(new MouseAdapter() {

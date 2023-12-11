@@ -1,5 +1,7 @@
 package search;
 
+import event.EventManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -38,7 +40,9 @@ public class SearchComponentPanel extends javax.swing.JPanel {
                 txtSearch.setText(data.getText());
                 previousSearch.add(data.getText());
 
-                System.out.println("Click Item : " + data.getText()+ " -> "+data.getHierarchy());
+                EventManager.getInstance().fireEvent(data.getHierarchy());
+
+                //System.out.println("Click Item : " + data.getText()+ " -> "+data.getHierarchy());
             }
 
             @Override

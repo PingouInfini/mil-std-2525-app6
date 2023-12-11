@@ -1,3 +1,6 @@
+import event.EventManager;
+import event.EventType;
+import event.Observer;
 import model.ExtractedData;
 import model.NodeAPP6;
 import net.miginfocom.swing.MigLayout;
@@ -18,7 +21,7 @@ import java.util.Set;
 /**
  * @author PingouInfini
  */
-public class SymbolSelectorFrame extends JDialog {
+public class SymbolSelectorFrame extends JDialog implements Observer {
     @Serial
     private static final long serialVersionUID = -1108393012654115976L;
 
@@ -26,6 +29,7 @@ public class SymbolSelectorFrame extends JDialog {
     private static final String ENGLISH_LANGUAGE = "EN";
 
     private final JPanel dialogPane = new JPanel();
+    private final int FONT_SIZE = 10;
 
     /* Init Dimensions */
     private int nodeNumber;
@@ -62,18 +66,16 @@ public class SymbolSelectorFrame extends JDialog {
     private String language = ENGLISH_LANGUAGE;
     private boolean presumed = false;
 
-    private String startSymbole;
-
-    private Map<String, String> mapDescriptionHierarchy;
+    private final ExtractedData extractedData;
     private final Set<String> historiqueRecherche;
-
+    private String startSymbole;
     private final String iconeDirectoryPath;
 
     public SymbolSelectorFrame(ExtractedData extractedData, Set<String> historiqueRecherche, String startSymbole, String iconeDirectoryPath) {
-        this.iconeDirectoryPath = iconeDirectoryPath;
-        this.mapDescriptionHierarchy = extractedData.getMapDescriptionHierarchy();
+        this.extractedData = extractedData;
         this.historiqueRecherche = historiqueRecherche;
         this.startSymbole = startSymbole;
+        this.iconeDirectoryPath = iconeDirectoryPath;
 
         NodeAPP6 startnode = extractedData.getNode();
 
@@ -127,7 +129,7 @@ public class SymbolSelectorFrame extends JDialog {
         this.dialogPane.setBorder(
                 new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0, 0, 0, 0),
                         "", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM,
-                        new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.red), this.dialogPane.getBorder()));
+                        new java.awt.Font("Dialog", java.awt.Font.BOLD, FONT_SIZE), java.awt.Color.red), this.dialogPane.getBorder()));
         this.dialogPane.addPropertyChangeListener(e -> {
             if ("border".equals(e.getPropertyName()))
                 throw new RuntimeException();
@@ -165,6 +167,7 @@ public class SymbolSelectorFrame extends JDialog {
 
         initSearchPanel(searchPanel);
         contentPanel.add(searchPanel, "cell 1 0 4 1, gapy 10");
+        EventManager.getInstance().subscribe(EventType.UI_REDRAW, this);
 
         initBehaviourPanel(node, behaviourPanel, blankPanel);
         contentPanel.add(behaviourPanel, "cell 1 1");
@@ -205,7 +208,8 @@ public class SymbolSelectorFrame extends JDialog {
             if (evt.getPropertyName().equals("activated")) {
                 final boolean activated = (boolean) evt.getNewValue();
                 this.language = activated ? FRENCH_LANGUAGE : ENGLISH_LANGUAGE;
-                this.mapDescriptionHierarchy = switchSearchDataset(this.mapDescriptionHierarchy);
+                this.extractedData.setMapDescriptionHierarchy(
+                        switchSearchDataset(this.extractedData.getMapDescriptionHierarchy()));
 
                 redraw(node);
             }
@@ -228,13 +232,14 @@ public class SymbolSelectorFrame extends JDialog {
                 "[]"));
 
         setPanelSize(searchPanel, 375, 40);
-        searchPanel.add(new SearchComponentPanel(this.mapDescriptionHierarchy, this.historiqueRecherche, "/images/navigation/")
-                .createSearchPanel());
+        searchPanel.add(new SearchComponentPanel(this.extractedData.getMapDescriptionHierarchy(),
+                this.historiqueRecherche, "/images/navigation/").createSearchPanel());
     }
 
     private void initBehaviourPanel(NodeAPP6 node, final JPanel behaviourPanel, JPanel blankPanel) {
         setPanelSize(behaviourPanel, BEHAVIOUR_PANEL_WIDTH, BEHAVIOUR_PANEL_HEIGHT);
-        behaviourPanel.setLayout(new MigLayout("hidemode 3,align center center,gapy 0" + SymbolSelectorFrame.DEFAULT_SPACE,
+        behaviourPanel.setLayout(new MigLayout("hidemode 3,align center center,gapy 0"
+                + SymbolSelectorFrame.DEFAULT_SPACE,
                 // columns
                 "[fill]",
                 // rows
@@ -320,7 +325,7 @@ public class SymbolSelectorFrame extends JDialog {
             };
 
             final JButton button = createSymbolButton(hierarchy, name);
-            button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD, button.getFont().getSize() - 3f));
+            button.setFont(button.getFont().deriveFont(button.getFont().getStyle() & Font.BOLD, FONT_SIZE));
             button.setEnabled(node.getChildren().get(i).getSymbolCode() != null);
 
             button.addActionListener(e -> {
@@ -475,5 +480,11 @@ public class SymbolSelectorFrame extends JDialog {
 
     private JPanel getDialogPane() {
         return this.dialogPane;
+    }
+
+    @Override
+    public void update(String hierarchy) {
+        this.startSymbole = hierarchy;
+        redraw(this.extractedData.getNode().getParentNodeByHierarchy(hierarchy));
     }
 }
