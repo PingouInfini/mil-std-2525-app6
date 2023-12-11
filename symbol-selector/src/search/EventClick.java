@@ -4,7 +4,7 @@ import java.awt.*;
 
 public interface EventClick {
 
-    public void itemClick(DataSearch data);
+    void itemClick(DataSearch data);
 
-    public void itemRemove(Component com, DataSearch data);
+    void itemRemove(Component com, DataSearch data);
 }

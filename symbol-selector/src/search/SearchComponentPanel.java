@@ -13,17 +13,13 @@ public class SearchComponentPanel extends javax.swing.JPanel {
     private SearchTextField txtSearch;
 
     private final Map<String, String> searchDataset;
-    private Set<String> previousSearch = new TreeSet<>();
+    private final Set<String> previousSearch;
     private final String iconPath;
 
     public SearchComponentPanel(Map<String, String> mapDescriptionHierarchy, Set<String> historiqueRecherche, String iconPath) {
         this.searchDataset = mapDescriptionHierarchy;
         this.iconPath = iconPath;
-
-        if (historiqueRecherche != null)
-            this.previousSearch = historiqueRecherche;
-        else
-            this.previousSearch = new TreeSet<>();
+        this.previousSearch = Objects.requireNonNullElseGet(historiqueRecherche, TreeSet::new);
     }
 
     public JPanel createSearchPanel() {
@@ -37,10 +33,10 @@ public class SearchComponentPanel extends javax.swing.JPanel {
             @Override
             public void itemClick(DataSearch data) {
                 menu.setVisible(false);
-                txtSearch.setText(data.getText());
-                previousSearch.add(data.getText());
+                txtSearch.setText(data.text());
+                previousSearch.add(data.text());
 
-                EventManager.getInstance().fireEvent(data.getHierarchy());
+                EventManager.getInstance().fireEvent(data.hierarchy());
 
                 //System.out.println("Click Item : " + data.getText()+ " -> "+data.getHierarchy());
             }
@@ -48,12 +44,11 @@ public class SearchComponentPanel extends javax.swing.JPanel {
             @Override
             public void itemRemove(Component com, DataSearch data) {
                 search.remove(com);
-                removeHistory(data.getText());
+                removeHistory(data.text());
                 menu.setPopupSize(menu.getWidth(), (search.getItemSize() * 35) + 2);
                 if (search.getItemSize() == 0) {
                     menu.setVisible(false);
                 }
-                System.out.println("Remove Item : " + data.getText());
             }
         });
         return searchPanel;
@@ -68,12 +63,12 @@ public class SearchComponentPanel extends javax.swing.JPanel {
         txtSearch.setPrefixIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource(this.iconPath + "/search.png")))); // NOI18N
         txtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtSearchMouseClicked(evt);
+                txtSearchMouseClicked();
             }
         });
         txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtSearchKeyReleased(evt);
+                txtSearchKeyReleased();
             }
         });
 
@@ -98,13 +93,13 @@ public class SearchComponentPanel extends javax.swing.JPanel {
         return searchPanel;
     }
 
-    private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {
+    private void txtSearchMouseClicked() {
         if (search.getItemSize() > 0) {
             menu.show(txtSearch, 0, txtSearch.getHeight());
         }
     }
 
-    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {
+    private void txtSearchKeyReleased() {
         String text = txtSearch.getText().trim().toLowerCase();
         search.setData(search(text));
         if (search.getItemSize() > 0) {
@@ -122,12 +117,13 @@ public class SearchComponentPanel extends javax.swing.JPanel {
 
         for (Map.Entry<String, String> entry : searchDataset.entrySet()) {
             String d = entry.getKey();
-            if (d.toLowerCase().contains(search)) {
+            if (d.toLowerCase().replaceAll("[\\s-]", "")
+                    .contains(search.replaceAll("[\\s-]", ""))) {
                 boolean inHistory = isInHistory(d);
                 if (inHistory) {
-                    list.add(0, new DataSearch(d, entry.getValue(), inHistory));
+                    list.add(0, new DataSearch(d, entry.getValue(), true));
                 } else {
-                    list.add(new DataSearch(d, entry.getValue(), inHistory));
+                    list.add(new DataSearch(d, entry.getValue(), false));
                 }
             }
         }
