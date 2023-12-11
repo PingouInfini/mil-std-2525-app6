@@ -1,64 +1,97 @@
+import model.ExtractedData;
+import model.NodeAPP6;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class App6Parser {
-    public static Node readFirstColumn(String filePath) {
-        Node primaryNode = new Node();
+public class App6Parser
+{
+    private static final Logger logger = Logger.getLogger("component.app6Parser");
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+    public static ExtractedData readColumns(String filePath)
+    {
+        final NodeAPP6 primaryNode = new NodeAPP6();
+        final Map<String, String> mapDescriptionHierarchy = new TreeMap<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath)))
+        {
             String line;
-            while ((line = reader.readLine()) != null) {
-                String[] columns = line.split(";");
-                if (columns.length > 0) {
-                    String currentHierarchy = columns[0].trim();
-                    if (!currentHierarchy.startsWith("1.X") && !currentHierarchy.startsWith("2.X")) continue;
+            while ((line = reader.readLine()) != null)
+            {
+                final String[] columns = line.split(";");
 
-                    String parentHierarchy = currentHierarchy.contains(".") ? currentHierarchy.substring(0, currentHierarchy.lastIndexOf(".")) : currentHierarchy;
-                    String currentSymbolCode = columns[1].trim();
-                    String fullPath = columns[2].trim();
-                    String currentName = columns[3].trim();
-                    String currentNameFR = columns[4].trim();
-                    Node currentNode = new Node(currentHierarchy, currentSymbolCode, currentName, currentNameFR);
+                if (columns.length > 0)
+                {
+                    final String currentHierarchy = columns[0].trim();
+                    final String name = columns[3].trim();
+                    final String nameFr = columns[4].trim();
+                    if (!currentHierarchy.startsWith("1.X") && !currentHierarchy.startsWith("2.X"))
+                        continue;
 
-                    // Le parent n'est pas trouvé, on rajoute le node au primaryNode s'il est de niveau 1 (1.X.1, 1.X.2...)
-                    if (currentHierarchy.length() == 5 && primaryNode.findNodeByHierarchy(parentHierarchy) == null) {
+                    final String parentHierarchy = currentHierarchy.contains(".")
+                            ? currentHierarchy.substring(0, currentHierarchy.lastIndexOf(".")) : currentHierarchy;
+                    final String currentSymbolCode = columns[1].trim();
+                    final String currentFullPath = columns[2].trim();
+                    final String currentName = columns[3].trim();
+                    final String currentNameFR = columns[4].trim();
+                    final NodeAPP6 currentNode = new NodeAPP6(currentHierarchy, currentSymbolCode, currentName, currentNameFR,
+                            currentFullPath);
+
+                    mapDescriptionHierarchy.put(name + " / " + nameFr, currentHierarchy);
+
+                    // Le parent n'est pas trouvé, on rajoute le NodeAPP6 au primaryNodeAPP6 s'il est de niveau 1 (1.X.1, 1.X.2...)
+                    if (currentHierarchy.length() == 5 && primaryNode.findNodeByHierarchy(parentHierarchy) == null)
+                    {
                         primaryNode.addChild(currentNode);
                     }
-                    // Sinon on va créer les nodes manquants pour le rattacher au primaryNode
-                    else if (primaryNode.findNodeByHierarchy(parentHierarchy) == null) {
-                        createMissingNodes(primaryNode, currentNode.getHierarchy(), currentSymbolCode, fullPath);
+                    // Sinon on va créer les NodeAPP6s manquants pour le rattacher au primaryNodeAPP6
+                    else if (primaryNode.findNodeByHierarchy(parentHierarchy) == null)
+                    {
+                        createMissingNodeAPP6s(primaryNode, currentNode.getHierarchy(), currentSymbolCode, currentFullPath);
                     }
                     // Le parent a été trouvé, on lui rattache son enfant
-                    else {
+                    else
+                    {
                         primaryNode.findNodeByHierarchy(parentHierarchy).addChild(currentNode);
                     }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
-        return primaryNode;
+        catch (final IOException e)
+        {
+            logger.log(Level.SEVERE, "erreur lors de la recuperation des noeuds de l'app6 ", e);
+        }
+        return new ExtractedData(primaryNode, mapDescriptionHierarchy);
     }
 
-    private static Node createMissingNodes(Node primaryNode, String hierarchy, String symbolCode, String path) {
-        String name = path.substring(path.lastIndexOf("|") + 1);
-        Node currentNode = new Node(hierarchy, symbolCode, name, name);
-        if (hierarchy.length() == 5) {
-            primaryNode.addChild(currentNode);
-            return currentNode;
+    private static NodeAPP6 createMissingNodeAPP6s(NodeAPP6 primaryNodeAPP6, String hierarchy, String symbolCode, String path)
+    {
+        final String name = path.substring(path.lastIndexOf("|") + 1);
+        final NodeAPP6 currentNodeAPP6 = new NodeAPP6(hierarchy, symbolCode, name, name, path);
+        if (hierarchy.length() == 5)
+        {
+            primaryNodeAPP6.addChild(currentNodeAPP6);
+            return currentNodeAPP6;
         }
 
-        String parentHierarchy = hierarchy.contains(".") ? hierarchy.substring(0, hierarchy.lastIndexOf(".")) : hierarchy;
+        final String parentHierarchy = hierarchy.contains(".") ? hierarchy.substring(0, hierarchy.lastIndexOf(".")) : hierarchy;
 
-        if (primaryNode.findNodeByHierarchy(parentHierarchy) == null) {
-            Node parentNode = createMissingNodes(primaryNode, parentHierarchy, null, path.substring(0, path.lastIndexOf("|")));
-            parentNode.addChild(currentNode);
-        } else {
-            primaryNode.findNodeByHierarchy(parentHierarchy).addChild(currentNode);
+        if (primaryNodeAPP6.findNodeByHierarchy(parentHierarchy) == null)
+        {
+            final NodeAPP6 parentNodeAPP6 = createMissingNodeAPP6s(primaryNodeAPP6, parentHierarchy, null,
+                    path.substring(0, path.lastIndexOf("|")));
+            parentNodeAPP6.addChild(currentNodeAPP6);
         }
-        return currentNode;
+        else
+        {
+            primaryNodeAPP6.findNodeByHierarchy(parentHierarchy).addChild(currentNodeAPP6);
+        }
+        return currentNodeAPP6;
     }
 
 }

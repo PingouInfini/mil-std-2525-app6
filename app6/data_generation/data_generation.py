@@ -84,6 +84,7 @@ def generate_icon_files_mapping_app6c():
                         hierarchy = compute_hierarchy_from_fullpath(fullpath)
                         name = re.search(r"(?<=\|)([^|]+)$", fullpath).group(0) \
                             if re.search(r"(?<=\|)([^|]+)$", fullpath) else fullpath
+                        name = name.replace("\"", "")
 
                         nameFR = translate_to_french_from_csv(name).strip()
                         sidc = match[1].strip().replace("'", "") if match[1] else None
@@ -221,6 +222,7 @@ def extract_svg(string):
 def get_clear_name(input_string):
     # Replace all but the last <br> with |.
     modified_string = re.sub(r"(<br>(?![^<]*$))", '|', input_string)
+    modified_string = modified_string.replace("\"", "")
     # Remove all html tags
     clean_string = re.sub('<.*?>', '', modified_string)
     clean_string = clean_string.replace("&amp;", "&")

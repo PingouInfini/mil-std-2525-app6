@@ -1,8 +1,12 @@
+import model.ExtractedData;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Main extends JFrame {
-    private JTextField textField;
 
     public Main() {
         setTitle("IHM Example");
@@ -10,7 +14,7 @@ public class Main extends JFrame {
         setSize(300, 200);
         setLayout(new FlowLayout());
 
-        textField = new JTextField(10);
+        JTextField textField = new JTextField(10);
         JButton goButton = new JButton("Select an APP6 Icon");
         goButton.addActionListener(e -> showPopup());
 
@@ -19,9 +23,14 @@ public class Main extends JFrame {
     }
 
     private void showPopup() {
-        Node nodes = App6Parser.readFirstColumn(App6Parser.class.getResource("/resources/icon-files-mapping.csv").getFile());
+        ExtractedData extractedData = App6Parser.readColumns(Objects.
+                requireNonNull(App6Parser.class.getResource("/resources/icon-files-mapping.csv")).getFile());
 
-        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(nodes);
+        Set<String> historiqueRecherche = new TreeSet<>();
+        historiqueRecherche.add("INFANTRY / INFANTERIE");
+        historiqueRecherche.add("ARMOR TRACK / PISTE DE BLINDE");
+
+        SymbolSelectorFrame symbolSelector = new SymbolSelectorFrame(extractedData, historiqueRecherche, "1.X.4.1.3", null);
         symbolSelector.setVisible(true);
     }
 
