@@ -37,8 +37,6 @@ public class SearchComponentPanel extends javax.swing.JPanel {
                 previousSearch.add(data.text());
 
                 EventManager.getInstance().fireEvent(data.hierarchy());
-
-                //System.out.println("Click Item : " + data.getText()+ " -> "+data.getHierarchy());
             }
 
             @Override
