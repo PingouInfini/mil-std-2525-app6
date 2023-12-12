@@ -12,6 +12,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.util.HashMap;
 import java.util.Map;
@@ -121,6 +123,12 @@ public class SymbolSelectorFrame extends JDialog implements Observer {
     private void initMainPanel() {
         setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                EventManager.getInstance().unsubscribe(EventType.UI_REDRAW, SymbolSelectorFrame.this);
+            }
+        });
         setResizable(false);
         setTitle("Sélection du symbole APP6");
         setType(Window.Type.POPUP);
