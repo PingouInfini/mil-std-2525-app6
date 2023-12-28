@@ -4,42 +4,50 @@ import fr.pingouinfini.symbology.*;
 import fr.pingouinfini.symbology.StandardEntityOnes;
 import fr.pingouinfini.symbology.StandardEntityTwos;
 import fr.pingouinfini.symbology.StatusAmplifierModes;
+import net.miginfocom.swing.MigLayout;
 import org.apache.batik.swing.JSVGCanvas;
 import org.w3c.dom.svg.SVGDocument;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**
  * Hello world!
  */
 public class App {
+
+
+
+
     public static void main(String[] args) {
-        // Tested against symbols generated from https://sidc.milsymb.net/#/APP6
-        MilitarySymbolFactory.setStatusAmplifierMode(StatusAmplifierModes.Alternate);
-        //MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-0-20-2-4-61-120501-03-01");
-        //MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-3-10-0-0-16-120300-00-00");
-//        MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-2-3-36-0-0-00-110100-00-00");
+        SymbolSelectorFrame symbolSelectorFrame = new SymbolSelectorFrame();
 
-        MilitarySymbol milSym = new MilitarySymbol();
-        milSym.setContext(StandardEntityOnes.Simulation);
-        milSym.setStandardEntity(StandardEntityTwos.Friend);
-        milSym.setSymbolSet(SymbolSets.Space);
-        milSym.setStatusAmplifier(Status.Present);
-        milSym.setStatusAmplifierMode(StatusAmplifierModes.Alternate);
-        milSym.setHqTFDummy(HQTFDummy.NotApplicable);
-        milSym.setAmplifier(EchelonAmplifiers.Battalion);
-        milSym.setEntity(new Entity("13", "130000"));
-        milSym.setEntityType(new EntityType("00", "130000"));
-        milSym.setEntitySubType(new EntitySubType("00", "110300"));
-        milSym.setSectorOneModifier(new Modifier("06", "06"));
-        milSym.setSectorTwoModifier(new Modifier("02", "02"));
-
-        //SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(SymbolSets.LandEquipment);
-        //System.out.println(h);
-
-        System.out.println("SIDC: " + milSym);
-        showSymbol(milSym);
+//        // Tested against symbols generated from https://sidc.milsymb.net/#/APP6
+//        MilitarySymbolFactory.setStatusAmplifierMode(StatusAmplifierModes.Alternate);
+//        //MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-0-20-2-4-61-120501-03-01");
+//        //MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-3-10-0-0-16-120300-00-00");
+////        MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-2-3-36-0-0-00-110100-00-00");
+//
+//        MilitarySymbol milSym = new MilitarySymbol();
+//        milSym.setContext(StandardEntityOnes.Simulation);
+//        milSym.setStandardEntity(StandardEntityTwos.Friend);
+//        milSym.setSymbolSet(SymbolSets.Space);
+//        milSym.setStatusAmplifier(Status.Present);
+//        milSym.setStatusAmplifierMode(StatusAmplifierModes.Alternate);
+//        milSym.setHqTFDummy(HQTFDummy.NotApplicable);
+//        milSym.setAmplifier(EchelonAmplifiers.Battalion);
+//        milSym.setEntity(new Entity("13", "130000"));
+//        milSym.setEntityType(new EntityType("00", "130000"));
+//        milSym.setEntitySubType(new EntitySubType("00", "110300"));
+//        milSym.setSectorOneModifier(new Modifier("06", "06"));
+//        milSym.setSectorTwoModifier(new Modifier("02", "02"));
+//
+//        //SymbolSetEntityModifierTree h = MilitarySymbolFactory.createSymbolSetEntityModifierTree(SymbolSets.LandEquipment);
+//        //System.out.println(h);
+//
+//        System.out.println("SIDC: " + milSym);
+//        showSymbol(milSym);
     }
 
     public static void showSymbol(MilitarySymbol milSym) {

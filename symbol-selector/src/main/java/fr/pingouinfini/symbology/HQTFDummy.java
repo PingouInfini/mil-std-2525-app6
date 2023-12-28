@@ -1,15 +1,15 @@
 package fr.pingouinfini.symbology;
 
-public enum HQTFDummy
+public enum HQTFDummy implements Amplifier
 {
     NotApplicable("Not Applicable","0"),
-    FientDummy("Fient/Dummy","1"),
+    FeintDummy("Feint/Dummy","1"),
     Headquarters("2"),
-    FientDummyHeadquarters("Fient/ Dummy Headquarters","3"),
+    FeintDummyHeadquarters("Feint/ Dummy Headquarters","3"),
     TaskForce("Task Force","4"),
-    FientDummyTaskforce("Fient/Dummy Task Force","5"),
+    FeintDummyTaskforce("Feint/Dummy Task Force","5"),
     TaskForceHeadquarters("Task Force Headquarters","6"),
-    FientDummyTaskforceHeadquarters("Fient/ Dummy Task Force Headquarters","7");
+    FeintDummyTaskforceHeadquarters("Feint/ Dummy Task Force Headquarters","7");
 	
 	private final String description;
     private final String sidcPart;

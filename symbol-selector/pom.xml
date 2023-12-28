@@ -40,5 +40,21 @@
             <artifactId>batik-svggen</artifactId>
             <version>1.11</version>
         </dependency>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>3.7.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-transcoder</artifactId>
+            <version>1.14</version> <!-- Vérifiez la version la plus récente -->
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-rasterizer</artifactId>
+            <version>1.14</version> <!-- Vérifiez la version la plus récente -->
+        </dependency>
+
     </dependencies>
 </project>

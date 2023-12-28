@@ -134,12 +134,27 @@ public class ResourceManager {
     	String setA = milSym.getSidcSetA();
     	char[] c = setA.toCharArray();
 
-    	
-    	// Consider symbols sets that use frames belonging to other symbol sets
+		// Consider symbols sets that use frames belonging to other symbol sets
+		if(c[4]=='0' && c[5]=='2') { // air missile (SIDC value 02) uses air  (SIDC value 01)
+			//c[4]='0';
+			c[5]='1';
+		}
+
+		if(c[4]=='0' && c[5]=='6') { // space missile (SIDC value 06) uses space  (SIDC value 05)
+			//c[4]='0';
+			c[5]='5';
+		}
+
     	if(c[4]=='1' && c[5]=='1') { // land civilian (SIDC value 11) uses land unit (SIDC value 10)
     		//c[4]='1';
     		c[5]='0';
     	}
+
+		if(c[4]=='3' && c[5]=='6') { // mine warfare (SIDC value 36) uses sea subsurface (SIDC value 35)
+			//c[4]='3';
+			c[5]='5';
+		}
+
     	if(c[4]=='5' && c[5]=='0') { // SIGINT Space (SIDC value 50) uses Space (SIDC value 05)
     		c[4]='0';
     		c[5]='5';
@@ -399,7 +414,7 @@ public class ResourceManager {
 	 * @param symbolSets The symbols set whose entities' resource path is to be generated
 	 * @return The CSV path to the symbol set's entities
 	 */
-	protected String getEnitiesCsvResourcePath(SymbolSets symbolSets) {
+	protected String getEntitiesCsvResourcePath(SymbolSets symbolSets) {
         return NAME_DOMAIN_VALUES_FOLDER+
 				CODED_DOMAIN_FILE_PREFIX+
 				symbolSetToCsvFileNameMap.get(symbolSets)+

@@ -58,6 +58,7 @@ public class SvgFactory {
         			Document document = f.createDocument(new File(file).toURI().toString());
         			appendDocument(newSvgDocument, svgRoot, document);
         		}catch(Exception e) {
+					logger.log(Level.WARNING, milSym.toString());
         			logger.log(Level.WARNING, "Unable to create frame SVG for "+
         		milSym.getSymbolSet().getDescription()+
         		", "+ResourceManager.getFrameSvgResourcePath(milSym)
@@ -128,6 +129,9 @@ public class SvgFactory {
 					Document document = f.createDocument(new File(file).toURI().toString());
 					appendDocument(newSvgDocument, svgRoot, document);
 				}catch(Exception e) {
+					System.out.println(path);
+					logger.log(Level.WARNING, milSym.toString());
+					e.printStackTrace(System.out); // fixme remove me
 					logger.log(Level.WARNING, "Unable to create Entity icons for "+
 						milSym.getSymbolSet()+
 						", "+milSym.getAmplifier()+
@@ -144,6 +148,7 @@ public class SvgFactory {
 					Document document = f.createDocument(new File(file).toURI().toString());
 					appendDocument(newSvgDocument, svgRoot, document);
 				}catch(Exception e) {
+					logger.log(Level.WARNING, milSym.toString());
 					logger.log(Level.WARNING, "Unable to get modifier symbols for "+
 						milSym.getSymbolSet()+
 						", "+path

@@ -1,6 +1,6 @@
 package fr.pingouinfini.symbology;
 
-public enum SymbolSets
+public enum SymbolSets implements Amplifier
 {
     Air("01"),
     AirMissile ("Air Missile","02"),

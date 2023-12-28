@@ -1,6 +1,6 @@
 package fr.pingouinfini.symbology;
 
-public enum StandardEntityOnes
+public enum StandardEntityOnes implements Amplifier
 {
     Reality("0"),
     Exercise("1"),

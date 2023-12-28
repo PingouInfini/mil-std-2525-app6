@@ -11,7 +11,7 @@ public enum EquipmentMobilityAmplifiers implements Amplifier  {
 	PackAnimals("Pack animals","37"),
 	OverSnow("Oversnow(prime mover)","41"),
     Sled("42"),
-    Barge("1"),
+    Barge("51"),
 	Amphibious("52");
 	
     private final String description;

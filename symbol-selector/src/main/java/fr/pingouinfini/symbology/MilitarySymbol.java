@@ -42,10 +42,9 @@ public class MilitarySymbol
 	}
 
 	public MilitarySymbol() {
-
         this.entity = new Entity("Unspecified","120000");
-        this.entityType = new EntityType("Unspecified","120500");
-        this.entitySubType = new EntitySubType("Unspecified","120501");
+        this.entityType = new EntityType("Unspecified","121100");
+        this.entitySubType = new EntitySubType("Unspecified","120000");
 	}
     
     public MilitarySymbol(String version, StandardEntityOnes standardEntityOne, StandardEntityTwos standardEntityTwo, SymbolSets symbolSet, Status status, HQTFDummy hQTFDummy, Amplifier amplifier)
@@ -187,10 +186,10 @@ public class MilitarySymbol
 	public void setAmplifier(Amplifier amplifier) {
 		this.amplifier = amplifier;
 	}
-	private Entity getEntity() {
+	public Entity getEntity() {
 		return entity;
 	}
 	public void setEntity(Entity entity) {
 		this.entity = entity;
-	}	
+	}
 }

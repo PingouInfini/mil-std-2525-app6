@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +55,7 @@ public class MilitarySymbolFactory
 	public static SymbolSetEntityModifierTree createSymbolSetEntityModifierTree(SymbolSets symbolSet) {
 		ResourceManager resourceManager = new ResourceManager();
 		
-    	String entitiesFilePath = resourceManager.getEnitiesCsvResourcePath(symbolSet);
+    	String entitiesFilePath = resourceManager.getEntitiesCsvResourcePath(symbolSet);
     	String areaEntitiesFilePath = resourceManager.getAreaEntitiesCsvResourcePath(symbolSet);
     	String lineEntitiesFilePath = resourceManager.getLineEntitiesCsvResourcePath(symbolSet);
     	String pointEntitiesFilePath = resourceManager.getPointEntitiesCsvResourcePath(symbolSet);
@@ -72,7 +73,7 @@ public class MilitarySymbolFactory
     	return h;
 	}
 	
-    private static void addEntitiesTree(String filePath, List<Entity> enitiesList) {   	
+    private static void addEntitiesTree(String filePath, Set<Entity> entitiesList) {
 
     	Entity lastEntity = null;
     	EntityType lastEntityType = null;
@@ -92,7 +93,7 @@ public class MilitarySymbolFactory
         	    switch(split.length) {
         	    case 1:
         	    	lastEntity = new Entity(split[0].trim(), code);
-        	    	enitiesList.add(lastEntity);
+        	    	entitiesList.add(lastEntity);
         	    	break;
         	    case 2:
         	    	lastEntityType = new EntityType(split[1].trim(), code);
@@ -117,12 +118,12 @@ public class MilitarySymbolFactory
     		name = name.replace('_', ' ');
     		name = name.substring(13);
     				
-    		logger.log(Level.INFO, "Unable to build enities for "+name);
+    		logger.log(Level.INFO, "Unable to build entities for "+name);
     		return;
     	}
     }
     
-    private static void addSectorModifiers(ModifierTypes modifierType, SymbolSets set,List<Modifier> modifiersList) {
+    private static void addSectorModifiers(ModifierTypes modifierType, SymbolSets set, List<Modifier> modifiersList) {
     	
     	ResourceManager resourceManager = new ResourceManager();
     	try {
@@ -131,7 +132,7 @@ public class MilitarySymbolFactory
         	BufferedReader csvReader = new BufferedReader(new FileReader(f));
         	String row = csvReader.readLine(); // skip CSV header
         	while ((row = csvReader.readLine()) != null) {
-        	    String[] data = row.split(",");
+        	    String[] data = row.split(";");
         	    String name = data[0].trim();
         	    String code = data[1].trim();
         	    modifiersList.add(new Modifier(name, code));
@@ -139,8 +140,7 @@ public class MilitarySymbolFactory
         	csvReader.close();
     	}catch(Exception e) {
     		logger.log(Level.INFO, "Unable to build sector modifiers("+modifierType.toString()+") for "+set);
-    		return;
-    	} 
+        }
     }
     
     public static boolean isAmplifierApplicable(MilitarySymbol milSym) {
