@@ -14,13 +14,13 @@ import java.util.logging.Logger;
 public class MilitarySymbolFactory
 {
 	static Logger logger = Logger.getLogger(SvgFactory.class.getName());
-	static StatusAmplifierModes amplifierMode = StatusAmplifierModes.Default;
+	static StatusAmplifierModes amplifierMode = StatusAmplifierModes.Alternate;
 	
 	public static MilitarySymbol createSymbol(String code) {
 		MilitarySymbol milSym = new MilitarySymbol();
 		milSym.setStatusAmplifierMode(amplifierMode);
 		String sidc = code.replaceAll(" ", "").replaceAll("-", "");
-		
+
 		milSym.setStandardEntityOne(StandardEntityOnes.getEnum(sidc.substring(2,3)));
     	milSym.setStandardEntityTwo(StandardEntityTwos.getEnum(sidc.substring(3,4)));
     	milSym.setSymbolSet(SymbolSets.getEnum(sidc.substring(4,6)));

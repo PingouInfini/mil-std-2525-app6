@@ -28,7 +28,7 @@ import java.util.Objects;
  */
 public class SymbolSelectorFrame extends JPanel {
 
-    private static MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-3-10-0-0-00-121102-09-51");
+    private static MilitarySymbol milSym = MilitarySymbolFactory.createSymbol("10-0-6-10-2-0-13-121102-09-51");
     private SymbolSetEntityModifierTree entityModifierTree;
 
     private static JFormattedTextField formattedTextField1;
@@ -69,15 +69,19 @@ public class SymbolSelectorFrame extends JPanel {
         //======== symbolSelectorFrame ========
         {
             symbolSelectorFrame.setAlwaysOnTop(true);
-            //dialog1.setModal(true);
-            symbolSelectorFrame.setResizable(true); // TODO
+            symbolSelectorFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            symbolSelectorFrame.setResizable(true); // TODO: keep this ?
+            symbolSelectorFrame.setTitle("Sélection du symbole APP6");
+            symbolSelectorFrame.setType(Window.Type.POPUP);
+            //symbolSelectorFrame.setModal(true);
+
             Container symbolSelectorContentPane = symbolSelectorFrame.getContentPane();
             symbolSelectorContentPane.setLayout(new GridLayout(1, 2));
 
             //======== leftSideSelectorFrame ========
             {
                 leftSideSelectorFrame.setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax
-                        .swing.border.EmptyBorder(0, 0, 0, 0), "JFormDesigner Evaluation", javax.swing
+                        .swing.border.EmptyBorder(0, 0, 0, 0), "", javax.swing
                         .border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.
                         Font("Dialog", java.awt.Font.BOLD, 12), java.awt.Color.red
                 ), leftSideSelectorFrame.getBorder()));
@@ -427,6 +431,8 @@ public class SymbolSelectorFrame extends JPanel {
 
         // Clear comboboxes
         entityComboBox.removeAllItems();
+        entityTypeComboBox.removeAllItems();
+        entitySubTypeComboBox.removeAllItems();
         sectorOneModifierComboBox.removeAllItems();
         sectorTwoModifierComboBox.removeAllItems();
 

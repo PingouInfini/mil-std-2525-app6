@@ -334,7 +334,7 @@ public class ResourceManager {
 		
 		SymbolSets set = milSym.getSymbolSet();
 		String fileMapping = ap.get(set);
-		String fileName = SVG_FOLDER+fileMapping+a[4]+a[5]+b[0]+b[1]+b[2]+b[3]+"00";
+		String fileName = SVG_FOLDER+fileMapping+a[4]+a[5]+b[0]+b[1]+b[2]+b[3]+b[4]+b[5];
 		paths.add(fileName);
 
 		// if the expected symbols are not found, give special consideration as
@@ -344,6 +344,9 @@ public class ResourceManager {
 			String suffix = "";
 			if(!resourceExists(p+".svg")) {
 				switch(milSym.getStandardEntityTwo()) {
+				case Pending: // same as Unknown
+					suffix = "_0";
+					break;
 				case Unknown:
 					suffix = "_0";
 					break;
