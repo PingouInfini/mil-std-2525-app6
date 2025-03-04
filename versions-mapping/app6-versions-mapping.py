@@ -2,6 +2,7 @@ import csv
 import os
 import subprocess
 
+
 def delete_existing_file(filepath):
     """Supprime le fichier s'il existe déjà."""
     if os.path.exists(filepath):
@@ -92,12 +93,12 @@ def process_2525c_files(input_dir, output_file):
         )
     )
 
-
-
     # Ouvrir le fichier de sortie et écrire les lignes triées
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
         # Définir les noms de colonnes dans l'ordre spécifié
-        fieldnames = ['APP6-C-Domain', 'APP6-C-FullPath', 'APP6-NAME', 'APP6-NAME-FR', 'APP6-C-HIERARCHY-NAME', 'APP6-C-HIERARCHY', 'APP6-B-SIDC', 'APP6-C-SIDC', 'APP6-D-SIDC', 'APP6-D-Domain', 'APP6-D-Entity', 'APP6-D-EntityType', 'APP6-D-EntitySubtype']
+        fieldnames = ['APP6-C-Domain', 'APP6-C-FullPath', 'APP6-NAME', 'APP6-NAME-FR', 'APP6-C-HIERARCHY-NAME',
+                      'APP6-C-HIERARCHY', 'APP6-B-SIDC', 'APP6-C-SIDC', 'APP6-D-SIDC', 'APP6-D-Domain', 'APP6-D-Entity',
+                      'APP6-D-EntityType', 'APP6-D-EntitySubtype']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=';')
         writer.writeheader()
 
@@ -126,7 +127,9 @@ def update_with_2525b_files(input_dir, output_file):
 
     # Réécrire le fichier CSV mis à jour
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
-        fieldnames = ['APP6-C-Domain', 'APP6-C-FullPath', 'APP6-NAME', 'APP6-NAME-FR', 'APP6-C-HIERARCHY-NAME', 'APP6-C-HIERARCHY', 'APP6-B-SIDC', 'APP6-C-SIDC', 'APP6-D-SIDC', 'APP6-D-Domain', 'APP6-D-Entity', 'APP6-D-EntityType', 'APP6-D-EntitySubtype']
+        fieldnames = ['APP6-C-Domain', 'APP6-C-FullPath', 'APP6-NAME', 'APP6-NAME-FR', 'APP6-C-HIERARCHY-NAME',
+                      'APP6-C-HIERARCHY', 'APP6-B-SIDC', 'APP6-C-SIDC', 'APP6-D-SIDC', 'APP6-D-Domain', 'APP6-D-Entity',
+                      'APP6-D-EntityType', 'APP6-D-EntitySubtype']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter=';')
         writer.writeheader()
         writer.writerows(reader)
@@ -151,23 +154,22 @@ def update_with_2525d_files_with_javascript():
 
 
 def update_with_2525d_files(input_dir, csv_file_path):
-
     update_with_2525d_files_with_javascript()
 
     # Dictionnaire pour associer les noms de fichiers aux préfixes
     file_prefixes = {
         'Air.tsv': '01',
-        'Air Missile.tsv': '02',
+        'Air missile.tsv': '02',
         'Space.tsv': '05',
-        'Space Missile.tsv': '06',
-        'Land Unit.tsv': '10',
-        'Land Civilian.tsv': '11',
-        'Land Equipment.tsv': '15',
-        'Land Installation.tsv': '20',
-        'Control Measure.tsv': '25',
-        'Sea Surface.tsv': '30',
-        'Sea Subsurface.tsv': '35',
-        'Mine Warfare.tsv': '36',
+        'Space missile.tsv': '06',
+        'Land unit.tsv': '10',
+        'Land civilian.tsv': '11',
+        'Land equipment.tsv': '15',
+        'Land installation.tsv': '20',
+        'Control Measures.tsv': '25',
+        'Sea surface.tsv': '30',
+        'Signals Intelligence - Space.tsv': '35',
+        'Mine warfare.tsv': '36',
         'Activities.tsv': '40',
         'Meteorological - Atmospheric.tsv': '45',
         'Meteorological - Oceanographic.tsv': '46',
@@ -203,8 +205,11 @@ def update_with_2525d_files(input_dir, csv_file_path):
                     # Mettre à jour les dernières valeurs non vides
                     if row['Entity']:
                         last_entity = row['Entity']
+                        last_entity_type = ""
+                        last_entity_subtype = ""
                     if row['Entity Type']:
                         last_entity_type = row['Entity Type']
+                        last_entity_subtype = ""
                     if row['Entity Subtype']:
                         last_entity_subtype = row['Entity Subtype']
 
@@ -212,7 +217,9 @@ def update_with_2525d_files(input_dir, csv_file_path):
                     code_found = False
                     for csv_row in csv_reader:
                         app6_d_sidc = csv_row['APP6-D-SIDC']
-                        if len(app6_d_sidc) >= 16 and app6_d_sidc[10:16] == code:
+
+                        if len(app6_d_sidc) >= 16 and app6_d_sidc[10:16] == code and app6_d_sidc[4:6] == file_prefixes[
+                            filename]:
                             # Si le code est trouvé, mettre à jour les colonnes correspondantes
                             csv_row['APP6-D-Domain'] = os.path.splitext(filename)[0].upper()
                             csv_row['APP6-D-Entity'] = last_entity
