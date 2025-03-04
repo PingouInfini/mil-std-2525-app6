@@ -2,6 +2,10 @@
 
 Permet de générer un fichier csv de mapping de code APP6-B, APP6-C et APP6-D et diverses informations
 
+# Remerciements
+
+Script et données de mapping issus de https://github.com/orbat-mapper/convert-symbology  
+
 # Prérequis
 
 - Python *(testé avec Python 3.13.2)*
@@ -11,6 +15,7 @@ Permet de générer un fichier csv de mapping de code APP6-B, APP6-C et APP6-D e
 Installer les dépendances suivantes:
 
 ```
+npm install -g typescript
 npm install csv-parser json2csv @orbat-mapper/convert-symbology
 ```
 

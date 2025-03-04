@@ -141,7 +141,7 @@ def update_with_2525d_files_with_javascript():
 
     try:
         # Aller dans le répertoire "lib"
-        os.chdir("lib")
+        os.chdir("utils")
 
         # Exécuter le script Node.js dans "lib"
         subprocess.run(["node", "convert-symbology.js"], check=True)
