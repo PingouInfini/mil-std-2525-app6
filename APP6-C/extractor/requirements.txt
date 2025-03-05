@@ -1,0 +1,3 @@
+cairosvg
+deep_translator
+tqdm

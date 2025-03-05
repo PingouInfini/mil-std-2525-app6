@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@orbat-mapper/convert-symbology": "^1.0.2",
-    "csv-parser": "^3.2.0",
-    "json2csv": "^6.0.0-alpha.2"
-  }
-}
