@@ -151,12 +151,12 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
         'Land installation.tsv': '20',
         'Control Measures.tsv': '25',
         'Sea surface.tsv': '30',
-        'Signals Intelligence - Space.tsv': '35',
+        'Sea subsurface.tsv': '35',
         'Mine warfare.tsv': '36',
         'Activities.tsv': '40',
-        # 'Meteorological - Atmospheric.tsv': '45',
-        # 'Meteorological - Oceanographic.tsv': '46',
-        # 'Meteorological - Space.tsv': '47',
+        'Meteorological - Atmospheric.tsv': '45',
+        'Meteorological - Oceanographic.tsv': '46',
+        'Meteorological - Space.tsv': '47',
         'Signals Intelligence - Space.tsv': '50',
         'Signals Intelligence - Air.tsv': '51',
         'Signals Intelligence - Land.tsv': '52',
@@ -285,8 +285,6 @@ def order_csv_by_column_name(csv_file, column_name):
         writer = csv.DictWriter(file, fieldnames=reader.fieldnames, delimiter=';')
         writer.writeheader()
         writer.writerows(rows_sorted)
-
-    print(f"Fichier trié écrit dans: {csv_file}")
 
 
 # Définir les répertoires d'entrée et le fichier de sortie
