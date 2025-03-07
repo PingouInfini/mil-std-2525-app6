@@ -1,0 +1,205 @@
+Entity	Entity Type	Entity Subtype	Code	Remarks
+Unspecified			000000	
+Ice Systems			110000	
+	Icebergs		110100	
+		Many Icebergs	110101	
+		Belts and Strips	110102	
+		General	110103	
+		Many Icebergs - General	110104	
+		Bergy Bit	110105	
+		Many Bergy Bits	110106	
+		Growler	110107	
+		Many Growlers	110108	
+		Floeberg	110109	
+		Ice Island	110110	
+	Ice Concentration		110200	
+		Bergy Water	110201	
+		Water with Radar Targets	110202	
+		Ice Free	110203	
+	Dynamic Processes		110300	
+		Convergence	110301	
+		Divergence	110302	
+		Shearing or Shear Zone	110303	
+		Ice Drift (Direction)	110304	
+	Sea Ice		110400	
+		Ice Thickness (Observed)	110401	
+		Ice Thickness (Estimated)	110402	
+		Melt Puddles or Flooded Ice	110403	
+	Limits		110500	
+		Limits of Visual Observation	110501	
+		Limits of Under Cast	110502	
+		Limits of Radar Observation	110503	
+		Observed Ice Edge or Boundary	110504	
+		Estimated Ice Edge or Boundary	110505	
+		Ice Edge or Boundary From Radar	110506	
+	Openings in the Ice		110600	
+		Cracks	110601	
+		Cracks at a Specific Location	110602	
+		Lead	110603	
+		Frozen Lead	110604	
+	Snow Cover		110700	
+		Sastrugi (with Orientation)	110701	
+	Topographical Features		110800	
+		Ridges or Hummocks	110801	
+		Rafting	110802	
+		Jammed Brash Barrier	110803	
+Hydrography			120000	
+	Depth		120100	
+		Soundings	120101	
+		Depth Curve	120102	
+		Depth Contour	120103	
+		Depth Area	120104	
+	Coastal Hydrography		120200	
+		Coastline	120201	
+		Island	120202	
+		Beach	120203	
+		Water	120204	
+		Foreshore - Line	120205	
+		Foreshore - Area	120206	
+	Ports and Harbors		120300	
+		Berths (Onshore)	120302	
+		Berths (Anchor)	120303	
+		Anchorage - Point	120304	
+		Anchorage - Line	120305	
+		Anchorage - Area	120306	
+		Call in Point	120307	
+		Pier/Wharf/Quay	120308	
+		Fishing Harbor - Point	120309	
+		Fish Weirs - Point	120310	
+		Fish Stakes - Point	120311	
+		Fish Traps - Area	120312	
+		Drydock	120314	
+		Landing Place	120315	
+		Offshore Loading Facility - Point	120316	
+		Offshore Loading Facility - Line	120317	
+		Offshore Loading Facility - Area	120318	
+		Ramp - Above Water	120319	
+		Ramp - Below Water	120320	
+		Landing Ring	120321	
+		Ferry Crossing	120322	
+		Cable Ferry Crossing	120323	
+		Dolphin	120324	
+		Breakwater/Groin/Jetty - Above Water	120326	
+		Breakwater/Groin/Jetty - Below Water	120327	
+		Seawall	120328	
+	Aids to Navigation		120400	
+		Beacon	120401	
+		Buoy Default	120402	
+		Marker	120403	
+		Perches/Stakes - Point	120404	
+		Perches/Stakes - Area	120405	
+		Light	120406	
+		Leading Line	120407	
+		Light Vessel/Light Ship	120408	
+		Lighthouse	120409	
+	Dangers/Hazards		120500	
+		Rock Submerged	120501	
+		Rock Awashed	120502	
+		Underwater Danger/Hazard	120503	
+		Foul Ground - Point	120504	
+		Foul Ground - Area	120505	
+		Kelp/Seaweed - Point	120506	
+		Kelp/Seaweed - Area	120507	
+		Snags/Stumps	120508	
+		Wreck (Uncovers)	120509	
+		Wreck (Submerged)	120510	
+		Breakers	120511	
+		Reef	120512	
+		Eddies/Overfalls/Tide Rips	120513	
+		Discolored Water	120514	
+	Bottom Features		120600	
+		Bottom Characteristics - Sand	120601	
+		Bottom Characteristics - Mud	120602	
+		Bottom Characteristics - Clay	120603	
+		Bottom Characteristics - Silt	120604	
+		Bottom Characteristics - Stones	120605	
+		Bottom Characteristics - Gravel	120606	
+		Bottom Characteristics - Pebbles	120607	
+		Bottom Characteristics - Cobbles	120608	
+		Bottom Characteristics - Rock	120609	
+		Bottom Characteristics - Coral	120610	
+		Bottom Characteristics - Shell	120611	
+		Qualifying Terms - Fine	120612	
+		Qualifying Terms - Medium	120613	
+		Qualifying Terms - Coarse	120614	
+	Tide and Current		120700	
+		Water Turbulence	120701	
+		Current Flow - Ebb	120702	
+		Current Flow - Flood	120703	
+		Tide Data Point	120704	
+		Tide Gauge	120705	
+Oceanography			130000	
+	Bioluminescence		130100	
+		Visual Detection Ratio (VDR) Level 1-2	130101	
+		VDR Level 2-3	130102	
+		VDR Level 3-4	130103	
+		VDR Level 4-5	130104	
+		VDR Level 5-6	130105	
+		VDR Level 6-7	130106	
+		VDR Level 7-8	130107	
+		VDR Level 8-9	130108	
+		VDR Level 9-10	130109	
+	Beach Slope		130200	
+		Flat	130201	
+		Gentle	130202	
+		Moderate	130203	
+		Steep	130204	
+Geophysics/Acoustics			140000	
+	Mine Warfare (MIW) Bottom Descriptors		140100	
+		MIW Bottom Sediments - Solid Rock	140101	
+		MIW Bottom Sediments - Clay	140102	
+		MIW Bottom Sediments - Very Coarse Sand	140103	
+		MIW Bottom Sediments - Coarse Sand	140104	
+		MIW Bottom Sediments - Medium Sand	140105	
+		MIW Bottom Sediments - Fine Sand	140106	
+		MIW Bottom Sediments - Very Fine Sand	140107	
+		MIW Bottom Sediments - Very Fine Silt	140108	
+		MIW Bottom Sediments - Fine Silt	140109	
+		MIW Bottom Sediments - Medium Silt	140110	
+		MIW Bottom Sediments - Coarse Silt	140111	
+		MIW Bottom Sediments - Boulders	140112	
+		MIW Bottom Sediments - Cobbles-Oyster Shells	140113	
+		MIW Bottom Sediments - Pebbles-Shells	140114	
+		MIW Bottom Sediments - Sand and Shells	140115	
+		MIW Bottom Sediment - Land	140116	
+		MIW Bottom Sediment - No Data	140117	
+		Bottom Roughness - Smooth	140118	
+		Bottom Roughness - Moderate	140119	
+		Bottom Roughness - Rough	140120	
+		Clutter (Bottom) - Low	140121	
+		Clutter (Bottom) - Medium	140122	
+		Clutter (Bottom) - High	140123	
+		Impact Burial - 0%	140124	
+		Impact Burial - 0-10%	140125	
+		Impact Burial - 10-20%	140126	
+		Impact Burial - 20-75%	140127	
+		Impact Burial - >75%	140128	
+		MIW Bottom Category A	140129	
+		MIW Bottom Category B	140130	
+		MIW Bottom Category C	140131	
+		MIW Bottom Type A1	140132	
+		MIW Bottom Type A2	140133	
+		MIW Bottom Type A3	140134	
+		MIW Bottom Type B1	140135	
+		MIW Bottom Type B2	140136	
+		MIW Bottom Type B3	140137	
+		MIW Bottom Type C1	140138	
+		MIW Bottom Type C2	140139	
+		MIW Bottom Type C3	140140	
+Limits			150000	
+	Maritime Limit Boundary		150100	
+	Maritime Area		150200	
+	Restricted Area		150300	
+	Swept Area		150400	
+	Training Area		150500	
+	Operator-Defined		150600	
+Man-Made Structures			160000	
+	Submarine Cable		160100	
+	Submerged Crib		160200	
+	Canal		160300	
+	Ford		160400	
+	Lock		160500	
+	Oil/Gas Rig		160600	
+	Oil/Gas Rig Field		160700	
+	Pipelines/Pipe		160800	
+	Pile/Piling/Post		160900	

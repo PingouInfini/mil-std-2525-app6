@@ -1,0 +1,175 @@
+SymbolSet;Entity;EntityType;EntitySubType;StandardIdentity;Code;GeometryType;IconType;UniqueName
+45;Unspecified;;;;000000;NotValid;NA;Unspecified
+45;Pressure Systems;Low Pressure Center;;;110100;Point;MAIN;Pressure Systems : Low Pressure Center
+45;Pressure Systems;Low Pressure Center;Cyclone Center;;110101;Point;MAIN;Pressure Systems : Low Pressure Center : Cyclone Center
+45;Pressure Systems;Low Pressure Center;Tropopause Low;;110102;Point;MAIN;Pressure Systems : Low Pressure Center : Tropopause Low
+45;Pressure Systems;High Pressure Center;;;110200;Point;MAIN;Pressure Systems : High Pressure Center
+45;Pressure Systems;High Pressure Center;Anticyclone Center;;110201;Point;MAIN;Pressure Systems : High Pressure Center : Anticyclone Center
+45;Pressure Systems;High Pressure Center;Tropopause High;;110202;Point;MAIN;Pressure Systems : High Pressure Center : Tropopause High
+45;Pressure Systems;Frontal Systems;Cold Front;;110301;Line;MAIN;Pressure Systems : Frontal Systems : Cold Front
+45;Pressure Systems;Frontal Systems;Upper Cold Front;;110302;Line;MAIN;Pressure Systems : Frontal Systems : Upper Cold Front
+45;Pressure Systems;Frontal Systems;Cold Frontogenesis;;110303;Line;MAIN;Pressure Systems : Frontal Systems : Cold Frontogenesis
+45;Pressure Systems;Frontal Systems;Cold Frontolysis;;110304;Line;MAIN;Pressure Systems : Frontal Systems : Cold Frontolysis
+45;Pressure Systems;Frontal Systems;Warm Front;;110305;Line;MAIN;Pressure Systems : Frontal Systems : Warm Front
+45;Pressure Systems;Frontal Systems;Upper Warm Front;;110306;Line;MAIN;Pressure Systems : Frontal Systems : Upper Warm Front
+45;Pressure Systems;Frontal Systems;Warm Frontogenesis;;110307;Line;MAIN;Pressure Systems : Frontal Systems : Warm Frontogenesis
+45;Pressure Systems;Frontal Systems;Warm Frontolysis;;110308;Line;MAIN;Pressure Systems : Frontal Systems : Warm Frontolysis
+45;Pressure Systems;Frontal Systems;Occluded Front;;110309;Line;MAIN;Pressure Systems : Frontal Systems : Occluded Front
+45;Pressure Systems;Frontal Systems;Upper Occluded Front;;110310;Line;MAIN;Pressure Systems : Frontal Systems : Upper Occluded Front
+45;Pressure Systems;Frontal Systems;Occluded Frontolysis;;110311;Line;MAIN;Pressure Systems : Frontal Systems : Occluded Frontolysis
+45;Pressure Systems;Frontal Systems;Stationary Front;;110312;Line;MAIN;Pressure Systems : Frontal Systems : Stationary Front
+45;Pressure Systems;Frontal Systems;Upper Stationary Front;;110313;Line;MAIN;Pressure Systems : Frontal Systems : Upper Stationary Front
+45;Pressure Systems;Frontal Systems;Stationary Frontogenesis;;110314;Line;MAIN;Pressure Systems : Frontal Systems : Stationary Frontogenesis
+45;Pressure Systems;Frontal Systems;Stationary Frontolysis;;110315;Line;MAIN;Pressure Systems : Frontal Systems : Stationary Frontolysis
+45;Pressure Systems;Lines;Trough Axis;;110401;Line;MAIN;Pressure Systems : Lines : Trough Axis
+45;Pressure Systems;Lines;Upper Trough Axis;;110402;Line;MAIN;Pressure Systems : Lines : Upper Trough Axis
+45;Pressure Systems;Lines;Ridge Axis;;110403;Line;MAIN;Pressure Systems : Lines : Ridge Axis
+45;Pressure Systems;Lines;Severe Squall Line;;110404;Line;MAIN;Pressure Systems : Lines : Severe Squall Line
+45;Pressure Systems;Lines;Instability Line;;110405;Line;MAIN;Pressure Systems : Lines : Instability Line
+45;Pressure Systems;Lines;Shear Line;;110406;Line;MAIN;Pressure Systems : Lines : Shear Line
+45;Pressure Systems;Lines;Inter-Tropical Convergence Zone;;110407;Line;MAIN;Pressure Systems : Lines : Inter-Tropical Convergence Zone
+45;Pressure Systems;Lines;Convergence Line;;110408;Line;MAIN;Pressure Systems : Lines : Convergence Line
+45;Pressure Systems;Lines;Inter-Tropical Discontinuity;;110409;Line;MAIN;Pressure Systems : Lines : Inter-Tropical Discontinuity
+45;Pressure Systems;Pressure Tendency;Rise Then Fall Higher;;110501;Point;MAIN;Pressure Systems : Pressure Tendency : Rise Then Fall Higher
+45;Pressure Systems;Pressure Tendency;Rise Then Steady;;110502;Point;MAIN;Pressure Systems : Pressure Tendency : Rise Then Steady
+45;Pressure Systems;Pressure Tendency;Rise;;110503;Point;MAIN;Pressure Systems : Pressure Tendency : Rise
+45;Pressure Systems;Pressure Tendency;Rise Then Rise Higher;;110504;Point;MAIN;Pressure Systems : Pressure Tendency : Rise Then Rise Higher
+45;Pressure Systems;Pressure Tendency;Steady;;110505;Point;MAIN;Pressure Systems : Pressure Tendency : Steady
+45;Pressure Systems;Pressure Tendency;Fall Then Rise Lower;;110506;Point;MAIN;Pressure Systems : Pressure Tendency : Fall Then Rise Lower
+45;Pressure Systems;Pressure Tendency;Fall Then Steady;;110507;Point;MAIN;Pressure Systems : Pressure Tendency : Fall Then Steady
+45;Pressure Systems;Pressure Tendency;Fall;;110508;Point;MAIN;Pressure Systems : Pressure Tendency : Fall
+45;Pressure Systems;Pressure Tendency;Rise Then Fall Lower;;110509;Point;MAIN;Pressure Systems : Pressure Tendency : Rise Then Fall Lower
+45;Turbulence;Light;;;120100;Point;MAIN;Turbulence : Light
+45;Turbulence;Moderate;;;120200;Point;MAIN;Turbulence : Moderate
+45;Turbulence;Severe;;;120300;Point;MAIN;Turbulence : Severe
+45;Turbulence;Extreme;;;120400;Point;MAIN;Turbulence : Extreme
+45;Turbulence;Mountain Waves;;;120500;Point;MAIN;Turbulence : Mountain Waves
+45;Icing;Clear Icing;Light;;130101;Point;MAIN;Icing : Clear Icing : Light
+45;Icing;Clear Icing;Moderate;;130102;Point;MAIN;Icing : Clear Icing : Moderate
+45;Icing;Clear Icing;Severe;;130103;Point;MAIN;Icing : Clear Icing : Severe
+45;Icing;Rime Icing;Light;;130201;Point;MAIN;Icing : Rime Icing : Light
+45;Icing;Rime Icing;Moderate;;130202;Point;MAIN;Icing : Rime Icing : Moderate
+45;Icing;Rime Icing;Severe;;130203;Point;MAIN;Icing : Rime Icing : Severe
+45;Icing;Mixed Icing;Light;;130301;Point;MAIN;Icing : Mixed Icing : Light
+45;Icing;Mixed Icing;Moderate;;130302;Point;MAIN;Icing : Mixed Icing : Moderate
+45;Icing;Mixed Icing;Severe;;130303;Point;MAIN;Icing : Mixed Icing : Severe
+45;Winds;Calm Winds;;;140100;Point;MAIN;Winds : Calm Winds
+45;Winds;Wind Plot;;;140200;Point;MAIN;Winds : Wind Plot
+45;Winds;Jet Stream;;;140300;Line;MAIN;Winds : Jet Stream
+45;Winds;Stream Line;;;140400;Line;MAIN;Winds : Stream Line
+45;Cloud Cover;Cloud Coverage Symbols;Clear Sky;;150101;Point;MAIN;Cloud Cover : Cloud Coverage : Clear Sky
+45;Cloud Cover;Cloud Coverage Symbols;Few Coverage;;150102;Point;MAIN;Cloud Cover : Cloud Coverage : Few Coverage
+45;Cloud Cover;Cloud Coverage Symbols;Scattered Coverage;;150103;Point;MAIN;Cloud Cover : Cloud Coverage : Scattered Coverage
+45;Cloud Cover;Cloud Coverage Symbols;Broken Coverage;;150104;Point;MAIN;Cloud Cover : Cloud Coverage : Broken Coverage
+45;Cloud Cover;Cloud Coverage Symbols;Overcast Coverage;;150105;Point;MAIN;Cloud Cover : Cloud Coverage : Overcast Coverage
+45;Cloud Cover;Cloud Coverage Symbols;Sky Totally or Partially Obscured;;150106;Point;MAIN;Cloud Cover : Cloud Coverage : Sky Totally or Partially Obscured
+45;Weather Symbols;Rain;Intermittent Light;;160101;Point;MAIN;Weather Symbols : Rain : Intermittent Light
+45;Weather Symbols;Rain;Continuous Light;;160102;Point;MAIN;Weather Symbols : Rain : Continuous Light
+45;Weather Symbols;Rain;Intermittent Moderate;;160103;Point;MAIN;Weather Symbols : Rain : Intermittent Moderate
+45;Weather Symbols;Rain;Intermittent Moderate/Continuous Moderate;;160104;Point;MAIN;Weather Symbols : Rain : Intermittent Moderate/Continuous Moderate
+45;Weather Symbols;Rain;Intermittent Heavy;;160105;Point;MAIN;Weather Symbols : Rain : Intermittent Heavy
+45;Weather Symbols;Rain;Intermittent Heavy/Continuous Heavy;;160106;Point;MAIN;Weather Symbols : Rain : Intermittent Heavy/Continuous Heavy
+45;Weather Symbols;Freezing Rain;Light;;160201;Point;MAIN;Weather Symbols : Freezing Rain : Light
+45;Weather Symbols;Freezing Rain;Moderate/Heavy;;160202;Point;MAIN;Weather Symbols : Freezing Rain : Moderate/Heavy
+45;Weather Symbols;Rain Showers;Light;;160301;Point;MAIN;Weather Symbols : Rain Showers : Light
+45;Weather Symbols;Rain Showers;Moderate/Heavy;;160302;Point;MAIN;Weather Symbols : Rain Showers : Moderate/Heavy
+45;Weather Symbols;Rain Showers;Torrential;;160303;Point;MAIN;Weather Symbols : Rain Showers : Torrential
+45;Weather Symbols;Drizzle;Intermittent Light;;160401;Point;MAIN;Weather Symbols : Drizzle : Intermittent Light
+45;Weather Symbols;Drizzle;Intermittent Light/Continuous Light;;160402;Point;MAIN;Weather Symbols : Drizzle : Intermittent Light/Continuous Light
+45;Weather Symbols;Drizzle;Intermittent Moderate;;160403;Point;MAIN;Weather Symbols : Drizzle : Intermittent Moderate
+45;Weather Symbols;Drizzle;Intermittent Moderate/Continuous Moderate;;160404;Point;MAIN;Weather Symbols : Drizzle : Intermittent Moderate/Continuous Moderate
+45;Weather Symbols;Drizzle;Intermittent Heavy;;160405;Point;MAIN;Weather Symbols : Drizzle : Intermittent Heavy
+45;Weather Symbols;Drizzle;Intermittent Heavy/Continuous Heavy;;160406;Point;MAIN;Weather Symbols : Drizzle : Intermittent Heavy/Continuous Heavy
+45;Weather Symbols;Freezing Drizzle;Light;;160501;Point;MAIN;Weather Symbols : Freezing Drizzle : Light
+45;Weather Symbols;Freezing Drizzle;Moderate/Heavy;;160502;Point;MAIN;Weather Symbols : Freezing Drizzle : Moderate/Heavy
+45;Weather Symbols;Rain and Snow Mixed;Rain or Drizzle and Snow - Light;;160601;Point;MAIN;Weather Symbols : Rain and Snow Mixed : Rain or Drizzle and Snow - Light
+45;Weather Symbols;Rain and Snow Mixed;Rain or Drizzle and Snow - Moderate/Heavy;;160602;Point;MAIN;Weather Symbols : Rain and Snow Mixed : Rain or Drizzle and Snow - Moderate/Heavy
+45;Weather Symbols;Rain and Snow Mixed;Rain and Snow Showers - Light;;160603;Point;MAIN;Weather Symbols : Rain and Snow Mixed : Rain and Snow Showers - Light
+45;Weather Symbols;Rain and Snow Mixed;Rain and Snow Showers - Moderate/Heavy;;160604;Point;MAIN;Weather Symbols : Rain and Snow Mixed : Rain and Snow Showers - Moderate/Heavy
+45;Weather Symbols;Snow;Intermittent Light;;160701;Point;MAIN;Weather Symbols : Snow : Intermittent Light
+45;Weather Symbols;Snow;Intermittent Light/Continuous Light;;160702;Point;MAIN;Weather Symbols : Snow : Intermittent Light/Continuous Light
+45;Weather Symbols;Snow;Intermittent Moderate;;160703;Point;MAIN;Weather Symbols : Snow : Intermittent Moderate
+45;Weather Symbols;Snow;Intermittent Moderate/Continuous Moderate;;160704;Point;MAIN;Weather Symbols : Snow : Intermittent Moderate/Continuous Moderate
+45;Weather Symbols;Snow;Intermittent Heavy;;160705;Point;MAIN;Weather Symbols : Snow : Intermittent Heavy
+45;Weather Symbols;Snow;Intermittent Heavy/Continuous Heavy;;160706;Point;MAIN;Weather Symbols : Snow : Intermittent Heavy/Continuous Heavy
+45;Weather Symbols;Snow;Blowing Snow - Light/Moderate;;160707;Point;MAIN;Weather Symbols : Snow : Blowing Snow - Light/Moderate
+45;Weather Symbols;Snow;Blowing Snow - Heavy;;160708;Point;MAIN;Weather Symbols : Snow : Blowing Snow - Heavy
+45;Weather Symbols;Snow Grains;;;160800;Point;MAIN;Weather Symbols : Snow Grains
+45;Weather Symbols;Snow Showers;Light;;160901;Point;MAIN;Weather Symbols : Snow Showers : Light
+45;Weather Symbols;Snow Showers;Moderate/Heavy;;160902;Point;MAIN;Weather Symbols : Snow Showers : Moderate/Heavy
+45;Weather Symbols;Hail;Light not Associated with Thunder;;161001;Point;MAIN;Weather Symbols : Hail : Light not Associated with Thunder
+45;Weather Symbols;Hail;Moderate/Heavy not Associated with Thunder;;161002;Point;MAIN;Weather Symbols : Hail : Moderate/Heavy not Associated with Thunder
+45;Weather Symbols;Ice Crystals (Diamond Dust);;;161100;Point;MAIN;Weather Symbols : Ice Crystals (Diamond Dust)
+45;Weather Symbols;Ice Pellets (Sleet);Light;;161201;Point;MAIN;Weather Symbols : Ice Pellets (Sleet) : Light
+45;Weather Symbols;Ice Pellets (Sleet);Moderate;;161202;Point;MAIN;Weather Symbols : Ice Pellets (Sleet) : Moderate
+45;Weather Symbols;Ice Pellets (Sleet);Heavy;;161203;Point;MAIN;Weather Symbols : Ice Pellets (Sleet) : Heavy
+45;Weather Symbols;Inversion;;;161300;Point;MAIN;Weather Symbols : Inversion
+45;Weather Symbols;Storms;Thunderstorm - No Precipitation;;161401;Point;MAIN;Weather Symbols : Storms : Thunderstorm - No Precipitation
+45;Weather Symbols;Storms;Thunderstorm Light to Moderate with Rain/Snow - No Hail;;161402;Point;MAIN;Weather Symbols : Storms : Thunderstorm Light to Moderate with Rain/Snow - No Hail
+45;Weather Symbols;Storms;Thunderstorm Heavy with Rain/Snow - No Hail;;161403;Point;MAIN;Weather Symbols : Storms : Thunderstorm Heavy with Rain/Snow - No Hail
+45;Weather Symbols;Storms;Thunderstorm Light to Moderate - With Hail;;161404;Point;MAIN;Weather Symbols : Storms : Thunderstorm Light to Moderate - With Hail
+45;Weather Symbols;Storms;Thunderstorm Heavy - With Hail;;161405;Point;MAIN;Weather Symbols : Storms : Thunderstorm Heavy - With Hail
+45;Weather Symbols;Storms;Funnel Cloud (Tornado/Waterspout);;161406;Point;MAIN;Weather Symbols : Storms : Funnel Cloud (Tornado/Waterspout)
+45;Weather Symbols;Storms;Squall;;161407;Point;MAIN;Weather Symbols : Storms : Squall
+45;Weather Symbols;Storms;Lightning;;161408;Point;MAIN;Weather Symbols : Storms : Lightning
+45;Weather Symbols;Fog;Shallow Patches;;161501;Point;MAIN;Weather Symbols : Fog : Shallow Patches
+45;Weather Symbols;Fog;Shallow Continuous;;161502;Point;MAIN;Weather Symbols : Fog : Shallow Continuous
+45;Weather Symbols;Fog;Patchy;;161503;Point;MAIN;Weather Symbols : Fog : Patchy
+45;Weather Symbols;Fog;Sky Visible;;161504;Point;MAIN;Weather Symbols : Fog : Sky Visible
+45;Weather Symbols;Fog;Sky Obscured;;161505;Point;MAIN;Weather Symbols : Fog : Sky Obscured
+45;Weather Symbols;Fog;Freezing-Sky Visible;;161506;Point;MAIN;Weather Symbols : Fog : Freezing-Sky Visible
+45;Weather Symbols;Fog;Freezing-Sky Obscured;;161507;Point;MAIN;Weather Symbols : Fog : Freezing-Sky Obscured
+45;Weather Symbols;Mist;;;161600;Point;MAIN;Weather Symbols : Mist
+45;Weather Symbols;Smoke;;;161700;Point;MAIN;Weather Symbols : Smoke
+45;Weather Symbols;Haze;;;161800;Point;MAIN;Weather Symbols : Haze
+45;Weather Symbols;Dust or Sand;Light to Moderate;;161901;Point;MAIN;Weather Symbols : Dust or Sand : Light to Moderate
+45;Weather Symbols;Dust or Sand;Severe;;161902;Point;MAIN;Weather Symbols : Dust or Sand : Severe
+45;Weather Symbols;Dust or Sand;Dust Devil;;161903;Point;MAIN;Weather Symbols : Dust or Sand : Dust Devil
+45;Weather Symbols;Dust or Sand;Blowing Dust or Sand;;161904;Point;MAIN;Weather Symbols : Dust or Sand : Blowing Dust or Sand
+45;Weather Symbols;Tropical Storm Systems;Tropical Depression;;162001;Point;MAIN;Weather Symbols : Tropical Storm Systems : Tropical Depression
+45;Weather Symbols;Tropical Storm Systems;Tropical Storm;;162002;Point;MAIN;Weather Symbols : Tropical Storm Systems : Tropical Storm
+45;Weather Symbols;Tropical Storm Systems;Hurricane/Typhoon;;162003;Point;MAIN;Weather Symbols : Tropical Storm Systems : Hurricane/Typhoon
+45;Weather Symbols;Tropical Storm Systems;Tropical Storm Wind Areas and Date/Time Labels;;162004;Area;MAIN;Weather Symbols : Tropical Storm Systems : Tropical Storm Wind Areas and Date/Time Labels
+45;Weather Symbols;Volcanic Eruption;;;162100;Point;MAIN;Weather Symbols : Volcanic Eruption
+45;Weather Symbols;Volcanic Eruption;Volcanic Ash;;162101;Point;MAIN;Weather Symbols : Volcanic Eruption : Volcanic Ash
+45;Weather Symbols;Tropopause Level;;;162200;Point;MAIN;Weather Symbols : Tropopause Level
+45;Weather Symbols;Freezing Level;;;162300;Point;MAIN;Weather Symbols : Freezing Level
+45;Weather Symbols;Precipitation of Unknown Type and Intensity;;;162400;Point;MAIN;Weather Symbols : Precipitation of Unknown Type and Intensity
+45;Bounded Areas of Weather;Instrument Flight Rule (IFR);;;170100;Area;MAIN;Bounded Areas : Instrument Flight Rule (IFR)
+45;Bounded Areas of Weather;Marginal Visual Flight Rule (MVFR);;;170200;Area;MAIN;Bounded Areas : Marginal Visual Flight Rule (MVFR)
+45;Bounded Areas of Weather;Turbulence;;;170300;Area;MAIN;Bounded Areas : Turbulence
+45;Bounded Areas of Weather;Icing;;;170400;Area;MAIN;Bounded Areas : Icing
+45;Bounded Areas of Weather;Liquid Precipitation - Non-Convective Continuous or Intermittent;;;170500;Area;MAIN;Bounded Areas : Liquid Precipitation - Non-Convective Continuous or Intermittent
+45;Bounded Areas of Weather;Liquid Precipitation - Non-Convective Continuous or Intermittent;Liquid Precipitation - Convective;;170501;Area;MAIN;Bounded Areas : Liquid Precipitation - Non-Convective Continuous or Intermittent : Liquid Precipitation - Convective
+45;Bounded Areas of Weather;Freezing /Frozen Precipitation;;;170600;Area;MAIN;Bounded Areas : Freezing /Frozen Precipitation
+45;Bounded Areas of Weather;Thunderstorm;;;170700;Area;MAIN;Bounded Areas : Thunderstorm
+45;Bounded Areas of Weather;Fog;;;170800;Area;MAIN;Bounded Areas : Fog
+45;Bounded Areas of Weather;Dust or Sand;;;170900;Area;MAIN;Bounded Areas : Dust or Sand
+45;Bounded Areas of Weather;Operator-Defined Freeform;;;171000;Area;MAIN;Bounded Areas : Operator-Defined Freeform
+45;Isopleths;Isobar - Surface;;;180100;Line;MAIN;Isopleths : Isobar - Surface
+45;Isopleths;Contour - Upper Air;;;180200;Line;MAIN;Isopleths : Contour - Upper Air
+45;Isopleths;Isotherm;;;180300;Line;MAIN;Isopleths : Isotherm
+45;Isopleths;Isotach;;;180400;Line;MAIN;Isopleths : Isotach
+45;Isopleths;Isodrosotherm;;;180500;Line;MAIN;Isopleths : Isodrosotherm
+45;Isopleths;Thickness;;;180600;Line;MAIN;Isopleths : Thickness
+45;Isopleths;Operator-Defined Freeform;;;180700;Line;MAIN;Isopleths : Operator-Defined Freeform
+45;State of the Ground;Without Snow or Measurable Ice Cover;Surface Dry Without Cracks or Appreciable Dust or Loose Sand;;190101;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Surface Dry Without Cracks or Appreciable Dust or Loose Sand
+45;State of the Ground;Without Snow or Measurable Ice Cover;Surface Moist;;190102;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Surface Moist
+45;State of the Ground;Without Snow or Measurable Ice Cover;Surface Wet-Standing Water in Small or Large Pools;;190103;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Surface Wet-Standing Water in Small or Large Pools
+45;State of the Ground;Without Snow or Measurable Ice Cover;Surface Flooded;;190104;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Surface Flooded
+45;State of the Ground;Without Snow or Measurable Ice Cover;Surface Frozen;;190105;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Surface Frozen
+45;State of the Ground;Without Snow or Measurable Ice Cover;Glaze (Thin Ice) on Ground;;190106;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Glaze (Thin Ice) on Ground
+45;State of the Ground;Without Snow or Measurable Ice Cover;Loose Dry Dust or Sand not Covering Ground Completely;;190107;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Loose Dry Dust or Sand not Covering Ground Completely
+45;State of the Ground;Without Snow or Measurable Ice Cover;Thin Loose Dry Dust or Sand Covering Ground Completely;;190108;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Thin Loose Dry Dust or Sand Covering Ground Completely
+45;State of the Ground;Without Snow or Measurable Ice Cover;Moderate/Thick Loose Dry Dust or Sand Covering Ground Completely;;190109;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Moderate/Thick Loose Dry Dust or Sand Covering Ground Completely
+45;State of the Ground;Without Snow or Measurable Ice Cover;Extremely Dry with Cracks;;190110;Point;MAIN;State of the Ground : Without Snow or Measurable Ice Cover : Extremely Dry with Cracks
+45;State of the Ground;With Snow or Measurable Ice Cover;Predominately Ice Covered;;190201;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Predominately Ice Covered
+45;State of the Ground;With Snow or Measurable Ice Cover;Compact or Wet Snow (with or without Ice) Covering Less Than One-Half of Ground;;190202;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Compact or Wet Snow (with or without Ice) Covering Less Than One-Half of Ground
+45;State of the Ground;With Snow or Measurable Ice Cover;Compact or Wet Snow (with or without Ice) Covering  at Least One-Half of Ground-but Ground not Completely Covered;;190203;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Compact or Wet Snow (with or without Ice) Covering  at Least One-Half of Ground-but Ground not Completely Covered
+45;State of the Ground;With Snow or Measurable Ice Cover;Even Layer of Compact or Wet Snow Covering Ground Completely;;190204;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Even Layer of Compact or Wet Snow Covering Ground Completely
+45;State of the Ground;With Snow or Measurable Ice Cover;Uneven Layer of Compact or Wet Snow Covering Ground Completely;;190205;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Uneven Layer of Compact or Wet Snow Covering Ground Completely
+45;State of the Ground;With Snow or Measurable Ice Cover;Loose Dry Snow Covering Less Than One-Half of Ground;;190206;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Loose Dry Snow Covering Less Than One-Half of Ground
+45;State of the Ground;With Snow or Measurable Ice Cover;Loose Dry Snow Covering at Least One-Half of Ground-but Ground not Completely Covered;;190207;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Loose Dry Snow Covering at Least One-Half of Ground-but Ground not Completely Covered
+45;State of the Ground;With Snow or Measurable Ice Cover;Even Layer of Loose Dry Snow Covering Ground Completely;;190208;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Even Layer of Loose Dry Snow Covering Ground Completely
+45;State of the Ground;With Snow or Measurable Ice Cover;Uneven Layer of Loose Dry Snow Covering Ground Completely;;190209;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Uneven Layer of Loose Dry Snow Covering Ground Completely
+45;State of the Ground;With Snow or Measurable Ice Cover;Snow Covering Ground Completely-Deep Drifts;;190210;Point;MAIN;State of the Ground : With Snow or Measurable Ice Cover : Snow Covering Ground Completely-Deep Drifts

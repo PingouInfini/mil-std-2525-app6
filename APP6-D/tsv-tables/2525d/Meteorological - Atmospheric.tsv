@@ -1,0 +1,207 @@
+Entity	Entity Type	Entity Subtype	Code	Remarks
+Unspecified			000000	
+Pressure Systems			110000	
+	Low Pressure Center		110100	
+		Cyclone Center	110101	
+		Tropopause Low	110102	
+	High Pressure Center		110200	
+		Anticyclone Center	110201	
+		Tropopause High	110202	
+	Frontal Systems		110300	
+		Cold Front	110301	
+		Upper Cold Front	110302	
+		Cold Frontogenesis	110303	
+		Cold Frontolysis	110304	
+		Warm Front	110305	
+		Upper Warm Front	110306	
+		Warm Frontogenesis	110307	
+		Warm Frontolysis	110308	
+		Occluded Front	110309	
+		Upper Occluded Front	110310	
+		Occluded Frontolysis	110311	
+		Stationary Front	110312	
+		Upper Stationary Front	110313	
+		Stationary Frontogenesis	110314	
+		Stationary Frontolysis	110315	
+	Lines		110400	
+		Trough Axis	110401	
+		Upper Trough Axis	110402	
+		Ridge Axis	110403	
+		Severe Squall Line	110404	
+		Instability Line	110405	
+		Shear Line	110406	
+		Inter-Tropical Convergence Zone	110407	
+		Convergence Line	110408	
+		Inter-Tropical Discontinuity	110409	
+	Pressure Tendency		110500	
+		Rise Then Fall Higher	110501	
+		Rise Then Steady	110502	
+		Rise	110503	
+		Rise Then Rise Higher	110504	
+		Steady	110505	
+		Fall Then Rise Lower	110506	
+		Fall Then Steady	110507	
+		Fall	110508	
+		Rise Then Fall Lower	110509	
+Turbulence			120000	
+	Light		120100	
+	Moderate		120200	
+	Severe		120300	
+	Extreme		120400	
+	Mountain Waves		120500	
+Icing			130000	
+	Clear Icing		130100	
+		Light	130101	
+		Moderate	130102	
+		Severe	130103	
+	Rime Icing		130200	
+		Light	130201	
+		Moderate	130202	
+		Severe	130203	
+	Mixed Icing		130300	
+		Light	130301	
+		Moderate	130302	
+		Severe	130303	
+Winds			140000	
+	Calm Winds		140100	
+	Wind Plot		140200	
+	Jet Stream		140300	
+	Stream Line		140400	
+Cloud Cover			150000	
+	Cloud Coverage Symbols		150100	
+		Clear Sky	150101	
+		Few Coverage	150102	
+		Scattered Coverage	150103	
+		Broken Coverage	150104	
+		Overcast Coverage	150105	
+		Sky Totally or Partially Obscured	150106	
+Weather Symbols			160000	
+	Rain		160100	
+		Intermittent Light	160101	
+		Continuous Light	160102	
+		Intermittent Moderate	160103	
+		Intermittent Moderate/Continuous Moderate	160104	
+		Intermittent Heavy	160105	
+		Intermittent Heavy/Continuous Heavy	160106	
+	Freezing Rain		160200	
+		Light	160201	
+		Moderate/Heavy	160202	
+	Rain Showers		160300	
+		Light	160301	
+		Moderate/Heavy	160302	
+		Torrential	160303	
+	Drizzle		160400	
+		Intermittent Light	160401	
+		Intermittent Light/Continuous Light	160402	
+		Intermittent Moderate	160403	
+		Intermittent Moderate/Continuous Moderate	160404	
+		Intermittent Heavy	160405	
+		Intermittent Heavy/Continuous Heavy	160406	
+	Freezing Drizzle		160500	
+		Light	160501	
+		Moderate/Heavy	160502	
+	Rain and Snow Mixed		160600	
+		Rain or Drizzle and Snow - Light	160601	
+		Rain or Drizzle and Snow - Moderate/Heavy	160602	
+		Rain and Snow Showers - Light	160603	
+		Rain and Snow Showers - Moderate/Heavy	160604	
+	Snow		160700	
+		Intermittent Light	160701	
+		Intermittent Light/Continuous Light	160702	
+		Intermittent Moderate	160703	
+		Intermittent Moderate/Continuous Moderate	160704	
+		Intermittent Heavy	160705	
+		Intermittent Heavy/Continuous Heavy	160706	
+		Blowing Snow - Light/Moderate	160707	
+		Blowing Snow - Heavy	160708	
+	Snow Grains		160800	
+	Snow Showers		160900	
+		Light	160901	
+		Moderate/Heavy	160902	
+	Hail		161000	
+		Light not Associated with Thunder	161001	
+		Moderate/Heavy not Associated with Thunder	161002	
+	Ice Crystals (Diamond Dust)		161100	
+	Ice Pellets (Sleet)		161200	
+		Light	161201	
+		Moderate	161202	
+		Heavy	161203	
+	Inversion		161300	
+	Storms		161400	
+		Thunderstorm - No Precipitation	161401	
+		Thunderstorm Light to Moderate with Rain/Snow - No Hail	161402	
+		Thunderstorm Heavy with Rain/Snow - No Hail	161403	
+		Thunderstorm Light to Moderate - With Hail	161404	
+		Thunderstorm Heavy - With Hail	161405	
+		Funnel Cloud (Tornado/Waterspout)	161406	
+		Squall	161407	
+		Lightning	161408	
+	Fog		161500	
+		Shallow Patches	161501	
+		Shallow Continuous	161502	
+		Patchy	161503	
+		Sky Visible	161504	
+		Sky Obscured	161505	
+		Freezing-Sky Visible	161506	
+		Freezing-Sky Obscured	161507	
+	Mist		161600	
+	Smoke		161700	
+	Haze		161800	
+	Dust or Sand		161900	
+		Light to Moderate	161901	
+		Severe	161902	
+		Dust Devil	161903	
+		Blowing Dust or Sand	161904	
+	Tropical Storm Systems		162000	
+		Tropical Depression	162001	
+		Tropical Storm	162002	
+		Hurricane/Typhoon	162003	
+		Tropical Storm Wind Areas and Date/Time Labels	162004	
+	Volcanic Eruption		162100	
+		Volcanic Ash	162101	
+	Tropopause Level		162200	
+	Freezing Level		162300	
+	Precipitation of Unknown Type and Intensity		162400	
+Bounded Areas of Weather			170000	
+	Instrument Flight Rule (IFR)		170100	
+	Marginal Visual Flight Rule (MVFR)		170200	
+	Turbulence		170300	
+	Icing		170400	
+	Liquid Precipitation - Non-Convective Continuous or Intermittent		170500	
+		Liquid Precipitation - Convective	170501	
+	Freezing /Frozen Precipitation		170600	
+	Thunderstorm		170700	
+	Fog		170800	
+	Dust or Sand		170900	
+	Operator-Defined Freeform		171000	
+Isopleths			180000	
+	Isobar - Surface		180100	
+	Contour - Upper Air		180200	
+	Isotherm		180300	
+	Isotach		180400	
+	Isodrosotherm		180500	
+	Thickness		180600	
+	Operator-Defined Freeform		180700	
+State of the Ground			190000	
+	Without Snow or Measurable Ice Cover		190100	
+		Surface Dry Without Cracks or Appreciable Dust or Loose Sand	190101	
+		Surface Moist	190102	
+		Surface Wet-Standing Water in Small or Large Pools	190103	
+		Surface Flooded	190104	
+		Surface Frozen	190105	
+		Glaze (Thin Ice) on Ground	190106	
+		Loose Dry Dust or Sand not Covering Ground Completely	190107	
+		Thin Loose Dry Dust or Sand Covering Ground Completely	190108	
+		Moderate/Thick Loose Dry Dust or Sand Covering Ground Completely	190109	
+		Extremely Dry with Cracks	190110	
+	With Snow or Measurable Ice Cover		190200	
+		Predominately Ice Covered	190201	
+		Compact or Wet Snow (with or without Ice) Covering Less Than One-Half of Ground	190202	
+		Compact or Wet Snow (with or without Ice) Covering  at Least One-Half of Ground-but Ground not Completely Covered	190203	
+		Even Layer of Compact or Wet Snow Covering Ground Completely	190204	
+		Uneven Layer of Compact or Wet Snow Covering Ground Completely	190205	
+		Loose Dry Snow Covering Less Than One-Half of Ground	190206	
+		Loose Dry Snow Covering at Least One-Half of Ground-but Ground not Completely Covered	190207	
+		Even Layer of Loose Dry Snow Covering Ground Completely	190208	
+		Uneven Layer of Loose Dry Snow Covering Ground Completely	190209	
+		Snow Covering Ground Completely-Deep Drifts	190210	

@@ -1,0 +1,183 @@
+SymbolSet;Entity;EntityType;EntitySubType;StandardIdentity;Code;GeometryType;IconType;UniqueName
+46;Unspecified;;;;000000;NotValid;NA;Unspecified
+46;Ice Systems;Icebergs;Many Icebergs;;110101;Point;MAIN;Ice Systems : Icebergs : Many Icebergs
+46;Ice Systems;Icebergs;Belts and Strips;;110102;Point;MAIN;Ice Systems : Icebergs : Belts and Strips
+46;Ice Systems;Icebergs;General;;110103;Point;MAIN;Ice Systems : Icebergs : General
+46;Ice Systems;Icebergs;Many Icebergs - General;;110104;Point;MAIN;Ice Systems : Icebergs : Many Icebergs - General
+46;Ice Systems;Icebergs;Bergy Bit;;110105;Point;MAIN;Ice Systems : Icebergs : Bergy Bit
+46;Ice Systems;Icebergs;Many Bergy Bits;;110106;Point;MAIN;Ice Systems : Icebergs : Many Bergy Bits
+46;Ice Systems;Icebergs;Growler;;110107;Point;MAIN;Ice Systems : Icebergs : Growler
+46;Ice Systems;Icebergs;Many Growlers;;110108;Point;MAIN;Ice Systems : Icebergs : Many Growlers
+46;Ice Systems;Icebergs;Floeberg;;110109;Point;MAIN;Ice Systems : Icebergs : Floeberg
+46;Ice Systems;Icebergs;Ice Island;;110110;Point;MAIN;Ice Systems : Icebergs : Ice Island
+46;Ice Systems;Ice Concentration;Bergy Water;;110201;Point;MAIN;Ice Systems : Ice Concentration : Bergy Water
+46;Ice Systems;Ice Concentration;Water with Radar Targets;;110202;Point;MAIN;Ice Systems : Ice Concentration : Water with Radar Targets
+46;Ice Systems;Ice Concentration;Ice Free;;110203;Point;MAIN;Ice Systems : Ice Concentration : Ice Free
+46;Ice Systems;Dynamic Processes;Convergence;;110301;Point;MAIN;Ice Systems : Dynamic Processes : Convergence
+46;Ice Systems;Dynamic Processes;Divergence;;110302;Point;MAIN;Ice Systems : Dynamic Processes : Divergence
+46;Ice Systems;Dynamic Processes;Shearing or Shear Zone;;110303;Point;MAIN;Ice Systems : Dynamic Processes : Shearing or Shear Zone
+46;Ice Systems;Dynamic Processes;Ice Drift (Direction);;110304;Point;MAIN;Ice Systems : Dynamic Processes : Ice Drift (Direction)
+46;Ice Systems;Sea Ice;;;110400;Point;MAIN;Ice Systems : Sea Ice
+46;Ice Systems;Sea Ice;Ice Thickness (Observed);;110401;Point;MAIN;Ice Systems : Sea Ice : Ice Thickness (Observed)
+46;Ice Systems;Sea Ice;Ice Thickness (Estimated);;110402;Point;MAIN;Ice Systems : Sea Ice : Ice Thickness (Estimated)
+46;Ice Systems;Sea Ice;Melt Puddles or Flooded Ice;;110403;Point;MAIN;Ice Systems : Sea Ice : Melt Puddles or Flooded Ice
+46;Ice Systems;Limits;Limits of Visual Observation;;110501;Line;MAIN;Ice Systems : Limits : Limits of Visual Observation
+46;Ice Systems;Limits;Limits of Under Cast;;110502;Line;MAIN;Ice Systems : Limits : Limits of Under Cast
+46;Ice Systems;Limits;Limits of Radar Observation;;110503;Line;MAIN;Ice Systems : Limits : Limits of Radar Observation
+46;Ice Systems;Limits;Observed Ice Edge or Boundary;;110504;Line;MAIN;Ice Systems : Limits : Observed Ice Edge or Boundary
+46;Ice Systems;Limits;Estimated Ice Edge or Boundary;;110505;Line;MAIN;Ice Systems : Limits : Estimated Ice Edge or Boundary
+46;Ice Systems;Limits;Ice Edge or Boundary From Radar;;110506;Line;MAIN;Ice Systems : Limits : Ice Edge or Boundary From Radar
+46;Ice Systems;Openings in the Ice;Cracks;;110601;Line;MAIN;Ice Systems : Openings in the Ice : Cracks
+46;Ice Systems;Openings in the Ice;Cracks at a Specific Location;;110602;Line;MAIN;Ice Systems : Openings in the Ice : Cracks at a Specific Location
+46;Ice Systems;Openings in the Ice;Lead;;110603;Line;MAIN;Ice Systems : Openings in the Ice : Lead
+46;Ice Systems;Openings in the Ice;Frozen Lead;;110604;Line;MAIN;Ice Systems : Openings in the Ice : Frozen Lead
+46;Ice Systems;Snow Cover;;;110700;Point;MAIN;Ice Systems : Snow Cover
+46;Ice Systems;Snow Cover;Sastrugi (with Orientation);;110701;Point;MAIN;Ice Systems : Snow Cover : Sastrugi (with Orientation)
+46;Ice Systems;Topographical Features;Ridges or Hummocks;;110801;Point;MAIN;Ice Systems : Topographical Features : Ridges or Hummocks
+46;Ice Systems;Topographical Features;Rafting;;110802;Point;MAIN;Ice Systems : Topographical Features : Rafting
+46;Ice Systems;Topographical Features;Jammed Brash Barrier;;110803;Point;MAIN;Ice Systems : Topographical Features : Jammed Brash Barrier
+46;Hydrography;Depth;Soundings;;120101;Point;MAIN;Hydrography : Depth : Soundings
+46;Hydrography;Depth;Depth Curve;;120102;Line;MAIN;Hydrography : Depth : Depth Curve
+46;Hydrography;Depth;Depth Contour;;120103;Line;MAIN;Hydrography : Depth : Depth Contour
+46;Hydrography;Depth;Depth Area;;120104;Area;MAIN;Hydrography : Depth : Depth Area
+46;Hydrography;Coastal Hydrography;Coastline;;120201;Line;MAIN;Hydrography : Coastal Hydrography : Coastline
+46;Hydrography;Coastal Hydrography;Island;;120202;Area;MAIN;Hydrography : Coastal Hydrography : Island
+46;Hydrography;Coastal Hydrography;Beach;;120203;Area;MAIN;Hydrography : Coastal Hydrography : Beach
+46;Hydrography;Coastal Hydrography;Water;;120204;Area;MAIN;Hydrography : Coastal Hydrography : Water
+46;Hydrography;Coastal Hydrography;Foreshore - Line;;120205;Line;MAIN;Hydrography : Coastal Hydrography : Foreshore - Line
+46;Hydrography;Coastal Hydrography;Foreshore - Area;;120206;Area;MAIN;Hydrography : Coastal Hydrography : Foreshore - Area
+46;Hydrography;Ports and Harbors;Berths (Onshore);;120302;Point;MAIN;Hydrography : Ports and Harbors : Berths (Onshore)
+46;Hydrography;Ports and Harbors;Berths (Anchor);;120303;Point;MAIN;Hydrography : Ports and Harbors : Berths (Anchor)
+46;Hydrography;Ports and Harbors;Anchorage - Point;;120304;Point;MAIN;Hydrography : Ports and Harbors : Anchorage - Point
+46;Hydrography;Ports and Harbors;Anchorage - Line;;120305;Line;MAIN;Hydrography : Ports and Harbors : Anchorage - Line
+46;Hydrography;Ports and Harbors;Anchorage - Area;;120306;Area;MAIN;Hydrography : Ports and Harbors : Anchorage - Area
+46;Hydrography;Ports and Harbors;Call in Point;;120307;Point;MAIN;Hydrography : Ports and Harbors : Call in Point
+46;Hydrography;Ports and Harbors;Pier/Wharf/Quay;;120308;Line;MAIN;Hydrography : Ports and Harbors : Pier/Wharf/Quay
+46;Hydrography;Ports and Harbors;Fishing Harbor - Point;;120309;Point;MAIN;Hydrography : Ports and Harbors : Fishing Harbor - Point
+46;Hydrography;Ports and Harbors;Fish Weirs - Point;;120310;Point;MAIN;Hydrography : Ports and Harbors : Fish Weirs - Point
+46;Hydrography;Ports and Harbors;Fish Stakes - Point;;120311;Point;MAIN;Hydrography : Ports and Harbors : Fish Stakes - Point
+46;Hydrography;Ports and Harbors;Fish Traps - Area;;120312;Area;MAIN;Hydrography : Ports and Harbors : Fish Traps - Area
+46;Hydrography;Ports and Harbors;Drydock;;120314;Area;MAIN;Hydrography : Ports and Harbors : Drydock
+46;Hydrography;Ports and Harbors;Landing Place;;120315;Point;MAIN;Hydrography : Ports and Harbors : Landing Place
+46;Hydrography;Ports and Harbors;Offshore Loading Facility - Point;;120316;Point;MAIN;Hydrography : Ports and Harbors : Offshore Loading Facility - Point
+46;Hydrography;Ports and Harbors;Offshore Loading Facility - Line;;120317;Line;MAIN;Hydrography : Ports and Harbors : Offshore Loading Facility - Line
+46;Hydrography;Ports and Harbors;Offshore Loading Facility - Area;;120318;Area;MAIN;Hydrography : Ports and Harbors : Offshore Loading Facility - Area
+46;Hydrography;Ports and Harbors;Ramp - Above Water;;120319;Line;MAIN;Hydrography : Ports and Harbors : Ramp - Above Water
+46;Hydrography;Ports and Harbors;Ramp - Below Water;;120320;Line;MAIN;Hydrography : Ports and Harbors : Ramp - Below Water
+46;Hydrography;Ports and Harbors;Landing Ring;;120321;Point;MAIN;Hydrography : Ports and Harbors : Landing Ring
+46;Hydrography;Ports and Harbors;Ferry Crossing;;120322;Point;MAIN;Hydrography : Ports and Harbors : Ferry Crossing
+46;Hydrography;Ports and Harbors;Cable Ferry Crossing;;120323;Point;MAIN;Hydrography : Ports and Harbors : Cable Ferry Crossing
+46;Hydrography;Ports and Harbors;Dolphin;;120324;Point;MAIN;Hydrography : Ports and Harbors : Dolphin
+46;Hydrography;Ports and Harbors;Breakwater/Groin/Jetty - Above Water;;120326;Line;MAIN;Hydrography : Ports and Harbors : Breakwater/Groin/Jetty - Above Water
+46;Hydrography;Ports and Harbors;Breakwater/Groin/Jetty - Below Water;;120327;Line;MAIN;Hydrography : Ports and Harbors : Breakwater/Groin/Jetty - Below Water
+46;Hydrography;Ports and Harbors;Seawall;;120328;Line;MAIN;Hydrography : Ports and Harbors : Seawall
+46;Hydrography;Aids to Navigation;Beacon;;120401;Point;MAIN;Hydrography : Aids to Navigation : Beacon
+46;Hydrography;Aids to Navigation;Buoy Default;;120402;Point;MAIN;Hydrography : Aids to Navigation : Buoy Default
+46;Hydrography;Aids to Navigation;Marker;;120403;Point;MAIN;Hydrography : Aids to Navigation : Marker
+46;Hydrography;Aids to Navigation;Perches/Stakes - Point;;120404;Point;MAIN;Hydrography : Aids to Navigation : Perches/Stakes - Point
+46;Hydrography;Aids to Navigation;Perches/Stakes - Area;;120405;Area;MAIN;Hydrography : Aids to Navigation : Perches/Stakes - Area
+46;Hydrography;Aids to Navigation;Light;;120406;Point;MAIN;Hydrography : Aids to Navigation : Light
+46;Hydrography;Aids to Navigation;Leading Line;;120407;Line;MAIN;Hydrography : Aids to Navigation : Leading Line
+46;Hydrography;Aids to Navigation;Light Vessel/Light Ship;;120408;Point;MAIN;Hydrography : Aids to Navigation : Light Vessel/Light Ship
+46;Hydrography;Aids to Navigation;Lighthouse;;120409;Point;MAIN;Hydrography : Aids to Navigation : Lighthouse
+46;Hydrography;Dangers/Hazards;Rock Submerged;;120501;Point;MAIN;Hydrography : Dangers/Hazards : Rock Submerged
+46;Hydrography;Dangers/Hazards;Rock Awashed;;120502;Point;MAIN;Hydrography : Dangers/Hazards : Rock Awashed
+46;Hydrography;Dangers/Hazards;Underwater Danger/Hazard;;120503;Area;MAIN;Hydrography : Dangers/Hazards : Underwater Danger/Hazard
+46;Hydrography;Dangers/Hazards;Foul Ground - Point;;120504;Point;MAIN;Hydrography : Dangers/Hazards : Foul Ground - Point
+46;Hydrography;Dangers/Hazards;Foul Ground - Area;;120505;Area;MAIN;Hydrography : Dangers/Hazards : Foul Ground - Area
+46;Hydrography;Dangers/Hazards;Kelp/Seaweed - Point;;120506;Point;MAIN;Hydrography : Dangers/Hazards : Kelp/Seaweed - Point
+46;Hydrography;Dangers/Hazards;Kelp/Seaweed - Area;;120507;Area;MAIN;Hydrography : Dangers/Hazards : Kelp/Seaweed - Area
+46;Hydrography;Dangers/Hazards;Snags/Stumps;;120508;Point;MAIN;Hydrography : Dangers/Hazards : Snags/Stumps
+46;Hydrography;Dangers/Hazards;Wreck (Uncovers);;120509;Point;MAIN;Hydrography : Dangers/Hazards : Wreck (Uncovers)
+46;Hydrography;Dangers/Hazards;Wreck (Submerged);;120510;Point;MAIN;Hydrography : Dangers/Hazards : Wreck (Submerged)
+46;Hydrography;Dangers/Hazards;Breakers;;120511;Line;MAIN;Hydrography : Dangers/Hazards : Breakers
+46;Hydrography;Dangers/Hazards;Reef;;120512;Line;MAIN;Hydrography : Dangers/Hazards : Reef
+46;Hydrography;Dangers/Hazards;Eddies/Overfalls/Tide Rips;;120513;Point;MAIN;Hydrography : Dangers/Hazards : Eddies/Overfalls/Tide Rips
+46;Hydrography;Dangers/Hazards;Discolored Water;;120514;Area;MAIN;Hydrography : Dangers/Hazards : Discolored Water
+46;Hydrography;Bottom Features;Bottom Characteristics - Sand;;120601;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Sand
+46;Hydrography;Bottom Features;Bottom Characteristics - Mud;;120602;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Mud
+46;Hydrography;Bottom Features;Bottom Characteristics - Clay;;120603;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Clay
+46;Hydrography;Bottom Features;Bottom Characteristics - Silt;;120604;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Silt
+46;Hydrography;Bottom Features;Bottom Characteristics - Stones;;120605;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Stones
+46;Hydrography;Bottom Features;Bottom Characteristics - Gravel;;120606;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Gravel
+46;Hydrography;Bottom Features;Bottom Characteristics - Pebbles;;120607;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Pebbles
+46;Hydrography;Bottom Features;Bottom Characteristics - Cobbles;;120608;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Cobbles
+46;Hydrography;Bottom Features;Bottom Characteristics - Rock;;120609;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Rock
+46;Hydrography;Bottom Features;Bottom Characteristics - Coral;;120610;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Coral
+46;Hydrography;Bottom Features;Bottom Characteristics - Shell;;120611;Point;MAIN;Hydrography : Bottom Features : Bottom Characteristics - Shell
+46;Hydrography;Bottom Features;Qualifying Terms - Fine;;120612;Point;MAIN;Hydrography : Bottom Features : Qualifying Terms - Fine
+46;Hydrography;Bottom Features;Qualifying Terms - Medium;;120613;Point;MAIN;Hydrography : Bottom Features : Qualifying Terms - Medium
+46;Hydrography;Bottom Features;Qualifying Terms - Coarse;;120614;Point;MAIN;Hydrography : Bottom Features : Qualifying Terms - Coarse
+46;Hydrography;Tide and Current;Water Turbulence;;120701;Point;MAIN;Hydrography : Tide and Current : Water Turbulence
+46;Hydrography;Tide and Current;Current Flow - Ebb;;120702;Line;MAIN;Hydrography : Tide and Current : Current Flow - Ebb
+46;Hydrography;Tide and Current;Current Flow - Flood;;120703;Line;MAIN;Hydrography : Tide and Current : Current Flow - Flood
+46;Hydrography;Tide and Current;Tide Data Point;;120704;Point;MAIN;Hydrography : Tide and Current : Tide Data Point
+46;Hydrography;Tide and Current;Tide Gauge;;120705;Point;MAIN;Hydrography : Tide and Current : Tide Gauge
+46;Oceanography;Bioluminescence;Visual Detection Ratio (VDR) Level 1-2;;130101;Area;MAIN;Oceanography : Bioluminescence : Visual Detection Ratio (VDR) Level 1-2
+46;Oceanography;Bioluminescence;VDR Level 2-3;;130102;Area;MAIN;Oceanography : Bioluminescence : VDR Level 2-3
+46;Oceanography;Bioluminescence;VDR Level 3-4;;130103;Area;MAIN;Oceanography : Bioluminescence : VDR Level 3-4
+46;Oceanography;Bioluminescence;VDR Level 4-5;;130104;Area;MAIN;Oceanography : Bioluminescence : VDR Level 4-5
+46;Oceanography;Bioluminescence;VDR Level 5-6;;130105;Area;MAIN;Oceanography : Bioluminescence : VDR Level 5-6
+46;Oceanography;Bioluminescence;VDR Level 6-7;;130106;Area;MAIN;Oceanography : Bioluminescence : VDR Level 6-7
+46;Oceanography;Bioluminescence;VDR Level 7-8;;130107;Area;MAIN;Oceanography : Bioluminescence : VDR Level 7-8
+46;Oceanography;Bioluminescence;VDR Level 8-9;;130108;Area;MAIN;Oceanography : Bioluminescence : VDR Level 8-9
+46;Oceanography;Bioluminescence;VDR Level 9-10;;130109;Area;MAIN;Oceanography : Bioluminescence : VDR Level 9-10
+46;Oceanography;Beach Slope;Flat;;130201;Area;MAIN;Oceanography : Beach Slope : Flat
+46;Oceanography;Beach Slope;Gentle;;130202;Area;MAIN;Oceanography : Beach Slope : Gentle
+46;Oceanography;Beach Slope;Moderate;;130203;Area;MAIN;Oceanography : Beach Slope : Moderate
+46;Oceanography;Beach Slope;Steep;;130204;Area;MAIN;Oceanography : Beach Slope : Steep
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Solid Rock;;140101;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Solid Rock
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Clay;;140102;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Clay
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Very Coarse Sand;;140103;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Very Coarse Sand
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Coarse Sand;;140104;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Coarse Sand
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Medium Sand;;140105;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Medium Sand
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Fine Sand;;140106;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Fine Sand
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Very Fine Sand;;140107;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Very Fine Sand
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Very Fine Silt;;140108;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Very Fine Silt
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Fine Silt;;140109;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Fine Silt
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Medium Silt;;140110;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Medium Silt
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Coarse Silt;;140111;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Coarse Silt
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Boulders;;140112;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Boulders
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Cobbles-Oyster Shells;;140113;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Cobbles-Oyster Shells
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Pebbles-Shells;;140114;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Pebbles-Shells
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediments - Sand and Shells;;140115;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediments - Sand and Shells
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediment - Land;;140116;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediment - Land
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Sediment - No Data;;140117;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Sediment - No Data
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Bottom Roughness - Smooth;;140118;Area;MAIN;Geophysics/Acoustics : MIW : Bottom Roughness - Smooth
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Bottom Roughness - Moderate;;140119;Area;MAIN;Geophysics/Acoustics : MIW : Bottom Roughness - Moderate
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Bottom Roughness - Rough;;140120;Area;MAIN;Geophysics/Acoustics : MIW : Bottom Roughness - Rough
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Clutter (Bottom) - Low;;140121;Area;MAIN;Geophysics/Acoustics : MIW : Clutter (Bottom) - Low
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Clutter (Bottom) - Medium;;140122;Area;MAIN;Geophysics/Acoustics : MIW : Clutter (Bottom) - Medium
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Clutter (Bottom) - High;;140123;Area;MAIN;Geophysics/Acoustics : MIW : Clutter (Bottom) - High
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Impact Burial - 0%;;140124;Area;MAIN;Geophysics/Acoustics : MIW : Impact Burial - 0%
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Impact Burial - 0-10%;;140125;Area;MAIN;Geophysics/Acoustics : MIW : Impact Burial - 0-10%
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Impact Burial - 10-20%;;140126;Area;MAIN;Geophysics/Acoustics : MIW : Impact Burial - 10-20%
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Impact Burial - 20-75%;;140127;Area;MAIN;Geophysics/Acoustics : MIW : Impact Burial - 20-75%
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;Impact Burial - >75%;;140128;Area;MAIN;Geophysics/Acoustics : MIW : Impact Burial - >75%
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Category A;;140129;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Category A
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Category B;;140130;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Category B
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Category C;;140131;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Category C
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type A1;;140132;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type A1
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type A2;;140133;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type A2
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type A3;;140134;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type A3
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type B1;;140135;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type B1
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type B2;;140136;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type B2
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type B3;;140137;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type B3
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type C1;;140138;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type C1
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type C2;;140139;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type C2
+46;Geophysics/Acoustics;Mine Warfare (MIW) Bottom Descriptors;MIW Bottom Type C3;;140140;Area;MAIN;Geophysics/Acoustics : MIW : MIW Bottom Type C3
+46;Limits;Maritime Limit Boundary;;;150100;Line;MAIN;Limits : Maritime Limit Boundary
+46;Limits;Maritime Area;;;150200;Area;MAIN;Limits : Maritime Area
+46;Limits;Restricted Area;;;150300;Line;MAIN;Limits : Restricted Area
+46;Limits;Swept Area;;;150400;Area;MAIN;Limits : Swept Area
+46;Limits;Training Area;;;150500;Area;MAIN;Limits : Training Area
+46;Limits;Operator-Defined;;;150600;Area;MAIN;Limits : Operator-Defined
+46;Man-Made Structures;Submarine Cable;;;160100;Line;MAIN;Man-Made Structures : Submarine Cable
+46;Man-Made Structures;Submerged Crib;;;160200;Area;MAIN;Man-Made Structures : Submerged Crib
+46;Man-Made Structures;Canal;;;160300;Line;MAIN;Man-Made Structures : Canal
+46;Man-Made Structures;Ford;;;160400;Point;MAIN;Man-Made Structures : Ford
+46;Man-Made Structures;Lock;;;160500;Point;MAIN;Man-Made Structures : Lock
+46;Man-Made Structures;Oil/Gas Rig;;;160600;Point;MAIN;Man-Made Structures : Oil/Gas Rig
+46;Man-Made Structures;Oil/Gas Rig Field;;;160700;Area;MAIN;Man-Made Structures : Oil/Gas Rig Field
+46;Man-Made Structures;Pipelines/Pipe;;;160800;Line;MAIN;Man-Made Structures : Pipelines/Pipe
+46;Man-Made Structures;Pile/Piling/Post;;;160900;Point;MAIN;Man-Made Structures : Pile/Piling/Post
