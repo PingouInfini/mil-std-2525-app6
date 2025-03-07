@@ -31,7 +31,7 @@ def process_2525c_files(input_dir, output_file):
         icon_reader = csv.DictReader(icon_file, delimiter=';')
         for row in icon_reader:
             # Utiliser "name" du mapping comme clé pour le dictionnaire
-            app6_mapping[row['name']] = {
+            app6_mapping[row['SIDC']] = {
                 'fullpath': row['fullpath'],
                 'hierarchy': row['hierarchy'],
                 'nameFR': row['nameFR']
@@ -51,7 +51,7 @@ def process_2525c_files(input_dir, output_file):
                 app6_c_sidc = concatenate_sidc(row)
 
                 # Chercher la correspondance dans le fichier icon-files-mapping.csv
-                app6_data = app6_mapping.get(row['name'])
+                app6_data = app6_mapping.get(app6_c_sidc)
 
                 if app6_data:
                     # Récupérer les valeurs correspondantes pour "fullpath", "hierarchy" et "nameFR"
@@ -81,17 +81,6 @@ def process_2525c_files(input_dir, output_file):
                     'APP6-D-EntitySubtype': ''
                 })
 
-    # Trier les lignes par "APP6-C-HIERARCHY"
-    rows_to_write_sorted = sorted(
-        rows_to_write,
-        key=lambda x: (
-            x['APP6-C-HIERARCHY'] == '',  # Place les lignes avec APP6-C-HIERARCHY vide à la fin
-            [int(part) if part.isdigit() else part for part in x['APP6-C-HIERARCHY'].split('.')]  # Tri numérique
-            if x['APP6-C-HIERARCHY'] else [],
-            x['APP6-C-SIDC']  # Tri secondaire pour les lignes avec APP6-C-HIERARCHY vide
-        )
-    )
-
     # Ouvrir le fichier de sortie et écrire les lignes triées
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
         # Définir les noms de colonnes dans l'ordre spécifié
@@ -102,7 +91,7 @@ def process_2525c_files(input_dir, output_file):
         writer.writeheader()
 
         # Écrire les lignes triées dans le fichier de sortie
-        writer.writerows(rows_to_write_sorted)
+        writer.writerows(rows_to_write)
 
 
 def update_with_2525b_files(input_dir, output_file):
@@ -149,8 +138,8 @@ def get_informations_from_tsv(tsv_file_path, code):
 
                 return entity, entity_type, entity_subtype
 
-def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
 
+def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
     file_prefixes = {
         'Air.tsv': '01',
         'Air missile.tsv': '02',
@@ -184,8 +173,8 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
     # Créer un dictionnaire pour stocker les correspondances APP6-C-SIDC -> Ligne complète du fichier tsv_dir_2525d
     sidc_dict = {}
 
-    with open(output_csv, mode='r', encoding='utf-8') as tsv_file:
-        tsv_reader = csv.DictReader(tsv_file, delimiter=';')
+    with open(output_csv, mode='r', encoding='utf-8') as mapping_output_file:
+        tsv_reader = csv.DictReader(mapping_output_file, delimiter=';')
         for row in tsv_reader:
             sidc = row['APP6-C-SIDC']
             sidc_dict[sidc] = row
@@ -217,7 +206,9 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
 
                 # Ouvrir le fichier TSV correspondant et chercher le code DeltaEntity
                 try:
-                    entity_info, entity_type_info, entity_subtype_info = get_informations_from_tsv(tsv_file_path, legacy_row['2525DeltaEntity'])
+                    entity_info, entity_type_info, entity_subtype_info = get_informations_from_tsv(tsv_file_path,
+                                                                                                   legacy_row[
+                                                                                                       '2525DeltaEntity'])
                 except Exception as e:
                     entity_info = entity_type_info = entity_subtype_info = None
 
@@ -251,9 +242,51 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
     with open(output_csv, mode='w', newline='', encoding='utf-8') as output_file:
         if updated_rows:
             fieldnames = updated_rows[0].keys()  # Les noms des colonnes sont les clés des dictionnaires
-            writer = csv.DictWriter(output_file, fieldnames=fieldnames, delimiter=';', quotechar='"', quoting=csv.QUOTE_ALL)
+            writer = csv.DictWriter(output_file, fieldnames=fieldnames, delimiter=';', quotechar='"',
+                                    quoting=csv.QUOTE_ALL)
             writer.writeheader()
             writer.writerows(updated_rows)
+
+
+def order_csv_by_column_name(csv_file, column_name):
+    # Lire le fichier CSV et charger les données
+    with open(csv_file, mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file, delimiter=';')
+        rows = list(reader)
+
+    # Supprimer les guillemets dans les noms de colonnes si présents
+    column_name = column_name.strip('"')
+
+    # Vérifier si la colonne existe après avoir retiré les guillemets
+    if column_name not in [col.strip('"') for col in reader.fieldnames]:
+        raise KeyError(f"Colonne '{column_name}' introuvable dans le fichier CSV.")
+
+    # Fonction pour déterminer si une valeur est numérique ou non
+    def convert_to_number(value):
+        try:
+            # Essayer de convertir en nombre
+            return float(value) if '.' in value else int(value)
+        except ValueError:
+            # Si la conversion échoue, renvoyer la valeur telle qu'elle est (pour le tri alphabétique)
+            return value
+
+    # Trier les lignes : d'abord celles avec une valeur non vide dans la colonne spécifiée, puis les autres
+    rows_sorted = sorted(
+        rows,
+        key=lambda x: (
+            x[column_name].strip('"') == '',  # Place les lignes avec une valeur vide à la fin
+            convert_to_number(x[column_name].strip('"')) if x[column_name].strip('"') else None,  # Tri principal
+            x['APP6-C-SIDC'].strip('"')  # Tri secondaire pour les lignes avec valeur vide dans la colonne spécifiée
+        )
+    )
+
+    # Écrire les lignes triées dans le même fichier CSV
+    with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=reader.fieldnames, delimiter=';')
+        writer.writeheader()
+        writer.writerows(rows_sorted)
+
+    print(f"Fichier trié écrit dans: {csv_file}")
 
 
 # Définir les répertoires d'entrée et le fichier de sortie
@@ -270,5 +303,6 @@ delete_existing_file(output_csv)
 process_2525c_files(tsv_dir_2525c, output_csv)
 update_with_2525b_files(tsv_dir_2525b, output_csv)
 update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv)
+order_csv_by_column_name(output_csv, 'APP6-C-HIERARCHY')
 
 print(f"Fichier '{output_csv}' généré et mis à jour avec succès.")
