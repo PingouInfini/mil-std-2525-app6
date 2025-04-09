@@ -182,9 +182,17 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
     # Créer une liste pour stocker les nouvelles lignes avec la colonne APP6-D-SIDC modifiée
     updated_rows = []
 
+    seen_charlie1st_ten = set()
+
     # Parcourir chaque ligne du legacy_mapping et chercher les correspondances
     for legacy_row in legacy_rows:
         charlie1st_ten = legacy_row['2525Charlie1stTen']
+
+        # Si la valeur a déjà été traitée, on passe à la suivante pour éviter les doublons
+        if charlie1st_ten in seen_charlie1st_ten:
+            continue
+
+        seen_charlie1st_ten.add(charlie1st_ten)
 
         # Modifier le 4e caractère de 2525Charlie1stTen par '*' si nécessaire
         if len(charlie1st_ten) >= 4 and charlie1st_ten[3] == 'P':
@@ -220,8 +228,11 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
                     entity_info, _, _ = get_informations_from_tsv(tsv_file_path, code_with_0000)
 
             else:
-                # Si le DeltaSymbolSet ne correspond à aucun code valide dans file_prefixes
-                entity_info = entity_type_info = entity_subtype_info = 'Not Found'
+                if legacy_row['Remarks'] == 'Retired':
+                    entity_info = entity_type_info = entity_subtype_info = 'Retired'
+                else:
+                    # Si le DeltaSymbolSet ne correspond à aucun code valide dans file_prefixes
+                    entity_info = entity_type_info = entity_subtype_info = 'Not Found'
 
             # Construire la nouvelle valeur de APP6-D-SIDC
             new_d_sidc = '1003' + legacy_row['2525DeltaSymbolSet'] + '0000' + legacy_row['2525DeltaEntity'] + \
