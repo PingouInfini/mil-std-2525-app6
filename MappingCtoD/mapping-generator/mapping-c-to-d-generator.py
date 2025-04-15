@@ -139,6 +139,17 @@ def get_informations_from_tsv(tsv_file_path, code):
                 return entity, entity_type, entity_subtype
 
 
+def get_codes_from_tsv(tsv_path):
+    codes = []
+    with open(tsv_path, newline='', encoding='utf-8') as tsvfile:
+        reader = csv.DictReader(tsvfile, delimiter='\t')
+        for row in reader:
+            code = row.get('Code', '').strip()
+            if code:
+                codes.append(code)
+    return codes
+
+
 def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
     file_prefixes = {
         'Air.tsv': '01',
@@ -170,29 +181,24 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
         legacy_reader = csv.DictReader(legacy_file, delimiter=';')
         legacy_rows = list(legacy_reader)
 
-    # Créer un dictionnaire pour stocker les correspondances APP6-C-SIDC -> Ligne complète du fichier tsv_dir_2525d
+    # Créer un dictionnaire pour stocker les correspondances APP6-C-SIDC -> Liste de lignes
     sidc_dict = {}
+    symbols_set_from_legacy = {}
 
     with open(output_csv, mode='r', encoding='utf-8') as mapping_output_file:
         tsv_reader = csv.DictReader(mapping_output_file, delimiter=';')
         for row in tsv_reader:
             sidc = row['APP6-C-SIDC']
-            sidc_dict[sidc] = row
+            if sidc not in sidc_dict:
+                sidc_dict[sidc] = []
+            sidc_dict[sidc].append(row)
 
     # Créer une liste pour stocker les nouvelles lignes avec la colonne APP6-D-SIDC modifiée
     updated_rows = []
 
-    seen_charlie1st_ten = set()
-
     # Parcourir chaque ligne du legacy_mapping et chercher les correspondances
     for legacy_row in legacy_rows:
         charlie1st_ten = legacy_row['2525Charlie1stTen']
-
-        # Si la valeur a déjà été traitée, on passe à la suivante pour éviter les doublons
-        if charlie1st_ten in seen_charlie1st_ten:
-            continue
-
-        seen_charlie1st_ten.add(charlie1st_ten)
 
         # Modifier le 4e caractère de 2525Charlie1stTen par '*' si nécessaire
         if len(charlie1st_ten) >= 4 and charlie1st_ten[3] == 'P':
@@ -200,54 +206,103 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
 
         # Rechercher la correspondance dans le fichier CSV tsv_dir_2525d
         if charlie1st_ten in sidc_dict:
-            corresponding_row = sidc_dict[charlie1st_ten]
+            # Obtenir la liste des lignes correspondant à ce SIDC
+            corresponding_rows = sidc_dict[charlie1st_ten]
 
-            # Obtenir le fichier TSV à partir du numéro de DeltaSymbolSet
-            delta_symbol_set = legacy_row['2525DeltaSymbolSet']
-            if delta_symbol_set in file_prefixes.values():
-                # Trouver le fichier correspondant
-                tsv_filename = next(key for key, value in file_prefixes.items() if value == delta_symbol_set)
-                tsv_file_path = os.path.join(tsv_dir_2525d, tsv_filename)
+            for corresponding_row in corresponding_rows:
+                # Obtenir le fichier TSV à partir du numéro de DeltaSymbolSet
+                delta_symbol_set = legacy_row['2525DeltaSymbolSet']
+                if delta_symbol_set in file_prefixes.values():
+                    # Trouver le fichier correspondant
+                    tsv_filename = next(key for key, value in file_prefixes.items() if value == delta_symbol_set)
+                    tsv_file_path = os.path.join(tsv_dir_2525d, tsv_filename)
 
-                code_with_00 = legacy_row['2525DeltaEntity'][:-2] + '00'
-                code_with_0000 = legacy_row['2525DeltaEntity'][:-4] + '0000'
+                    if delta_symbol_set not in symbols_set_from_legacy:
+                        symbols_set_from_legacy[delta_symbol_set] = []
+                    symbols_set_from_legacy[delta_symbol_set].append(legacy_row['2525DeltaEntity'])
 
-                # Ouvrir le fichier TSV correspondant et chercher le code DeltaEntity
+                    code_with_00 = legacy_row['2525DeltaEntity'][:-2] + '00'
+                    code_with_0000 = legacy_row['2525DeltaEntity'][:-4] + '0000'
+
+                    try:
+                        entity_info, entity_type_info, entity_subtype_info = get_informations_from_tsv(
+                            tsv_file_path, legacy_row['2525DeltaEntity']
+                        )
+                    except Exception as e:
+                        entity_info = entity_type_info = entity_subtype_info = None
+
+                    if entity_subtype_info is not None:
+                        entity_info, entity_type_info, _ = get_informations_from_tsv(tsv_file_path, code_with_00)
+                        entity_info, _, _ = get_informations_from_tsv(tsv_file_path, code_with_0000)
+                    elif entity_type_info is not None:
+                        entity_info, _, _ = get_informations_from_tsv(tsv_file_path, code_with_0000)
+                else:
+                    if legacy_row['Remarks'] == 'Retired':
+                        entity_info = entity_type_info = entity_subtype_info = 'Retired'
+                    else:
+                        entity_info = entity_type_info = entity_subtype_info = 'Not Found'
+
+                # Construire la nouvelle valeur de APP6-D-SIDC
+                new_d_sidc = '1003' + legacy_row['2525DeltaSymbolSet'] + '0000' + \
+                             legacy_row['2525DeltaEntity'] + legacy_row['2525DeltaMod1'] + legacy_row['2525DeltaMod2']
+
+                # Mettre à jour la ligne
+                corresponding_row['APP6-D-SIDC'] = new_d_sidc
+                corresponding_row['APP6-D-Domain'] = os.path.splitext(os.path.basename(tsv_filename))[0]
+                corresponding_row['APP6-D-Entity'] = entity_info
+                corresponding_row['APP6-D-EntityType'] = entity_type_info
+                corresponding_row['APP6-D-EntitySubtype'] = entity_subtype_info
+
+                # Ajouter à updated_rows
+                if corresponding_row not in updated_rows:
+                    updated_rows.append(corresponding_row)
+
+    for filename in os.listdir(tsv_dir_2525d):
+        if not filename.endswith('.tsv'):
+            continue  # ignorer les fichiers non-tsv
+        if filename not in file_prefixes:
+            continue
+
+        symbolSet = file_prefixes[filename]
+        tsv_file = os.path.join(tsv_dir_2525d, filename)
+        codes = get_codes_from_tsv(tsv_file)
+
+        expected_codes = symbols_set_from_legacy.get(symbolSet, set())
+
+        # Vérifier les codes manquants
+        missing_codes = [code for code in codes if code not in expected_codes]
+
+        if missing_codes:
+            for code in missing_codes:
+
+                code_with_00 = code[:-2] + '00'
+                code_with_0000 = code[:-4] + '0000'
+
                 try:
-                    entity_info, entity_type_info, entity_subtype_info = get_informations_from_tsv(tsv_file_path,
-                                                                                                   legacy_row[
-                                                                                                       '2525DeltaEntity'])
+                    entity_info, entity_type_info, entity_subtype_info = get_informations_from_tsv(
+                        tsv_file, code
+                    )
                 except Exception as e:
                     entity_info = entity_type_info = entity_subtype_info = None
 
                 if entity_subtype_info is not None:
-                    # Recherche pour Entity Type (remplacer les 2 derniers chiffres par "00")
-                    entity_info, entity_type_info, _ = get_informations_from_tsv(tsv_file_path, code_with_00)
-                    entity_info, _, _ = get_informations_from_tsv(tsv_file_path, code_with_0000)
+                    entity_info, entity_type_info, _ = get_informations_from_tsv(tsv_file, code_with_00)
+                    entity_info, _, _ = get_informations_from_tsv(tsv_file, code_with_0000)
                 elif entity_type_info is not None:
-                    entity_info, _, _ = get_informations_from_tsv(tsv_file_path, code_with_0000)
+                    entity_info, _, _ = get_informations_from_tsv(tsv_file, code_with_0000)
+                get_informations_from_tsv(tsv_file, code)
 
-            else:
-                if legacy_row['Remarks'] == 'Retired':
-                    entity_info = entity_type_info = entity_subtype_info = 'Retired'
-                else:
-                    # Si le DeltaSymbolSet ne correspond à aucun code valide dans file_prefixes
-                    entity_info = entity_type_info = entity_subtype_info = 'Not Found'
+                new_d_sidc = '1003' + symbolSet + '0000' + code + '00' + '00'
 
-            # Construire la nouvelle valeur de APP6-D-SIDC
-            new_d_sidc = '1003' + legacy_row['2525DeltaSymbolSet'] + '0000' + legacy_row['2525DeltaEntity'] + \
-                         legacy_row['2525DeltaMod1'] + legacy_row['2525DeltaMod2']
+                new_row = {'APP6-C-Domain': '', 'APP6-C-FullPath': '', 'APP6-NAME': '', 'APP6-NAME-FR': '',
+                           'APP6-C-HIERARCHY-NAME': '', 'APP6-C-HIERARCHY': '', 'APP6-B-SIDC': '', 'APP6-C-SIDC': '',
+                           'APP6-D-SIDC': new_d_sidc,
+                           'APP6-D-Domain': os.path.splitext(os.path.basename(tsv_filename))[0],
+                           'APP6-D-Entity': entity_info, 'APP6-D-EntityType': entity_type_info,
+                           'APP6-D-EntitySubtype': entity_subtype_info}
 
-            # Mettre à jour la colonne APP6-D-SIDC dans la ligne correspondante
-            corresponding_row['APP6-D-SIDC'] = new_d_sidc
-            # Ajouter les nouvelles informations (Entity, Entity Type, Entity Subtype) dans la ligne
-            corresponding_row['APP6-D-Domain'] = os.path.splitext(os.path.basename(tsv_filename))[0]
-            corresponding_row['APP6-D-Entity'] = entity_info
-            corresponding_row['APP6-D-EntityType'] = entity_type_info
-            corresponding_row['APP6-D-EntitySubtype'] = entity_subtype_info
-
-            # Ajouter la ligne modifiée à updated_rows
-            updated_rows.append(corresponding_row)
+                # Ajouter à updated_rows
+                updated_rows.append(new_row)
 
     # Écrire les résultats dans un fichier output_csv
     with open(output_csv, mode='w', newline='', encoding='utf-8') as output_file:
@@ -259,41 +314,49 @@ def update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv):
             writer.writerows(updated_rows)
 
 
-def order_csv_by_column_name(csv_file, column_name):
+def order_csv_by_column_name(csv_file):
     # Lire le fichier CSV et charger les données
     with open(csv_file, mode='r', encoding='utf-8') as file:
         reader = csv.DictReader(file, delimiter=';')
         rows = list(reader)
+        fieldnames = reader.fieldnames
 
-    # Supprimer les guillemets dans les noms de colonnes si présents
-    column_name = column_name.strip('"')
+    # Colonnes à trier
+    col_c_domain = 'APP6-C-Domain'
+    col_hierarchy = 'APP6-C-HIERARCHY'
+    col_sidc = 'APP6-D-SIDC'
 
-    # Vérifier si la colonne existe après avoir retiré les guillemets
-    if column_name not in [col.strip('"') for col in reader.fieldnames]:
-        raise KeyError(f"Colonne '{column_name}' introuvable dans le fichier CSV.")
+    # Ordre de tri personnalisé pour APP6-C-Domain
+    domain_order = [
+        "SPACE", "AIR", "GROUND-UNIT", "GROUND-EQUIPMENT", "GROUND-INSTALLATION",
+        "SEA-SURFACE", "SUB-SURFACE", "SOF", "TACTICAL-GRAPHICS", "SIGNALS-INTELLIGENCE",
+        "STABILITY-OPERATIONS", "EMERGENCY-MANAGEMENT", ""
+    ]
+    domain_order_index = {val: i for i, val in enumerate(domain_order)}
 
-    # Fonction pour déterminer si une valeur est numérique ou non
-    def convert_to_number(value):
+    # Fonction de conversion mixte numérique/alphabétique
+    def convert(value):
+        value = value.strip('"')
         try:
-            # Essayer de convertir en nombre
-            return float(value) if '.' in value else int(value)
+            return int(value) if value.isdigit() else float(value)
         except ValueError:
-            # Si la conversion échoue, renvoyer la valeur telle qu'elle est (pour le tri alphabétique)
             return value
 
-    # Trier les lignes : d'abord celles avec une valeur non vide dans la colonne spécifiée, puis les autres
+    # Tri combiné
     rows_sorted = sorted(
         rows,
         key=lambda x: (
-            x[column_name].strip('"') == '',  # Place les lignes avec une valeur vide à la fin
-            convert_to_number(x[column_name].strip('"')) if x[column_name].strip('"') else None,  # Tri principal
-            x['APP6-C-SIDC'].strip('"')  # Tri secondaire pour les lignes avec valeur vide dans la colonne spécifiée
+            domain_order_index.get(x[col_c_domain].strip('"'), len(domain_order)),
+            x[col_hierarchy].strip('"') == '',
+            convert(x[col_hierarchy]) if x[col_hierarchy].strip('"') else '',
+            x[col_sidc].strip('"') == '',
+            x[col_sidc].strip('"')
         )
     )
 
-    # Écrire les lignes triées dans le même fichier CSV
+    # Écriture dans le même fichier
     with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
-        writer = csv.DictWriter(file, fieldnames=reader.fieldnames, delimiter=';')
+        writer = csv.DictWriter(file, fieldnames=fieldnames, delimiter=';')
         writer.writeheader()
         writer.writerows(rows_sorted)
 
@@ -312,6 +375,6 @@ delete_existing_file(output_csv)
 process_2525c_files(tsv_dir_2525c, output_csv)
 update_with_2525b_files(tsv_dir_2525b, output_csv)
 update_with_2525d_files(tsv_dir_2525d, legacy_mapping, output_csv)
-order_csv_by_column_name(output_csv, 'APP6-C-HIERARCHY')
+order_csv_by_column_name(output_csv)
 
 print(f"Fichier '{output_csv}' généré et mis à jour avec succès.")
