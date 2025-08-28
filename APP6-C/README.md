@@ -1,3 +1,4 @@
 ### Liens utiles
 
-- [milsymbol-APP6c](https://www.spatialillusions.com/milsymbol/docs/milsymbol-2525c.html)
+- [Structure code APP6](../APP6-B)
+- [milsymbol-APP6c](extractor/rawdata/Milsymbol%202525C.html)
